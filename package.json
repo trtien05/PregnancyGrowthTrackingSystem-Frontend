@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "test": "react-scripts test",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "prettier:check": "prettier --check \"src/**/*.{jsx,json}\"",
+    "prettier:fix": "prettier --write \"src/**/*.{jsx,json}\"",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -18,10 +19,13 @@
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.57.0",
+    "autoprefixer": "^10.4.20",
+    "prettier": "^2.8.4",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
     "vite": "^5.2.0"
   }
 }
