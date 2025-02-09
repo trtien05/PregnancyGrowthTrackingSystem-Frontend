@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+  font-family: theme("fontFamily.poppins");
+}
+
+@layer utilities {
+  .textBold {
+    @apply text-[60px] 
+  }
+}
