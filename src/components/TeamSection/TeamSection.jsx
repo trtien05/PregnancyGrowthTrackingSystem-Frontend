@@ -1,7 +1,26 @@
+import { Row, Col } from 'antd';
 import avatar1 from '../../assets/images/avatar.png';
 import avatar2 from '../../assets/images/avatar_1.png';
 import avatar3 from '../../assets/images/avatar_2.png';
 import elipse from '../../assets/images/elipse.png';
+import './TeamSection.css';
+
+// eslint-disable-next-line react/prop-types
+const TeamMember = ({ imgSrc, title }) => (
+  <div className="team-card">
+    <div className="image-container">
+      <img
+        src={imgSrc}
+        alt="Medical Professional"
+        className="member-image"
+      />
+    </div>
+    <div className="member-info">
+      <h3 className="member-name">John Doe</h3>
+      <p className="member-title">{title}</p>
+    </div>
+  </div>
+);
 
 const TeamSection = () => {
   const teamMembers = [
@@ -20,49 +39,30 @@ const TeamSection = () => {
   ];
 
   return (
-    <div className="bg-primary py-16 px-4">
-      <div className="container mx-auto relative ">
-        {/* Section Header */}
-        <div className="text-center mb-16 relative z-10 ">
-          <div className="max-w-4xl mx-auto text-right">
-            <h2 className="text-[60px] font-[700] ">
+    <div className="team-section">
+      <div className="team-container">
+        <div className="section-header">
+          <div className="header-content">
+            <h2 className="header-title-team">
               Your pregnancy journey,
             </h2>
-            <span className="text-[60px] font-[700] text-[#A4A29C]">
+            <p className="header-subtitle-team">
               guided with care and precision
-            </span>
+            </p>
           </div>
-
         </div>
 
-        {/* Elipse Image */}
-        <div className="absolute top-[180px] right-[40px] z-0">
+        <div className="elipse-image">
           <img src={elipse} alt="Elipse" width={693} height={693} />
         </div>
-        {/* Team Cards */}
-        <div className="flex items-center justify-center gap-8 relative z-10">
-          {teamMembers.map((member, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-3xl w-[416px] h-[547px]  p-7 shadow-xl  transition-shadow duration-300"
-            >
-              {/* Image Container */}
-              <div className="w-60 mx-auto mb-6 p-7 overflow-hidden ">
-                <img
-                  src={member.imgSrc}
-                  alt="Medical Professional"
-                  className="w-full h-full object-cover"
-                />
-              </div>
 
-              {/* Text Content */}
-              <div className="text-center">
-                <h3 className="text-xl font-semibold mb-2">John Doe</h3>
-                <p className="text-gray-500">{member.title}</p>
-              </div>
-            </div>
+        <Row gutter={[0, 32]} justify="center">
+          {teamMembers.map((member, index) => (
+            <Col xs={24} md={12} lg={8} key={index} style={{ display: 'flex', justifyContent: 'center' }}>
+              <TeamMember {...member} />
+            </Col>
           ))}
-        </div>
+        </Row>
       </div>
     </div>
   );

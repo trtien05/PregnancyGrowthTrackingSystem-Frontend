@@ -3,6 +3,7 @@ const routes = {
     home: '/',
     notFound: '/404',
     login: '/login',
+    register: '/register',
   },
 };
 
