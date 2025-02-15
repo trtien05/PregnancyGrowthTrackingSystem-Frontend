@@ -103,7 +103,7 @@
 
 .submit-button {
   width: 100%;
-  background-color: #C3C3C3;
+  background-color: var(--second-color);
   color: white;
   font-weight: 600;
   padding: 16px;
@@ -114,7 +114,7 @@
 }
 
 .submit-button:hover {
-  background-color: #9CA3AF;
+  background-color: #f9a8d4;
 }
 
 .divider {

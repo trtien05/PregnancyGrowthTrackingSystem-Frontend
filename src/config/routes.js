@@ -4,6 +4,8 @@ const routes = {
     notFound: '/404',
     login: '/login',
     register: '/register',
+    verifyEmail: '/verify-email',
+    blogs: '/blogs',
   },
 };
 
