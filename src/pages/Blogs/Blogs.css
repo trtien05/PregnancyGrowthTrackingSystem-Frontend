@@ -1,10 +1,14 @@
 .blog-container {
-  padding: 24px;
+  padding: 24px 100px;
   margin: 0 auto;
   background: var(--primary-color);
 }
 
-
+.tools-title{
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+}
 .featured-card {
   border-radius: 12px;
   overflow: hidden;
@@ -74,6 +78,10 @@
   margin: 12px 0 !important;
   line-height: 1.4 !important;
 }
+.article-title:hover {
+  color:rgb(168, 75, 126);
+  transition: 0.3s;
+}
 
 .article-excerpt {
   color: #666;
@@ -112,6 +120,36 @@
   color:rgb(168, 75, 126);
   transition: 0.3s;
 
+}
+/* 🎯 Danh sách công cụ */
+.tools-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.tool-card {
+  text-align: center;
+  padding: 5px;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+}
+
+.tool-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.tool-name {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .pagination-container {

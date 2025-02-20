@@ -1,127 +1,143 @@
-import { Card, Row, Col, Typography, Pagination, Tag, Carousel } from 'antd';
+import { Card, Row, Col, Typography, Pagination, Carousel, Skeleton } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import './Blogs.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const { Title, Paragraph } = Typography;
 
-const BlogPage = () => {
-  const articles = [
-    {
-      id: 1,
-      category: 'Health',
-      title: 'Top 10 Foods Every Pregnant Mom Should Include in Her Diet',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKGvxtr7vmYvKw_dBgBPf98isHM4Cz6REorg&s',
-      featured: true
-    },
-    {
-      id: 2,
-      category: 'Health',
-      title: 'The Importance of Sleep for Moms and Babies: Tips to Rest Better',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKGvxtr7vmYvKw_dBgBPf98isHM4Cz6REorg&s',
-      featured: true
-    },
-    {
-      id: 3,
-      category: 'Health',
-      title: '5 Simple Prenatal Yoga Poses to Reduce Stress and Boost Energy',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKGvxtr7vmYvKw_dBgBPf98isHM4Cz6REorg&s',
-      featured: true
-    },
-    {
-      id: 4,
-      category: 'Health',
-      title: 'Pregnancy Warning Signs You Should Never Ignore',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKGvxtr7vmYvKw_dBgBPf98isHM4Cz6REorg&s',
-      excerpt: 'By Texas Health and Human services: If you experience any of these symptoms during or after[...]'
-    },
-    {
-      id: 5,
-      category: 'Fun',
-      title: 'Fun and Educational Games to Boost Your Baby\'s Brain Development',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKGvxtr7vmYvKw_dBgBPf98isHM4Cz6REorg&s',
-      excerpt: 'For children, play is not just about having fun—it\'s crucial for developing critical[...]'
-    },
-    {
-      id: 6,
-      category: 'Health',
-      title: 'Common Newborn Health Issues and How to Handle Them Like a Pro',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKGvxtr7vmYvKw_dBgBPf98isHM4Cz6REorg&s',
-      excerpt: 'If you\'re a first-time parent, and even if you\'ve already been through it before[...]'
-    }
-  ];
+const tools = [
+  {
+    name: 'Ovulation Calculator',
+    icon: 'https://assets.babycenter.com/ims/2023/11/Ovulation-Calculator-nov-2023.svg',
+    path: 'blogs/ovulation-calculator'
+  },
+  {
+    name: 'Due Date Calculator',
+    icon: 'https://assets.babycenter.com/ims/2023/11/DueDateCalculator-nov-2023.svg',
+    path: 'blogs/due-date-calculator'
+  },
+  {
+    name: 'Pregnancy Weight Gain Calculator',
+    icon: 'https://assets.babycenter.com/ims/2023/11/PregWeightGainCalc-nov-2023.svg',
+    path: 'blogs/pregnancy-weight-gain-calculator'
+  },
+  {
+    name: 'Birth Plan Worksheet',
+    icon: 'https://assets.babycenter.com/ims/2023/11/BirthPlanWorksheet-nov-2023.svg',
+    path: 'blogs/birth-plan-worksheet'
+  },
 
-  const featuredArticles = articles.filter(article => article.featured);
-  const regularArticles = articles.filter(article => !article.featured);
+];
+
+const BlogPage = () => {
+  const [articles, setArticles] = useState([]);
+  const [page, setPage] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
+  const limit = 6;
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts?page=${page}&size=${limit}`);
+        setArticles(response.data.data.content);
+        setTotalElements(response.data.data.totalElements);
+      } catch (error) {
+        console.error('Failed to fetch articles: ', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, [page]);
 
   return (
     <div className="blog-container">
-      {/* Carousel for Featured Articles */}
-      <Row gutter={[24, 24]}>
+      {/* Danh sách bài viết */}
+      <Row gutter={[24, 24]} >
         <Col xs={24}>
-          <Carousel autoplay>
-            {featuredArticles.map(article => (
-              <div key={article.id} className="carousel-slide">
-                <div className="featured-image-container">
-                  <img
-                    alt={article.title}
-                    src={article.image}
-                    className="featured-image"
-                  />
-                  <div className="featured-content">
-                    <Tag color="blue" className="category-tag">
-                      {article.category}
-                    </Tag>
-                    <Title level={2} className="featured-title">
-                      {article.title}
-                    </Title>
-                    <button className="read-more-btn">
-                      Read more <RightOutlined />
-                    </button>
+          {loading ? (
+            <Skeleton active paragraph={{ rows: 2 }} />
+          ) : (
+            <Carousel autoplay>
+              {articles.map(article => (
+                <div key={article.id} className="carousel-slide">
+                  <div className="featured-image-container">
+                    <img alt={article.pageTitle} src={article.featuredImageUrl} className="featured-image" />
+                    <div className="featured-content">
+                      <Title level={2} className="featured-title">{article.pageTitle}</Title>
+                      <button className="read-more-btn">
+                        Read more <RightOutlined />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </Carousel>
+              ))}
+            </Carousel>
+          )}
         </Col>
-
-        {/* Regular Articles */}
-        {regularArticles.map(article => (
-          <Col xs={24} sm={12} lg={8} key={article.id}>
-            <Card hoverable className="article-card">
-              <div className="article-image-container">
-                <img
-                  alt={article.title}
-                  src={article.image}
-                  className="article-image"
-                />
-              </div>
-              <div className="article-content">
-                <Tag color="blue" className="category-tag">
-                  {article.category}
-                </Tag>
-                <Title level={4} className="article-title">
-                  {article.title}
-                </Title>
-                <Paragraph ellipsis={{ rows: 3 }} className="article-excerpt">
-                  {article.excerpt}
-                </Paragraph>
-                <Link
-                  to={`/blogs/${article.id}`}
-                  className="read-more-link"
-                >
-                  Read more <RightOutlined />
-                </Link>
-              </div>
-            </Card>
+        {/* Danh sách công cụ */}
+        <Row gutter={[16, 16]} justify="center">
+          <Col span={24}>
+            <Title className="tools-title">Popular tools</Title>
           </Col>
-        ))}
+          {tools.map((tool, index) => (
+
+            <Col xs={12} sm={8} md={6} lg={4} key={index}>
+              <Link to={tool.path}>
+                <Card hoverable className="tool-card">
+                  <img src={tool.icon} alt={tool.name} className="tool-icon" />
+                  <Title level={5} className="tool-name">{tool.name}</Title>
+                </Card>
+              </Link>
+            </Col>
+
+          ))}
+        </Row>
+        {loading ? (
+          [...Array(6)].map((_, index) => (
+            <Col xs={24} sm={12} lg={8} key={index}>
+              <Card hoverable className="article-card">
+                <Skeleton active />
+              </Card>
+            </Col>
+          ))
+        ) : (
+          <Row gutter={[16, 16]} justify="center">
+            <Col span={24}>
+              <Title className="tools-title">Blog Post</Title>
+            </Col>
+            {articles.map(article => (
+              <Col xs={24} sm={12} lg={8} key={article.id}>
+                <Link to={`/blogs/${article.id}`} className="read-more-link">
+                  <Card hoverable className="article-card">
+                    <div className="article-image-container">
+                      <img alt={article.pageTitle} src={article.featuredImageUrl} className="article-image" />
+                    </div>
+                    <div className="article-content">
+                      <Title level={4} className="article-title">{article.pageTitle}</Title>
+                      <Paragraph ellipsis={{ rows: 3 }} className="article-excerpt">
+                        {article.shortDescription}
+                      </Paragraph>
+                      <Link to={`/blogs/${article.id}`} className="read-more-link">
+                        Read more <RightOutlined />
+                      </Link>
+                    </div>
+                  </Card>
+                </Link>
+              </Col>
+            ))}
+          </Row>
+        )}
       </Row>
 
       {/* Pagination */}
       <Row justify="center" className="pagination-container">
         <Col>
-          <Pagination defaultCurrent={1} total={420} />
+          <Pagination total={totalElements} onChange={(page) => setPage(page - 1)} />
         </Col>
       </Row>
     </div>
