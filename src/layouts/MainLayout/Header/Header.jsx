@@ -7,7 +7,7 @@ import './Header.css';
 const navLinks = [
   { title: 'About Us', href: '#' },
   { title: 'Pregnancy', href: '#' },
-  { title: 'Blog', href: '#' },
+  { title: 'Blog', href: '/blogs' },
   { title: 'FAQ', href: '#' },
   { title: 'Explore Plans', href: '#' }
 ];

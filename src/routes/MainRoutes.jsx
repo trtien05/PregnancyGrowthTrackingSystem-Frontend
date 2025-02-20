@@ -1,6 +1,7 @@
 import config from '../config'
 import MainLayout from '../layouts/MainLayout'
 import NotFound from '../pages/404'
+import BlogDetail from '../pages/BlogDetail'
 import BlogPage from '../pages/Blogs/Blogs'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
@@ -20,6 +21,7 @@ const publicRoutes = {
     { path: config.routes.public.register, element: <Register /> },
     { path: config.routes.public.register, element: <Register /> },
     { path: config.routes.public.blogs, element: <BlogPage /> },
+    { path: config.routes.public.blog, element: <BlogDetail /> },
   ]
 }
 

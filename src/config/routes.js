@@ -6,6 +6,7 @@ const routes = {
     register: '/register',
     verifyEmail: '/verify-email',
     blogs: '/blogs',
+    blog: '/blogs/:id',
   },
 };
 
