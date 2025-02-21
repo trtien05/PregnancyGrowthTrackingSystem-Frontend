@@ -7,6 +7,11 @@ const routes = {
     verifyEmail: '/verify-email',
     blogs: '/blogs',
     blog: '/blogs/:id',
+    blogToolWorksheet: '/blogs/tool-worksheet',
+    blogToolDueDate: '/blogs/tool-due-date',
+    blogToolOvulation: '/blogs/tool-ovulation',
+    blogToolPregWeight: '/blogs/tool-preg-weight',
+
   },
 };
 

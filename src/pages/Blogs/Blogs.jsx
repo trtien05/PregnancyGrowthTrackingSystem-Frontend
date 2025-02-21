@@ -11,22 +11,22 @@ const tools = [
   {
     name: 'Ovulation Calculator',
     icon: 'https://assets.babycenter.com/ims/2023/11/Ovulation-Calculator-nov-2023.svg',
-    path: 'blogs/ovulation-calculator'
+    path: 'tool-ovulation'
   },
   {
     name: 'Due Date Calculator',
     icon: 'https://assets.babycenter.com/ims/2023/11/DueDateCalculator-nov-2023.svg',
-    path: 'blogs/due-date-calculator'
+    path: 'tool-due-date'
   },
   {
     name: 'Pregnancy Weight Gain Calculator',
     icon: 'https://assets.babycenter.com/ims/2023/11/PregWeightGainCalc-nov-2023.svg',
-    path: 'blogs/pregnancy-weight-gain-calculator'
+    path: 'tool-preg-weight'
   },
   {
     name: 'Birth Plan Worksheet',
     icon: 'https://assets.babycenter.com/ims/2023/11/BirthPlanWorksheet-nov-2023.svg',
-    path: 'blogs/birth-plan-worksheet'
+    path: 'tool-worksheet'
   },
 
 ];
@@ -79,60 +79,60 @@ const BlogPage = () => {
             </Carousel>
           )}
         </Col>
-        {/* Danh sách công cụ */}
+      </Row>
+
+      {/* Danh sách công cụ */}
+      <Row gutter={[16, 16]} justify="center" style={{ marginTop: 24, marginBottom: 24 }}>
+        <Col span={24}>
+          <Title className="tools-title">Popular tools</Title>
+        </Col>
+        {tools.map((tool, index) => (
+          <Col xs={12} sm={8} md={6} lg={4} key={index}>
+            <Link to={tool.path}>
+              <Card hoverable className="tool-card">
+                <img src={tool.icon} alt={tool.name} className="tool-icon" />
+                <Title level={5} className="tool-name">{tool.name}</Title>
+              </Card>
+            </Link>
+          </Col>
+        ))}
+      </Row>
+
+      {loading ? (
+        [...Array(6)].map((_, index) => (
+          <Col xs={24} sm={12} lg={8} key={index}>
+            <Card hoverable className="article-card">
+              <Skeleton active />
+            </Card>
+          </Col>
+        ))
+      ) : (
         <Row gutter={[16, 16]} justify="center">
           <Col span={24}>
-            <Title className="tools-title">Popular tools</Title>
+            <Title className="tools-title">Blog Post</Title>
           </Col>
-          {tools.map((tool, index) => (
-
-            <Col xs={12} sm={8} md={6} lg={4} key={index}>
-              <Link to={tool.path}>
-                <Card hoverable className="tool-card">
-                  <img src={tool.icon} alt={tool.name} className="tool-icon" />
-                  <Title level={5} className="tool-name">{tool.name}</Title>
+          {articles.map(article => (
+            <Col xs={24} sm={12} lg={8} key={article.id}>
+              <Link to={`/blogs/${article.id}`} className="read-more-link">
+                <Card hoverable className="article-card">
+                  <div className="article-image-container">
+                    <img alt={article.pageTitle} src={article.featuredImageUrl} className="article-image" />
+                  </div>
+                  <div className="article-content">
+                    <Title level={4} className="article-title">{article.pageTitle}</Title>
+                    <Paragraph ellipsis={{ rows: 3 }} className="article-excerpt">
+                      {article.shortDescription}
+                    </Paragraph>
+                    <Link to={`/blogs/${article.id}`} className="read-more-link">
+                      Read more <RightOutlined />
+                    </Link>
+                  </div>
                 </Card>
               </Link>
             </Col>
-
           ))}
         </Row>
-        {loading ? (
-          [...Array(6)].map((_, index) => (
-            <Col xs={24} sm={12} lg={8} key={index}>
-              <Card hoverable className="article-card">
-                <Skeleton active />
-              </Card>
-            </Col>
-          ))
-        ) : (
-          <Row gutter={[16, 16]} justify="center">
-            <Col span={24}>
-              <Title className="tools-title">Blog Post</Title>
-            </Col>
-            {articles.map(article => (
-              <Col xs={24} sm={12} lg={8} key={article.id}>
-                <Link to={`/blogs/${article.id}`} className="read-more-link">
-                  <Card hoverable className="article-card">
-                    <div className="article-image-container">
-                      <img alt={article.pageTitle} src={article.featuredImageUrl} className="article-image" />
-                    </div>
-                    <div className="article-content">
-                      <Title level={4} className="article-title">{article.pageTitle}</Title>
-                      <Paragraph ellipsis={{ rows: 3 }} className="article-excerpt">
-                        {article.shortDescription}
-                      </Paragraph>
-                      <Link to={`/blogs/${article.id}`} className="read-more-link">
-                        Read more <RightOutlined />
-                      </Link>
-                    </div>
-                  </Card>
-                </Link>
-              </Col>
-            ))}
-          </Row>
-        )}
-      </Row>
+      )}
 
       {/* Pagination */}
       <Row justify="center" className="pagination-container">
@@ -140,7 +140,7 @@ const BlogPage = () => {
           <Pagination total={totalElements} onChange={(page) => setPage(page - 1)} />
         </Col>
       </Row>
-    </div>
+    </div >
   );
 };
 

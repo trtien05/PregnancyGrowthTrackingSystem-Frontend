@@ -4,11 +4,6 @@
   background: var(--primary-color);
 }
 
-.tools-title{
-  text-align: center;
-  font-size: 30px;
-  font-weight: 700;
-}
 .featured-card {
   border-radius: 12px;
   overflow: hidden;

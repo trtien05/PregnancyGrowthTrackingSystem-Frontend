@@ -2,6 +2,10 @@ import config from '../config'
 import MainLayout from '../layouts/MainLayout'
 import NotFound from '../pages/404'
 import BlogDetail from '../pages/BlogDetail'
+import BirthPlanWorksheet from '../pages/BlogDetail/ToolsPage/BirthPlanWorksheet'
+import DueDateCalculator from '../pages/BlogDetail/ToolsPage/DueDateCalculator'
+import OvulationCalculator from '../pages/BlogDetail/ToolsPage/OvulationCalculator'
+import PregnancyWeight from '../pages/BlogDetail/ToolsPage/PregnancyWeight'
 import BlogPage from '../pages/Blogs/Blogs'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
@@ -22,6 +26,11 @@ const publicRoutes = {
     { path: config.routes.public.register, element: <Register /> },
     { path: config.routes.public.blogs, element: <BlogPage /> },
     { path: config.routes.public.blog, element: <BlogDetail /> },
+    { path: config.routes.public.blogToolWorksheet, element: <BirthPlanWorksheet /> },
+    { path: config.routes.public.blogToolDueDate, element: <DueDateCalculator /> },
+    { path: config.routes.public.blogToolOvulation, element: <OvulationCalculator /> },
+    { path: config.routes.public.blogToolPregWeight, element: <PregnancyWeight /> },
+
   ]
 }
 
