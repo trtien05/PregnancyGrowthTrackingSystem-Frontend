@@ -19,12 +19,31 @@ function AuthForm() {
   const [messageApi, contextHolder] = message.useMessage();
 
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const [passwordError, setPasswordError] = useState(''); 
+  // Hàm validate mật khẩu (password)
+const validatePassword = (password) => {
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  return passwordRegex.test(password);
+};
+
+
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData(prev => ({
+    ...prev,
+    [name]: value
+  }));
+
+  // Kiểm tra mật khẩu khi người dùng nhập vào
+  if (name === 'password') {
+    if (!validatePassword(value)) {
+      setPasswordError("Password must contain at least one uppercase letter, one number, and one special character.");
+    } else {
+      setPasswordError('');
+    }
+  }
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,6 +107,8 @@ function AuthForm() {
                   className="form-input"
                   autoComplete="on"
                 />
+                {passwordError && <p className="error-message">{passwordError}</p>}
+
               </div>
 
               <div className="form-links">
