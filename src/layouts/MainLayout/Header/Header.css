@@ -58,13 +58,29 @@
 }
 
 @media (min-width: 768px) {
-  /* .nav-links {
+  .nav-links {
     display: flex;
-  } */
+  }
   
   .mobile-menu-button {
     display: none;
   }
+  
+}
+
+@media (max-width: 768px) {
+  .join-button {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: block;
+    position: absolute;  
+    right: 28px;         
+    top: 50%;            
+    transform: translateY(-50%);
+  }
+
 }
 
 .mobile-menu {
