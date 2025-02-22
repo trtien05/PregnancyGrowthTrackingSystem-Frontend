@@ -44,9 +44,9 @@ const PregnancyCalculationResult = ({ bmi, weightGainRange, onStartOver }) => {
           </h3>
           <LineChart
             width={500}
-            height={300}
+            height={250}
             data={chartData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            margin={{ top: 5, right: 10, left: 50, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
@@ -79,6 +79,22 @@ const PregnancyCalculationResult = ({ bmi, weightGainRange, onStartOver }) => {
               dot={false}
             />
           </LineChart>
+
+          <div className="chart-description">
+            <p>
+              This graph shows how you&apos;re currently tracking toward your target pregnancy
+              weight gain. The graph will indicate how much you weigh now. If the line between
+              the orange and blue lines, you&apos;re within the recommended weight gain range for
+              pregnant women at your body mass index (BMI). If the green dot is above or below
+              those lines, you&apos;re tracking above or below your recommended weight gain.
+            </p>
+
+            <p>
+              Keep in mind that these are just guidelines – they aren&apos;t set in stone. Depending on
+              your health needs and your medical conditions, your target weight gain may be
+              different.
+            </p>
+          </div>
         </div>
 
         <button

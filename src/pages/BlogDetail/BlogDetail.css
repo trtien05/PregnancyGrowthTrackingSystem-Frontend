@@ -66,101 +66,101 @@
 .keep-reading-container {
   width: 100%;
   max-width: 400px;
-  padding:60px 20px 20px 20px;
+  padding: 60px 20px 20px 20px;
 }
 
-.pregnancy-weight-content{
+.pregnancy-weight-content {
   margin-top: 55px;
   position: relative;
   background: var(--primary-color);
   padding: 20px;
-    border-radius: 12px;
+  border-radius: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 .iconImg {
-    position: absolute;
-    width: 60px;
-    top: -25px;
-    left: 50%;
-    margin: auto;
+  position: absolute;
+  width: 60px;
+  top: -25px;
+  left: 48%;
+  margin: auto;
 }
 .main-title {
-    font-size: 28px;
-    color: #2c1810;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    font-weight: bold;
+  font-size: 28px;
+  color: #2c1810;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-weight: bold;
 }
 
 .intro-text {
-    margin-bottom: 24px;
-    font-size: 16px;
+  margin-bottom: 24px;
+  font-size: 16px;
 }
 
 .intro-text a {
-    color: #0066cc;
-    text-decoration: none;
+  color: #0066cc;
+  text-decoration: none;
 }
 
 .intro-text a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .section-title {
-    font-size: 24px;
-    color: #2c1810;
-    margin: 30px 0 20px;
-    font-weight: bold;
+  font-size: 24px;
+  color: #2c1810;
+  margin: 30px 0 20px;
+  font-weight: bold;
 }
 
 .advice-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
 }
 
 .advice-item {
-    background: #f8f9fa;
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #f9a8d4;
+  background: #f8f9fa;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #f9a8d4;
 }
 
 .advice-text {
-    margin: 0;
-    font-size: 15px;
+  margin: 0;
+  font-size: 15px;
 }
 
 .advice-author {
-    color: #666;
-    font-style: italic;
-    margin-top: 8px;
-    font-size: 14px;
+  color: #666;
+  font-style: italic;
+  margin-top: 8px;
+  font-size: 14px;
 }
 
 .important-notice {
-    background: #fff3f3;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 30px;
-    border: 1px solid #ffcdd2;
+  background: #fff3f3;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 30px;
+  border: 1px solid #ffcdd2;
 }
 
 .important-notice p {
-    margin: 0;
-    color: #d32f2f;
-    font-size: 14px;
+  margin: 0;
+  color: #d32f2f;
+  font-size: 14px;
 }
 
 .link {
-    color: #f472b6;
-    text-decoration: none;
-    font-weight: 500;
+  color: #f472b6;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 .keep-reading-header {
   color: #fff;
@@ -315,4 +315,41 @@
     font-size: 14px;
   }
 }
+.birth-plan-content h1 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 24px;
+}
 
+.birth-plan-content h2 {
+  font-size: 28px;
+  /* color: #333; */
+  margin: 32px 0 16px;
+}
+
+.birth-plan-content p {
+  margin-bottom: 16px;
+}
+.expert-quote {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 24px 0;
+}
+
+.expert-quote p {
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.expert-name {
+  font-weight: bold;
+  color: #666;
+}
+
+.template-section {
+  background-color: #e8f4ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 24px 0;
+}

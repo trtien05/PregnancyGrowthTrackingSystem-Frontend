@@ -100,7 +100,7 @@ input::placeholder {
 
 
 .result-container {
-  background: #f0ffff;
+  background: white;
   padding: 30px;
   border-radius: 12px;
   text-align: center;
@@ -118,7 +118,7 @@ input::placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 5px;
 }
 
 .result-title {
@@ -148,4 +148,11 @@ input::placeholder {
 
 .start-over-btn:hover {
   color: #004999;
+}
+
+.chart-description {
+  text-align: left;
+  margin: 20px 0;
+  color: #333;
+  line-height: 1.6;
 }
