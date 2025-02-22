@@ -3,11 +3,15 @@ import { CalendarOutlined } from '@ant-design/icons'
 import './BlogDetail.css'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import ArticleFeedback from '../../components/ArticleFeedback'
+import useAuth from '../../hooks/useAuth'
 
 const { Title, Text } = Typography
 const { Content } = Layout
 
 export default function BlogDetail() {
+  const { user } = useAuth();
+  console.log("user", user);
   const id = parseInt(window.location.pathname.split('/').pop())
   const [article, setArticle] = useState(null)
   const [relatedArticles, setRelatedArticles] = useState([])
@@ -67,6 +71,8 @@ export default function BlogDetail() {
           <div className="article-content">
             {loading ? <Skeleton active paragraph={{ rows: 5 }} /> : <Text className="intro-text">{article.content}</Text>}
           </div>
+
+          <ArticleFeedback />
         </Content>
 
         <div className="keep-reading-container">
