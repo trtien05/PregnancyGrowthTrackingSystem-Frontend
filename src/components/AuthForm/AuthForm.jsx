@@ -18,7 +18,11 @@ function AuthForm() {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+  
   const [passwordError, setPasswordError] = useState(''); 
   // Hàm validate mật khẩu (password)
 const validatePassword = (password) => {
@@ -26,6 +30,8 @@ const validatePassword = (password) => {
   return passwordRegex.test(password);
 };
 
+
+const [emailError, setEmailError] = useState(''); // Thêm state để theo dõi lỗi email
 
 const handleChange = (e) => {
   const { name, value } = e.target;
@@ -42,7 +48,17 @@ const handleChange = (e) => {
       setPasswordError('');
     }
   }
+
+  // Kiểm tra email khi người dùng nhập vào
+  if (name === 'username') {  // Validate email khi người dùng nhập vào trường email
+    if (!validateEmail(value)) {
+      setEmailError("Invalid email address.");
+    } else {
+      setEmailError('');
+    }
+  }
 };
+
 
 
   const handleSubmit = async (e) => {
@@ -77,7 +93,7 @@ const handleChange = (e) => {
             <h1 className="form-title">Sign in</h1>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label className="form-label">Username</label>
+                <label className="form-label">Email</label>
                 <input
                   type="text"
                   name="username"
@@ -85,6 +101,7 @@ const handleChange = (e) => {
                   onChange={handleChange}
                   className="form-input"
                 />
+                {emailError && <p className="error-message">{emailError}</p>}
               </div>
 
               <div className="form-group">
