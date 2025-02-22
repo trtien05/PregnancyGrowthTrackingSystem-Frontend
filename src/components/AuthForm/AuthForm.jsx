@@ -24,21 +24,22 @@ function AuthForm() {
   };
   
   const [passwordError, setPasswordError] = useState(''); 
+
   // Hàm validate mật khẩu (password)
-const validatePassword = (password) => {
-  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-  return passwordRegex.test(password);
-};
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return passwordRegex.test(password);
+  };
 
 
 const [emailError, setEmailError] = useState(''); // Thêm state để theo dõi lỗi email
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData(prev => ({
-    ...prev,
-    [name]: value
-  }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
 
   // Kiểm tra mật khẩu khi người dùng nhập vào
   if (name === 'password') {
@@ -59,6 +60,15 @@ const handleChange = (e) => {
   }
 };
 
+    // Kiểm tra mật khẩu khi người dùng nhập vào
+    if (name === 'password') {
+      if (!validatePassword(value)) {
+        setPasswordError("Password must contain at least one uppercase letter, one number, and one special character.");
+      } else {
+        setPasswordError('');
+      }
+    }
+  };
 
 
   const handleSubmit = async (e) => {
@@ -171,6 +181,6 @@ const handleChange = (e) => {
       </div>
     </>
   );
-}
+}}
 
 export default AuthForm;

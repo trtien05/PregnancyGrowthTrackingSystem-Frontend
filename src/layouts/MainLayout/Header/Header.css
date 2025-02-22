@@ -38,7 +38,7 @@
   color: #1f2937;
 }
 
-.join-button {
+.join-button{
   background-color: var(--second-color);
   color: white;
   padding: 8px 24px;
@@ -48,8 +48,20 @@
   border: none;
   cursor: pointer;
 }
+.lognin-mobile{
+  background-color: var(--second-color);
+  color: white;
+  padding: 8px 24px;
+  width: 100%;
+  border-radius: 9999px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+}
 
-.join-button:hover {
+
+.join-button .lognin-mobile:hover {
   background-color: #f9a8d4;
 }
 
@@ -60,6 +72,7 @@
 @media (min-width: 768px) {
   .nav-links {
     display: flex;
+    gap: 50px;
   }
   
   .mobile-menu-button {
@@ -101,6 +114,7 @@
 .mobile-nav-link {
   display: block;
   padding: 12px 16px;
+  border-radius: 12px;
   color: black;
   text-decoration: none;
   transition: background-color 0.2s ease;
