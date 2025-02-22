@@ -9,7 +9,7 @@ const navLinks = [
   { title: 'Pregnancy', href: '#' },
   { title: 'Blog', href: '/blogs' },
   { title: 'FAQ', href: '#' },
-  { title: 'Explore Plans', href: '#' }
+  { title: 'Explore Plans', href: '#' },
 ];
 
 function Header() {
@@ -53,16 +53,14 @@ function Header() {
             {link.title}
           </a>
         ))}
-        <div style={{ padding: '16px' }}>
-          <Button
-            type="primary"
-            href="/login"
-            block
-            className="join-button"
+        <a href="/login">
+          <button
+            className="lognin-mobile"
           >
             Join us
-          </Button>
-        </div>
+          </button>
+        </a>
+
       </Drawer>
 
       <a href="/login" className="hidden md:block">
