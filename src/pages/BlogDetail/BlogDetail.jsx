@@ -2,9 +2,10 @@ import { Typography, Layout, Tag, Skeleton } from 'antd'
 import { CalendarOutlined } from '@ant-design/icons'
 import './BlogDetail.css'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+
 import ArticleFeedback from '../../components/ArticleFeedback'
 import useAuth from '../../hooks/useAuth'
+import axiosClient from '../../utils/apiCaller'
 
 const { Title, Text } = Typography
 const { Content } = Layout
@@ -21,8 +22,9 @@ export default function BlogDetail() {
     const fetchArticle = async () => {
       try {
         setLoading(true)
-        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts/${id}`)
-        setArticle(response.data.data)
+        const response = await axiosClient.get(`/blog-posts/${id}`)
+
+        setArticle(response.data)
       } catch (error) {
         console.error('Failed to fetch article: ', error)
       } finally {
@@ -37,8 +39,8 @@ export default function BlogDetail() {
     const fetchRelatedArticles = async () => {
       try {
         setLoading(true)
-        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts?page=0&size=3`)
-        setRelatedArticles(response.data.data.content)
+        const response = await axiosClient.get(`/blog-posts?page=0&size=3`)
+        setRelatedArticles(response.data.content)
       } catch (error) {
         console.error('Failed to fetch related articles: ', error)
       } finally {
@@ -71,8 +73,7 @@ export default function BlogDetail() {
           <div className="article-content">
             {loading ? <Skeleton active paragraph={{ rows: 5 }} /> : <Text className="intro-text">{article.content}</Text>}
           </div>
-
-          <ArticleFeedback />
+          {user && <ArticleFeedback blogPostId={id} userId={user.id} role={user.role} />}
         </Content>
 
         <div className="keep-reading-container">

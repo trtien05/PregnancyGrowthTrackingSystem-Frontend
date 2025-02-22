@@ -2,15 +2,17 @@ import useDocumentTitle from '../../hooks/useDocumentTitle'
 import banner from '../../assets/images/banner-verify.png'
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { message } from 'antd'
 import config from '../../config'
 import './VerifyEmail.css'
+import axiosClient from '../../utils/apiCaller'
+import { LoadingOutlined } from '@ant-design/icons'
 
 function VerifyEmail() {
   useDocumentTitle('PregnaJoy | Verify Email')
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const [messageApi, contextHolder] = message.useMessage()
+  const [loading, setLoading] = useState(false)
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -29,7 +31,7 @@ function VerifyEmail() {
 
   const handleChange = (index, value) => {
     if (value.length > 1) {
-      value = value[0] // Only take the first character if multiple characters are pasted
+      value = value[0]
     }
 
     const newOtp = [...otp]
@@ -70,17 +72,20 @@ function VerifyEmail() {
     e.preventDefault()
     const otpValue = otp.join('')
     try {
-      const response = await axios.post(
-        `http://localhost:8080/api/v1/otp/validate-email?email=${encodeURIComponent(email)}&otp=${otpValue}`
+      setLoading(true)
+      const response = await axiosClient.post(
+        `/otp/validate-email?email=${encodeURIComponent(email)}&otp=${otpValue}`
       )
-      if (response.status === 200) {
-        messageApi.success(response.data.message)
+      if (response.code === 200) {
+        messageApi.success(response.message)
         setTimeout(() => {
           navigate(config.routes.public.login)
         }, 2000)
       }
     } catch (error) {
       console.log('Error: ', error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -113,7 +118,7 @@ function VerifyEmail() {
                 ))}
               </div>
               <button type="submit" className="submit-button" disabled={otp.some((digit) => digit === '')}>
-                Verify OTP
+                {loading ? <LoadingOutlined style={{ color: 'white' }} spin /> : ' Verify OTP'}
               </button>
             </form>
           </div>

@@ -1,7 +1,7 @@
 import { Typography, Layout, Skeleton } from "antd";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import PregnancyCalculatorForm from "../../../components/PregnancyCalculatorForm";
+import axiosClient from "../../../utils/apiCaller";
 
 const { Title } = Typography;
 const { Content } = Layout;
@@ -15,7 +15,7 @@ export default function PregnancyWeight() {
     const fetchRelatedArticles = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts?page=0&size=3`);
+        const response = await axiosClient.get(`/blog-posts?page=0&size=3`);
         setRelatedArticles(response.data.data.content);
       } catch (error) {
         console.error("Failed to fetch related articles: ", error);

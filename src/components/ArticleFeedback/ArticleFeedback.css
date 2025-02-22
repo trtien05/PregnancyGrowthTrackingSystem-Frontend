@@ -52,3 +52,9 @@
 .feedback-button.active-no .feedback-icon {
   color: currentColor;
 }
+
+.thank-you-text {
+  color: #374151;
+  font-weight: 500;
+  text-align: center;
+}

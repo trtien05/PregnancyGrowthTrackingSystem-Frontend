@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import useDocumentTitle from '../../hooks/useDocumentTitle'
 import './Register.css'
-import axios from 'axios'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import config from '../../config'
+import axiosClient from '../../utils/apiCaller'
+import { LoadingOutlined } from '@ant-design/icons'
 
 function Register() {
   useDocumentTitle('PregnaJoy | Register')
@@ -16,6 +17,7 @@ function Register() {
     agreeToTerms: false
   })
   const [messageApi, contextHolder] = message.useMessage()
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const [passwordMatch, setPasswordMatch] = useState(true)
@@ -50,22 +52,21 @@ function Register() {
       confirmPassword: formData.confirmPassword
     }
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/auth/register', newData)
-      console.log('response:', response)
+      setLoading(true)
+      const response = await axiosClient.post('/auth/register', newData)
       const data = response.data
-      if (response.status === 200) {
-        const responseEmail = await axios.post(`http://localhost:8080/api/v1/otp/generate?email=${encodeURIComponent(data.data.email)}`)
-
-        messageApi.success(`Verify your email: ${responseEmail.data.message}`)
-
+      if (response.code === 200) {
+        const responseEmail = await axiosClient.post(`/otp/generate?email=${encodeURIComponent(data.email)}`)
+        messageApi.success(`Verify your email: ${responseEmail.message}`)
         setTimeout(() => {
           navigate(config.routes.public.verifyEmail, { state: { email: formData.email } })
         }, 2000)
       }
     } catch (error) {
       console.log('Error:', error)
+    } finally {
+      setLoading(false)
     }
-    console.log('Form submitted:', newData)
   }
 
   return (
@@ -100,7 +101,7 @@ function Register() {
               <label htmlFor="email" className="form-label">
                 Email
               </label>
-              <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} className="form-input" required />
+              <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} className="form-input" required autoComplete="username" />
             </div>
 
             <div className="form-group">
@@ -115,6 +116,7 @@ function Register() {
                 onChange={handleChange}
                 className="form-input"
                 required
+                autoComplete="new-password" // Thêm thuộc tính này
               />
             </div>
 
@@ -130,6 +132,7 @@ function Register() {
                 onChange={handleChange}
                 className={`form-input ${!passwordMatch ? 'password-mismatch' : ''}`}
                 required
+                autoComplete="new-password" // Thêm thuộc tính này
               />
               {!passwordMatch && <p className="error-message">Passwords do not match</p>}
             </div>
@@ -149,8 +152,8 @@ function Register() {
               </label>
             </div>
 
-            <button type="submit" className="submit-button">
-              Create an account
+            <button type="submit" className="submit-button" disabled={loading}>
+              {loading ? <LoadingOutlined style={{ color: 'white' }} spin /> : 'Create an account'}
             </button>
           </form>
         </div>

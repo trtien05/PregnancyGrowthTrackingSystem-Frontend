@@ -1,7 +1,9 @@
 import axios from 'axios'
+import cookieUtils from './cookieUtils';
 
 const axiosClient = axios.create({
-  baseURL: import.meta.env.REACT_APP_API_URL || 'http://localhost:3000', // Base URL cho API
+  // eslint-disable-next-line no-undef
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000', // Base URL cho API
   timeout: 10000, // Thời gian timeout (ms)
   headers: {
     'Content-Type': 'application/json' // Định dạng gửi request
@@ -12,7 +14,8 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   (config) => {
     // Thêm token vào header nếu có
-    const token = localStorage.getItem('accessToken')
+    const token = cookieUtils.getToken();
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -48,5 +51,4 @@ axiosClient.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
 export default axiosClient

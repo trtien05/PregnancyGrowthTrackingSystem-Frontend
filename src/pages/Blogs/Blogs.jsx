@@ -2,8 +2,9 @@ import { Card, Row, Col, Typography, Pagination, Carousel, Skeleton } from 'antd
 import { RightOutlined } from '@ant-design/icons'
 import './Blogs.css'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+
 import { useEffect, useState } from 'react'
+import axiosClient from '../../utils/apiCaller'
 
 const { Title, Paragraph } = Typography
 
@@ -41,8 +42,8 @@ const BlogPage = () => {
     const fetchArticles = async () => {
       try {
         setLoading(true)
-        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts?page=${page}&size=${limit}`)
-        setArticles(response.data.data.content)
+        const response = await axiosClient.get(`/blog-posts?page=${page}&size=${limit}`)
+        setArticles(response.data.content)
         setTotalElements(response.data.data.totalElements)
       } catch (error) {
         console.error('Failed to fetch articles: ', error)
@@ -128,9 +129,9 @@ const BlogPage = () => {
                     <Paragraph ellipsis={{ rows: 3 }} className="article-excerpt">
                       {article.shortDescription}
                     </Paragraph>
-                    <Link to={`/blogs/${article.id}`} className="read-more-link">
+                    <span className="read-more-link">
                       Read more <RightOutlined />
-                    </Link>
+                    </span>
                   </div>
                 </Card>
               </Link>

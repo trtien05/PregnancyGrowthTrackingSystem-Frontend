@@ -1,14 +1,38 @@
 import { useState } from 'react'
 import './ArticleFeedback.css';
 import { MehFilled, SmileFilled } from '@ant-design/icons';
+import axiosClient from '../../utils/apiCaller';
 
-const ArticleFeedback = () => {
+const ArticleFeedback = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { blogPostId, userId, role } = props;
+
+  console.log("blogPostId", blogPostId);
+  console.log("userId", userId);
   const [feedback, setFeedback] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleFeedback = (isHelpful) => {
-    setFeedback(isHelpful);
-    // Here you could add API call to save feedback
+  const handleFeedback = async (isHelpful) => {
+    try {
+      setFeedback(isHelpful);
+      setIsSubmitted(true);
+      const response = await axiosClient.post('/blog-likes', {
+        blogPostId,
+        userId,
+      });
+      console.log('Feedback submitted: ', response);
+    } catch (error) {
+      console.log('Failed to submit feedback: ', error);
+    }
   };
+
+  if (isSubmitted) {
+    return (
+      <div className="feedback-container">
+        <span className="thank-you-text">Thanks for your feedback!</span>
+      </div>
+    );
+  }
 
   return (
     <div className="feedback-container">

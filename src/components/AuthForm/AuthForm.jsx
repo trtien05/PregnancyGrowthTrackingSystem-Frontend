@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
-import axios from 'axios'
 import banner from '../../assets/images/banner-signin.png'
 import './AuthForm.css'
 import cookieUtils from '../../utils/cookieUtils'
 import config from '../../config'
 import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
+import axiosClient from '../../utils/apiCaller'
+import { LoadingOutlined } from '@ant-design/icons'
 
 function AuthForm() {
   const [showPassword, setShowPassword] = useState(false)
@@ -14,6 +15,7 @@ function AuthForm() {
     username: '',
     password: ''
   })
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const [messageApi, contextHolder] = message.useMessage()
@@ -28,15 +30,9 @@ function AuthForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/v1/auth/login',
-        {},
-        {
-          auth: formData
-        }
-      )
-      console.log('response: ', response)
-      const data = response.data.data
+      setLoading(true)
+      const response = await axiosClient.post('/auth/login', {}, { auth: formData })
+      const data = response.data
       const { token } = data
       cookieUtils.setItem(config.cookies.token, token)
       messageApi.success('Logged in successfully')
@@ -45,6 +41,8 @@ function AuthForm() {
       }, 2000)
     } catch (error) {
       console.log('Error: ', error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -94,8 +92,8 @@ function AuthForm() {
                 </a>
               </div>
 
-              <button type="submit" className="submit-button">
-                Sign in
+              <button type="submit" className="submit-button" disabled={loading}>
+                {loading ? <LoadingOutlined style={{ color: 'white' }} spin /> : 'Sign in'}
               </button>
 
               <div className="divider">

@@ -3,7 +3,8 @@ import { Content } from 'antd/es/layout/layout'
 const { Title } = Typography
 import birthDate from '../../../assets/images/banner-birthdate.jpg'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+
+import axiosClient from '../../../utils/apiCaller'
 
 function BirthPlanWorksheet() {
   const [relatedArticles, setRelatedArticles] = useState([]);
@@ -14,8 +15,8 @@ function BirthPlanWorksheet() {
     const fetchRelatedArticles = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts?page=0&size=3`);
-        setRelatedArticles(response.data.data.content);
+        const response = await axiosClient.get(`/blog-posts?page=0&size=3`);
+        setRelatedArticles(response.data.content);
       } catch (error) {
         console.error("Failed to fetch related articles: ", error);
       } finally {

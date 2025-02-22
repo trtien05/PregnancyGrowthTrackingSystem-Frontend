@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import cookieUtils from '../utils/cookieUtils'
-import axios from 'axios';
+import axiosClient from '../utils/apiCaller';
 
 const getRole = () => {
   const decoded = cookieUtils.decodeJwt();
@@ -48,13 +48,8 @@ const useAuth = () => {
 
       // Fetch API to get info user
       const getInfo = async () => {
-        const { data } = await axios.get('http://localhost:8080/api/v1/auth/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        console.log("data", data);
-        setUser(data);
+        const response = await axiosClient.get('/auth/profile');
+        setUser(response.data);
       };
 
       getInfo();
