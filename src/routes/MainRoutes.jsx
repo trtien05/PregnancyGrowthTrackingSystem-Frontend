@@ -29,8 +29,7 @@ const publicRoutes = {
     { path: config.routes.public.blogToolWorksheet, element: <BirthPlanWorksheet /> },
     { path: config.routes.public.blogToolDueDate, element: <DueDateCalculator /> },
     { path: config.routes.public.blogToolOvulation, element: <OvulationCalculator /> },
-    { path: config.routes.public.blogToolPregWeight, element: <PregnancyWeight /> },
-
+    { path: config.routes.public.blogToolPregWeight, element: <PregnancyWeight /> }
   ]
 }
 

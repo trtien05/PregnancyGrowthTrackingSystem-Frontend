@@ -1,9 +1,8 @@
 import { CalendarOutlined } from '@ant-design/icons'
 import { Tag, Typography } from 'antd'
 import { Content } from 'antd/es/layout/layout'
-const { Title } = Typography;
-const { Text } = Typography;
-
+const { Title } = Typography
+const { Text } = Typography
 
 function BirthPlanWorksheet() {
   return (
@@ -12,7 +11,7 @@ function BirthPlanWorksheet() {
         <Title level={1}>BirthPlanWorksheet</Title>
       </div>
 
-      <div style={{ display: "flex" }}>
+      <div style={{ display: 'flex' }}>
         <Content className="main-content">
           <div className="date-tag">
             <Tag color="blue">Pregnancy</Tag>
@@ -21,9 +20,7 @@ function BirthPlanWorksheet() {
             </div>
           </div>
 
-
           <div className="article-content">
-
             <Text className="intro-text">123</Text>
           </div>
         </Content>

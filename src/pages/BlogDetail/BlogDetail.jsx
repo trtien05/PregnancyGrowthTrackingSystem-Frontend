@@ -1,49 +1,49 @@
-import { Typography, Layout, Tag, Skeleton } from "antd";
-import { CalendarOutlined } from "@ant-design/icons";
-import "./BlogDetail.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { Typography, Layout, Tag, Skeleton } from 'antd'
+import { CalendarOutlined } from '@ant-design/icons'
+import './BlogDetail.css'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
-const { Title, Text } = Typography;
-const { Content } = Layout;
+const { Title, Text } = Typography
+const { Content } = Layout
 
 export default function BlogDetail() {
-  const id = parseInt(window.location.pathname.split("/").pop());
-  const [article, setArticle] = useState(null);
-  const [relatedArticles, setRelatedArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const id = parseInt(window.location.pathname.split('/').pop())
+  const [article, setArticle] = useState(null)
+  const [relatedArticles, setRelatedArticles] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        setLoading(true);
-        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts/${id}`);
-        setArticle(response.data.data);
+        setLoading(true)
+        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts/${id}`)
+        setArticle(response.data.data)
       } catch (error) {
-        console.error("Failed to fetch article: ", error);
+        console.error('Failed to fetch article: ', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchArticle();
-  }, [id]);
+    fetchArticle()
+  }, [id])
 
   useEffect(() => {
     const fetchRelatedArticles = async () => {
       try {
-        setLoading(true);
-        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts?page=0&size=3`);
-        setRelatedArticles(response.data.data.content);
+        setLoading(true)
+        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts?page=0&size=3`)
+        setRelatedArticles(response.data.data.content)
       } catch (error) {
-        console.error("Failed to fetch related articles: ", error);
+        console.error('Failed to fetch related articles: ', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchRelatedArticles();
-  }, []);
+    fetchRelatedArticles()
+  }, [])
 
   return (
     <div className="layout-container">
@@ -51,7 +51,7 @@ export default function BlogDetail() {
         {loading ? <Skeleton active paragraph={{ rows: 0 }} /> : <Title level={1}>{article.pageTitle}</Title>}
       </div>
 
-      <div style={{ display: "flex" }}>
+      <div style={{ display: 'flex' }}>
         <Content className="main-content">
           <div className="date-tag">
             <Tag color="blue">Pregnancy</Tag>
@@ -61,13 +61,11 @@ export default function BlogDetail() {
           </div>
 
           <div className="hero-image">
-            {loading ? <Skeleton.Image className="hero-image" /> :
-              <img src={article.featuredImageUrl} alt={article.pageTitle} />}
+            {loading ? <Skeleton.Image className="hero-image" /> : <img src={article.featuredImageUrl} alt={article.pageTitle} />}
           </div>
 
           <div className="article-content">
-            {loading ? <Skeleton active paragraph={{ rows: 5 }} /> :
-              <Text className="intro-text">{article.content}</Text>}
+            {loading ? <Skeleton active paragraph={{ rows: 5 }} /> : <Text className="intro-text">{article.content}</Text>}
           </div>
         </Content>
 
@@ -91,5 +89,5 @@ export default function BlogDetail() {
         </div>
       </div>
     </div>
-  );
+  )
 }

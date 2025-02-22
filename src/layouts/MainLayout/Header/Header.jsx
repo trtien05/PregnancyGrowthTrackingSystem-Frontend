@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { MenuOutlined } from '@ant-design/icons';
-import { Button, Drawer } from 'antd';
-import logo from '../../../assets/images/logo.svg';
-import './Header.css';
+import { useState } from 'react'
+import { MenuOutlined } from '@ant-design/icons'
+import { Button, Drawer } from 'antd'
+import logo from '../../../assets/images/logo.svg'
+import './Header.css'
 
 const navLinks = [
   { title: 'About Us', href: '#' },
@@ -10,14 +10,14 @@ const navLinks = [
   { title: 'Blog', href: '/blogs' },
   { title: 'FAQ', href: '#' },
   { title: 'Explore Plans', href: '#' }
-];
+]
 
 function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
 
   return (
     <nav className="header">
@@ -35,31 +35,17 @@ function Header() {
       </div>
 
       <div className="mobile-menu-button">
-        <Button
-          type="text"
-          icon={<MenuOutlined />}
-          onClick={toggleMobileMenu}
-        />
+        <Button type="text" icon={<MenuOutlined />} onClick={toggleMobileMenu} />
       </div>
 
-      <Drawer
-        title="Menu"
-        placement="right"
-        onClose={toggleMobileMenu}
-        open={mobileMenuOpen}
-      >
+      <Drawer title="Menu" placement="right" onClose={toggleMobileMenu} open={mobileMenuOpen}>
         {navLinks.map((link, index) => (
           <a key={index} href={link.href} className="mobile-nav-link">
             {link.title}
           </a>
         ))}
         <div style={{ padding: '16px' }}>
-          <Button
-            type="primary"
-            href="/login"
-            block
-            className="join-button"
-          >
+          <Button type="primary" href="/login" block className="join-button">
             Join us
           </Button>
         </div>
@@ -69,7 +55,7 @@ function Header() {
         <button className="join-button">Join us</button>
       </a>
     </nav>
-  );
+  )
 }
 
-export default Header;
+export default Header

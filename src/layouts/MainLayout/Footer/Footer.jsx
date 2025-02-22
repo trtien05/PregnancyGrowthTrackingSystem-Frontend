@@ -1,26 +1,26 @@
-import { Col, List, Row, Typography, Space } from 'antd';
-import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import { FacebookOutlined, TwitterOutlined, InstagramOutlined } from '@ant-design/icons';
-import logo from '../../../assets/images/logo.svg';
-import './Footer.css';
+import { Col, List, Row, Typography, Space } from 'antd'
+import { MailOutlined, PhoneOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import { FacebookOutlined, TwitterOutlined, InstagramOutlined } from '@ant-design/icons'
+import logo from '../../../assets/images/logo.svg'
+import './Footer.css'
 
-const { Title, Text } = Typography;
+const { Title, Text } = Typography
 
 const Footer = () => {
   const learnItems = [
     { id: 1, titleName: 'IELTS' },
     { id: 2, titleName: 'TOEIC' },
     { id: 3, titleName: 'MATHEMATICS' },
-    { id: 4, titleName: 'CODING' },
-  ];
+    { id: 4, titleName: 'CODING' }
+  ]
 
   const pageItems = [
     { id: 1, titleName: 'Home' },
     { id: 2, titleName: 'About Us' },
     { id: 3, titleName: 'Blog' },
-    { id: 4, titleName: 'Pregnancy' },
-  ];
+    { id: 4, titleName: 'Pregnancy' }
+  ]
 
   return (
     <footer className="footer-section">
@@ -31,16 +31,17 @@ const Footer = () => {
             <div className="footer-logo">
               <img src={logo} alt="MyTutor Logo" />
               <span className="brand-name">PregnaJoy</span>
-
             </div>
           </Col>
 
           {/* Learn Column */}
           <Col xs={24} sm={12} md={6} lg={6}>
-            <Title level={4} className="footer-title">TOOLS</Title>
+            <Title level={4} className="footer-title">
+              TOOLS
+            </Title>
             <List
               dataSource={learnItems}
-              renderItem={item => (
+              renderItem={(item) => (
                 <List.Item className="footer-list-item">
                   <Link to={`/${item.titleName.toLowerCase()}`}>{item.titleName}</Link>
                 </List.Item>
@@ -50,10 +51,12 @@ const Footer = () => {
 
           {/* Page Column */}
           <Col xs={24} sm={12} md={6} lg={6}>
-            <Title level={4} className="footer-title">PAGE</Title>
+            <Title level={4} className="footer-title">
+              PAGE
+            </Title>
             <List
               dataSource={pageItems}
-              renderItem={item => (
+              renderItem={(item) => (
                 <List.Item className="footer-list-item">
                   <Link to={`/${item.titleName.toLowerCase()}`}>{item.titleName}</Link>
                 </List.Item>
@@ -63,7 +66,9 @@ const Footer = () => {
 
           {/* Contact Column */}
           <Col xs={24} sm={24} md={6} lg={6}>
-            <Title level={4} className="footer-title">CONTACT</Title>
+            <Title level={4} className="footer-title">
+              CONTACT
+            </Title>
             <Space direction="vertical" size="middle">
               <Text>
                 <PhoneOutlined /> 028-7300-5588
@@ -72,9 +77,15 @@ const Footer = () => {
                 <MailOutlined /> pregnajoy.main.official@gmail.com
               </Text>
               <Space size="large" className="social-icons">
-                <Link to="#"><FacebookOutlined /></Link>
-                <Link to="#"><TwitterOutlined /></Link>
-                <Link to="#"><InstagramOutlined /></Link>
+                <Link to="#">
+                  <FacebookOutlined />
+                </Link>
+                <Link to="#">
+                  <TwitterOutlined />
+                </Link>
+                <Link to="#">
+                  <InstagramOutlined />
+                </Link>
               </Space>
             </Space>
           </Col>
@@ -94,7 +105,7 @@ const Footer = () => {
         </Row>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

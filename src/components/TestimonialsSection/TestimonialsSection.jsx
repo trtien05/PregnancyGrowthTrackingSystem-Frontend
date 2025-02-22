@@ -1,7 +1,7 @@
-import { Row, Col } from 'antd';
-import quote from '../../assets/images/quote.png';
-import quote_small from '../../assets/images/quote_small.png';
-import './TestimonialsSection.css';
+import { Row, Col } from 'antd'
+import quote from '../../assets/images/quote.png'
+import quote_small from '../../assets/images/quote_small.png'
+import './TestimonialsSection.css'
 
 // eslint-disable-next-line react/prop-types
 const TestimonialCard = ({ text, author, info, className }) => (
@@ -19,7 +19,7 @@ const TestimonialCard = ({ text, author, info, className }) => (
       </div>
     </div>
   </div>
-);
+)
 
 const TestimonialsSection = () => {
   return (
@@ -37,9 +37,7 @@ const TestimonialsSection = () => {
                 <br />
                 Real Customers
               </h2>
-              <p className="header-subtitle">
-                Get inspired by these stories.
-              </p>
+              <p className="header-subtitle">Get inspired by these stories.</p>
             </div>
             <div className="left-column">
               <TestimonialCard
@@ -73,7 +71,7 @@ const TestimonialsSection = () => {
         </Row>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TestimonialsSection;
+export default TestimonialsSection

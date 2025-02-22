@@ -1,6 +1,6 @@
-import { Row, Col, Button } from 'antd';
-import banner from '../../assets/images/banner.png';
-import './HeroSection.css';
+import { Row, Col, Button } from 'antd'
+import banner from '../../assets/images/banner.png'
+import './HeroSection.css'
 
 function HeroSection() {
   return (
@@ -16,8 +16,8 @@ function HeroSection() {
                 Every Step of the Way&quot;
               </h1>
               <p className="hero-description">
-                At PregnaJoy, we&apos;re here to support you through your entire pregnancy journey. From tracking your baby&apos;s growth to gentle
-                reminders, we walk beside you, ensuring you feel cared for and confident every step of the way.
+                At PregnaJoy, we&apos;re here to support you through your entire pregnancy journey. From tracking your baby&apos;s growth to
+                gentle reminders, we walk beside you, ensuring you feel cared for and confident every step of the way.
               </p>
               <Button type="primary" size="large" className="hero-button">
                 Embrace This Beautiful Journey
@@ -34,7 +34,7 @@ function HeroSection() {
         </Row>
       </div>
     </div>
-  );
+  )
 }
 
-export default HeroSection;
+export default HeroSection

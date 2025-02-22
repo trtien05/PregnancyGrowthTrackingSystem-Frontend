@@ -1,16 +1,16 @@
-import { Row, Col } from 'antd';
-import perDay from "../../assets/images/per-day.svg";
-import clients from "../../assets/images/client.svg";
-import users from "../../assets/images/users.svg";
-import countries from "../../assets/images/countries.svg";
-import './AchievementSection.css';
+import { Row, Col } from 'antd'
+import perDay from '../../assets/images/per-day.svg'
+import clients from '../../assets/images/client.svg'
+import users from '../../assets/images/users.svg'
+import countries from '../../assets/images/countries.svg'
+import './AchievementSection.css'
 
 const stats = [
-  { img: perDay, value: "10,000+", label: "Downloads per day" },
-  { img: clients, value: "500+", label: "Clients" },
-  { img: users, value: "2 Million", label: "Users" },
-  { img: countries, value: "140", label: "Countries" },
-];
+  { img: perDay, value: '10,000+', label: 'Downloads per day' },
+  { img: clients, value: '500+', label: 'Clients' },
+  { img: users, value: '2 Million', label: 'Users' },
+  { img: countries, value: '140', label: 'Countries' }
+]
 
 const AchievementsSection = () => {
   return (
@@ -40,7 +40,7 @@ const AchievementsSection = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AchievementsSection;
+export default AchievementsSection

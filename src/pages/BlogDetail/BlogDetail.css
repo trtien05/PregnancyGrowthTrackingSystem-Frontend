@@ -1,17 +1,15 @@
 .layout-container {
   margin: 0 auto;
-  padding: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 80px;
+  padding-right: 80px;
   background: #fff;
   display: flex;
   flex-direction: column;
 }
 
 .main-content {
-
-  /* padding: 0 24px; */
-  padding-left:24px;
-  padding-top:0px;
-  padding-bottom:0px;
   min-height: 100vh;
   background: #fff;
 }
@@ -71,6 +69,99 @@
   padding:60px 20px 20px 20px;
 }
 
+.pregnancy-weight-content{
+  margin-top: 55px;
+  position: relative;
+  background: var(--primary-color);
+  padding: 20px;
+    border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.iconImg {
+    position: absolute;
+    width: 60px;
+    top: -25px;
+    left: 50%;
+    margin: auto;
+}
+.main-title {
+    font-size: 28px;
+    color: #2c1810;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.intro-text {
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+
+.intro-text a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.intro-text a:hover {
+    text-decoration: underline;
+}
+
+.section-title {
+    font-size: 24px;
+    color: #2c1810;
+    margin: 30px 0 20px;
+    font-weight: bold;
+}
+
+.advice-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.advice-item {
+    background: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #f9a8d4;
+}
+
+.advice-text {
+    margin: 0;
+    font-size: 15px;
+}
+
+.advice-author {
+    color: #666;
+    font-style: italic;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.important-notice {
+    background: #fff3f3;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+    border: 1px solid #ffcdd2;
+}
+
+.important-notice p {
+    margin: 0;
+    color: #d32f2f;
+    font-size: 14px;
+}
+
+.link {
+    color: #f472b6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
 .keep-reading-header {
   color: #fff;
   background: #ff6b6b;

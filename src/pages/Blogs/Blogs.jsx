@@ -1,11 +1,11 @@
-import { Card, Row, Col, Typography, Pagination, Carousel, Skeleton } from 'antd';
-import { RightOutlined } from '@ant-design/icons';
-import './Blogs.css';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Card, Row, Col, Typography, Pagination, Carousel, Skeleton } from 'antd'
+import { RightOutlined } from '@ant-design/icons'
+import './Blogs.css'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph } = Typography
 
 const tools = [
   {
@@ -27,48 +27,49 @@ const tools = [
     name: 'Birth Plan Worksheet',
     icon: 'https://assets.babycenter.com/ims/2023/11/BirthPlanWorksheet-nov-2023.svg',
     path: 'tool-worksheet'
-  },
-
-];
+  }
+]
 
 const BlogPage = () => {
-  const [articles, setArticles] = useState([]);
-  const [page, setPage] = useState(0);
-  const [totalElements, setTotalElements] = useState(0);
-  const limit = 6;
-  const [loading, setLoading] = useState(true);
+  const [articles, setArticles] = useState([])
+  const [page, setPage] = useState(0)
+  const [totalElements, setTotalElements] = useState(0)
+  const limit = 6
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        setLoading(true);
-        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts?page=${page}&size=${limit}`);
-        setArticles(response.data.data.content);
-        setTotalElements(response.data.data.totalElements);
+        setLoading(true)
+        const response = await axios.get(`http://localhost:8080/api/v1/blog-posts?page=${page}&size=${limit}`)
+        setArticles(response.data.data.content)
+        setTotalElements(response.data.data.totalElements)
       } catch (error) {
-        console.error('Failed to fetch articles: ', error);
+        console.error('Failed to fetch articles: ', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    fetchArticles();
-  }, [page]);
+    }
+    fetchArticles()
+  }, [page])
 
   return (
     <div className="blog-container">
       {/* Danh sách bài viết */}
-      <Row gutter={[24, 24]} >
+      <Row gutter={[24, 24]}>
         <Col xs={24}>
           {loading ? (
             <Skeleton active paragraph={{ rows: 2 }} />
           ) : (
             <Carousel autoplay>
-              {articles.map(article => (
+              {articles.map((article) => (
                 <div key={article.id} className="carousel-slide">
                   <div className="featured-image-container">
                     <img alt={article.pageTitle} src={article.featuredImageUrl} className="featured-image" />
                     <div className="featured-content">
-                      <Title level={2} className="featured-title">{article.pageTitle}</Title>
+                      <Title level={2} className="featured-title">
+                        {article.pageTitle}
+                      </Title>
                       <button className="read-more-btn">
                         Read more <RightOutlined />
                       </button>
@@ -91,7 +92,9 @@ const BlogPage = () => {
             <Link to={tool.path}>
               <Card hoverable className="tool-card">
                 <img src={tool.icon} alt={tool.name} className="tool-icon" />
-                <Title level={5} className="tool-name">{tool.name}</Title>
+                <Title level={5} className="tool-name">
+                  {tool.name}
+                </Title>
               </Card>
             </Link>
           </Col>
@@ -111,7 +114,7 @@ const BlogPage = () => {
           <Col span={24}>
             <Title className="tools-title">Blog Post</Title>
           </Col>
-          {articles.map(article => (
+          {articles.map((article) => (
             <Col xs={24} sm={12} lg={8} key={article.id}>
               <Link to={`/blogs/${article.id}`} className="read-more-link">
                 <Card hoverable className="article-card">
@@ -119,7 +122,9 @@ const BlogPage = () => {
                     <img alt={article.pageTitle} src={article.featuredImageUrl} className="article-image" />
                   </div>
                   <div className="article-content">
-                    <Title level={4} className="article-title">{article.pageTitle}</Title>
+                    <Title level={4} className="article-title">
+                      {article.pageTitle}
+                    </Title>
                     <Paragraph ellipsis={{ rows: 3 }} className="article-excerpt">
                       {article.shortDescription}
                     </Paragraph>
@@ -140,8 +145,8 @@ const BlogPage = () => {
           <Pagination total={totalElements} onChange={(page) => setPage(page - 1)} />
         </Col>
       </Row>
-    </div >
-  );
-};
+    </div>
+  )
+}
 
-export default BlogPage;
+export default BlogPage
