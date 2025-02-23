@@ -21,7 +21,7 @@
 
 .checkout-payment {
   margin-top: 12px;
-  padding: 16px 20px 36px;
+  /* padding: 16px 20px 36px; */
 }
 
 .checkout-payment h3.ant-typography {
@@ -86,11 +86,6 @@
   --text-primary: #333333;
   --primary-color: #ff7b7b;
   --shadow-cart-hover: rgba(0, 0, 0, 0.1);
-}
-
-.checkout-payment {
-  margin-top: 12px;
-  padding: 16px 20px 36px;
 }
 
 .checkout-payment h3.ant-typography {
@@ -247,4 +242,13 @@
     width: 100% !important;
     margin: 0 !important;
   }
+}
+.checkout-container {
+  padding: 40px 20px;
+  margin: 0 auto;
+  background: #ffcecd;
+}
+.checkout-section {
+  max-width: 1400px;
+  margin: 0 auto;
 }

@@ -23,7 +23,7 @@ const Pricing = () => {
     {
       title: 'Lifetime Package',
       price: '$199',
-      period: '/year',
+      period: '/forever',
       features: [
         'All features unlocked',
         'Exclusive lifetime',
