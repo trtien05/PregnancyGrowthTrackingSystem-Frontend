@@ -1,0 +1,101 @@
+/* Phần nền chính */
+.achievements-section {
+  background-color: #FDF8F6;
+  padding-top: 240px;
+  padding-bottom: 80px;
+  padding-left: 120px;
+  padding-right: 120px;
+}
+
+/* Chứa nội dung */
+.achievements-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Phần tiêu đề */
+.achievements-header {
+  width: 50%;
+  margin-bottom: 48px;
+}
+
+.achievements-header h2 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.achievements-header p {
+  font-size: 18px;
+}
+
+/* Grid chứa các stats */
+.achievements-grid {
+  width: 50%;
+  display: flex;
+  gap: 144px;
+}
+
+/* Mỗi cột trong grid */
+.achievements-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Mỗi stat item */
+.achievement-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.achievement-item .info {
+  display: flex;
+  align-items: center;
+}
+
+.achievement-item img {
+  width: 48px;
+  height: auto;
+  margin-right: 12px;
+}
+
+.achievement-item p {
+  font-size: 36px;
+  font-weight: 800;
+}
+
+.achievement-item span {
+  color: #6b7280;
+  margin-left: 60px;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 992px) {
+  .achievements-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .achievements-header,
+  .achievements-grid {
+    width: 100%;
+  }
+
+  .achievements-grid {
+    gap: 80px;
+    justify-content: center;
+  }
+
+  .achievement-item {
+    align-items: center;
+  }
+
+  .achievement-item span {
+    margin-left: 0;
+  }
+}
