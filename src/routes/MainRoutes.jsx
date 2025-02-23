@@ -8,9 +8,6 @@ import OvulationCalculator from '../pages/BlogDetail/ToolsPage/OvulationCalculat
 import PregnancyWeight from '../pages/BlogDetail/ToolsPage/PregnancyWeight'
 import BlogPage from '../pages/Blogs/Blogs'
 import Home from '../pages/Home'
-import Login from '../pages/Login'
-import Register from '../pages/Register'
-import VerifyEmail from '../pages/VerifyEmail'
 
 //* ====================  Authorization for PUBLIC ==================== */
 const MainRouter = () => {
@@ -20,10 +17,6 @@ const MainRouter = () => {
 const publicRoutes = {
   children: [
     { path: config.routes.public.home, element: <Home /> },
-    { path: config.routes.public.login, element: <Login /> },
-    { path: config.routes.public.verifyEmail, element: <VerifyEmail /> },
-    { path: config.routes.public.register, element: <Register /> },
-    { path: config.routes.public.register, element: <Register /> },
     { path: config.routes.public.blogs, element: <BlogPage /> },
     { path: config.routes.public.blog, element: <BlogDetail /> },
     { path: config.routes.public.blogToolWorksheet, element: <BirthPlanWorksheet /> },

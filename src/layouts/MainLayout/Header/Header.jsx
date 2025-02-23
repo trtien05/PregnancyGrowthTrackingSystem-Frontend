@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import { MenuOutlined } from '@ant-design/icons'
-import { Button, Drawer } from 'antd'
+import { MenuOutlined, UserOutlined } from '@ant-design/icons'
+import { Avatar, Button, Drawer, Dropdown, Space } from 'antd'
 import logo from '../../../assets/images/logo.svg'
 import './Header.css'
+import { Link } from 'react-router-dom'
+import config from '../../../config'
+import cookieUtils from '../../../utils/cookieUtils'
 
 const navLinks = [
   { title: 'About Us', href: '#' },
@@ -12,7 +15,25 @@ const navLinks = [
   { title: 'Explore Plans', href: '#' }
 ]
 
-function Header() {
+const items = [
+  {
+    label: <Link>Profile</Link>,
+    key: "profile",
+  },
+  {
+    label: (
+      <Link to={config.routes.public.login} onClick={() => cookieUtils.clear()}>
+        Log Out
+      </Link>
+    ),
+    key: config.routes.public.login,
+  },
+];
+
+function Header(props) {
+  // eslint-disable-next-line react/prop-types
+  const { user } = props
+  console.log("user", user)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const toggleMobileMenu = () => {
@@ -50,10 +71,17 @@ function Header() {
           </Button>
         </div>
       </Drawer>
-
-      <a href="/login" className="hidden md:block">
-        <button className="join-button">Join us</button>
-      </a>
+      {user ? (
+        <Dropdown menu={{ items }} arrow placement="bottomRight" trigger={['click']}>
+          <Space style={{ cursor: 'pointer' }}>
+            <Avatar size={40} icon={<UserOutlined />} />
+          </Space>
+        </Dropdown>
+      ) : (
+        <a href="/login" className="hidden md:block">
+          <button className="join-button">Join us</button>
+        </a>
+      )}
     </nav>
   )
 }

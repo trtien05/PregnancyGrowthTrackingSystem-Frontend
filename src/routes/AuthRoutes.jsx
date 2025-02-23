@@ -1,30 +1,26 @@
-import { Outlet } from 'react-router-dom'
-
-// import ForgotPassword from '../pages/ForgotPassword';
+import { Navigate, Outlet } from 'react-router-dom'
 import Login from '../pages/Login'
-// import Register from '../pages/Register';
-// import SetPassword from '../pages/SetPassword';
 import config from '../config'
-// import VerifyCode from '../pages/VerifyCode';
-// import { useAuth } from '../hooks';
+import VerifyEmail from '../pages/VerifyEmail'
+import Register from '../pages/Register'
+import useAuth from '../hooks/useAuth'
+
 
 // Authorization
 const AuthRouter = () => {
-  // const { role } = useAuth();
+  const { user } = useAuth();
 
-  // return !role ? <Outlet /> : <Navigate to="/" />;
-  return <Outlet />
+  return !user ? <Outlet /> : <Navigate to="/" />;
 }
 
 // Define routes for student
 const AuthRoutes = {
   element: <AuthRouter />,
   children: [
-    { path: config.routes.public.login, element: <Login /> }
-    // { path: config.routes.public.register, element: <Register /> },
-    // { path: config.routes.public.verifyCode, element: <VerifyCode /> },
-    // { path: config.routes.public.forgotPassword, element: <ForgotPassword /> },
-    // { path: config.routes.public.setPassword, element: <SetPassword /> },
+    { path: config.routes.public.login, element: <Login /> },
+    { path: config.routes.public.login, element: <Login /> },
+    { path: config.routes.public.verifyEmail, element: <VerifyEmail /> },
+    { path: config.routes.public.register, element: <Register /> },
   ]
 }
 

@@ -43,6 +43,7 @@ const BlogPage = () => {
       try {
         setLoading(true)
         const response = await axiosClient.get(`/blog-posts?page=${page}&size=${limit}`)
+        console.log("first response", response)
         setArticles(response.data.content)
         setTotalElements(response.data.data.totalElements)
       } catch (error) {
@@ -103,13 +104,16 @@ const BlogPage = () => {
       </Row>
 
       {loading ? (
-        [...Array(6)].map((_, index) => (
-          <Col xs={24} sm={12} lg={8} key={index}>
-            <Card hoverable className="article-card">
-              <Skeleton active />
-            </Card>
-          </Col>
-        ))
+        <Row gutter={[16, 16]} justify="center">
+          {[...Array(6)].map((_, index) => (
+            <Col xs={24} sm={12} lg={8} key={index}>
+              <Card hoverable className="article-card">
+                <Skeleton active />
+              </Card>
+            </Col>
+          ))}
+
+        </Row>
       ) : (
         <Row gutter={[16, 16]} justify="center">
           <Col span={24}>

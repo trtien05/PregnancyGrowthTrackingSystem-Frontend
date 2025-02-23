@@ -5,7 +5,7 @@ import axiosClient from '../../utils/apiCaller';
 
 const ArticleFeedback = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { blogPostId, userId, role } = props;
+  const { blogPostId, userId } = props;
 
   console.log("blogPostId", blogPostId);
   console.log("userId", userId);

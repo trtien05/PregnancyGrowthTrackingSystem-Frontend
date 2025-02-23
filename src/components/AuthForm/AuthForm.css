@@ -1,5 +1,5 @@
 .auth-container {
-  min-height: 85vh;
+  min-height: 100vh;
   background-color: var(--second-color);
   display: flex;
   align-items: center;
@@ -29,7 +29,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  border-left: 1px solid #E5E5E5; /* Direct color instead of var */
+  border-left: 1px solid #e5e5e5; /* Direct color instead of var */
 }
 
 .form-title {
@@ -56,7 +56,7 @@
 
 .form-input {
   width: 91%;
-  padding:  16px 20px;
+  padding: 16px 20px;
   border-radius: 12px;
   border: 1px solid #d1d5db;
   outline: none;
@@ -65,7 +65,7 @@
 
 .form-input:focus {
   border-color: #ec4899; /* equivalent to 'focus:ring-pink-200' */
-  box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.2); 
+  box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.2);
 }
 
 .password-toggle {
@@ -124,7 +124,7 @@
 }
 
 .divider::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 0;
@@ -155,7 +155,6 @@
   cursor: pointer;
 }
 
-
 .banner-text {
   position: absolute;
   bottom: 80px;
@@ -170,13 +169,13 @@
   .auth-card {
     flex-direction: column;
   }
-  
+
   .form-section,
   .image-section {
     width: 100%;
     padding-right: 0;
   }
-  
+
   .image-section {
     border-left: none;
     border-top: 1px solid var(--border-default);

@@ -1,5 +1,5 @@
 .register-container {
-  min-height: 85vh;
+  min-height: 100vh;
   background-color: var(--third-color); /* Adjust as needed */
   display: flex;
   justify-content: center;
@@ -9,7 +9,7 @@
 
 .register-card {
   background-color: white;
-  border-radius: 1.5rem;  /* equivalent to 'rounded-3xl' */
+  border-radius: 1.5rem; /* equivalent to 'rounded-3xl' */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* equivalent to 'shadow-lg' */
   padding: 2rem; /* equivalent to 'p-8' */
   width: 100%;
@@ -28,7 +28,6 @@
   font-weight: 600;
   color: #333;
 }
-
 
 .register-form {
   display: flex;
@@ -96,7 +95,6 @@
   margin-right: 8px;
 }
 
-
 .checkbox-container {
   display: flex;
   align-items: flex-start; /* equivalent to 'items-start' */
@@ -121,13 +119,13 @@
 .checkbox-input {
   margin-top: 0.25rem; /* equivalent to 'mt-1' */
 }
-.checkbox-input:checked{
+.checkbox-input:checked {
   background-color: var(--primary-color);
 }
 
 .create-button {
   width: 100%;
-  background-color: #C3C3C3;
+  background-color: #c3c3c3;
   color: white;
   font-weight: 600;
   padding: 16px;
@@ -138,8 +136,7 @@
 }
 
 .create-button:hover {
-  background-color: #9CA3AF;
-
+  background-color: #9ca3af;
 }
 
 .divider-register {
@@ -149,7 +146,7 @@
 }
 
 .divider-register::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 0;

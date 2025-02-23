@@ -16,7 +16,7 @@ export default function PregnancyWeight() {
       try {
         setLoading(true);
         const response = await axiosClient.get(`/blog-posts?page=0&size=3`);
-        setRelatedArticles(response.data.data.content);
+        setRelatedArticles(response.data.content);
       } catch (error) {
         console.error("Failed to fetch related articles: ", error);
       } finally {
