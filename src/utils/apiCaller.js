@@ -4,7 +4,6 @@ import cookieUtils from './cookieUtils';
 const axiosClient = axios.create({
   // eslint-disable-next-line no-undef
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000', // Base URL cho API
-  timeout: 10000, // Thời gian timeout (ms)
   headers: {
     'Content-Type': 'application/json' // Định dạng gửi request
   }

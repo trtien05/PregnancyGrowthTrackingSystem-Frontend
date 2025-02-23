@@ -12,7 +12,7 @@ const navLinks = [
   { title: 'Pregnancy', href: '#' },
   { title: 'Blog', href: '/blogs' },
   { title: 'FAQ', href: '#' },
-  { title: 'Explore Plans', href: '#' }
+  { title: 'Pricing', href: '/pricing' }
 ]
 
 const items = [
@@ -33,7 +33,6 @@ const items = [
 function Header(props) {
   // eslint-disable-next-line react/prop-types
   const { user } = props
-  console.log("user", user)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const toggleMobileMenu = () => {
