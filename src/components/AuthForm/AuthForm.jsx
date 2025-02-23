@@ -11,7 +11,7 @@ import { message } from 'antd'
 function AuthForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   })
   const navigate = useNavigate()
@@ -50,35 +50,22 @@ function AuthForm() {
     }
 
     // Kiểm tra email khi người dùng nhập vào
-    if (name === 'username') {
-      // Validate email khi người dùng nhập vào trường email
-      if (!validateEmail(value)) {
-        setEmailError('Invalid email address.')
+    if (name === 'email') {
+      if (!value.trim()) {
+        setEmailError("Email is required.");
+      } else if (!validateEmail(value)) {
+        setEmailError("Invalid email address.");
       } else {
-        setEmailError('')
+        setEmailError("");
       }
     }
+    
   }
 
-  // Kiểm tra mật khẩu khi người dùng nhập vào
-  if (name === 'password') {
-    if (!validatePassword(value)) {
-      setPasswordError('Password must contain at least one uppercase letter, one number, and one special character.')
-    } else {
-      setPasswordError('')
-    }
-    // Kiểm tra mật khẩu khi người dùng nhập vào
-    if (name === 'password') {
-      if (!validatePassword(value)) {
-        setPasswordError('Password must contain at least one uppercase letter, one number, and one special character.')
-      } else {
-        setPasswordError('')
-      }
-    }
-  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setPasswordError(''); // Reset lỗi trước khi gửi request
     try {
       const response = await axios.post(
         'http://localhost:8080/api/v1/auth/login',
@@ -96,7 +83,19 @@ function AuthForm() {
         navigate(config.routes.public.home)
       }, 2000)
     } catch (error) {
-      console.log('Error: ', error)
+      console.log('Error: ', error);
+
+      if (error.response) {
+        if (error.response.status === 401) {
+          setPasswordError("Incorrect password. Please try again.");
+        } else if (error.response.status === 404) {
+          setEmailError("Email not found. Please check again.");
+        } else {
+          messageApi.error("Something went wrong. Please try again.");
+        }
+      } else {
+        messageApi.error("Network error. Please check your connection.");
+      }
     }
   }
 
@@ -112,7 +111,7 @@ function AuthForm() {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label className="form-label">Email</label>
-                <input type="text" name="username" value={formData.username} onChange={handleChange} className="form-input" />
+                <input type="text" name="email" value={formData.email} onChange={handleChange} className="form-input" />
                 {emailError && <p className="error-message">{emailError}</p>}
               </div>
 
