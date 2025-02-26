@@ -4,11 +4,11 @@ import Footer from './Footer'
 import useAuth from '../../hooks/useAuth';
 
 const HomeLayout = () => {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
 
   return (
     <>
-      <Header user={user} />
+      <Header user={user} role={role} />
       <main>
         <Outlet />
       </main>

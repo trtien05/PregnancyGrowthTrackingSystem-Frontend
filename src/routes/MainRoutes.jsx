@@ -1,4 +1,6 @@
+import { Navigate, Outlet } from 'react-router-dom'
 import config from '../config'
+import useAuth from '../hooks/useAuth'
 import MainLayout from '../layouts/MainLayout'
 import NotFound from '../pages/404'
 import BlogDetail from '../pages/BlogDetail'
@@ -10,11 +12,30 @@ import BlogPage from '../pages/Blogs/Blogs'
 import Checkout from '../pages/Checkout'
 import Home from '../pages/Home'
 import Pricing from '../pages/Pricing'
+import Profile from '../pages/Profile'
+import DashboardFetus from '../pages/Dashboard/DashboardFetus'
+import CustomerDashboard from '../pages/Dashboard'
+import MomInfor from '../pages/Dashboard/MomInfor'
 
 //* ====================  Authorization for PUBLIC ==================== */
 const MainRouter = () => {
+  // const { role } = useAuth();
+  // if (user.role === 'admin') return <Navigate to={config.routes.admin.dashboard} />;
   return <MainLayout />
 }
+
+const DashboardRouter = () => {
+  const { role } = useAuth();
+  // return role === 'ROLE_authenticatedUser' ? <CustomerDashboard />
+  // : <Navigate to={config.routes.public.home} />;
+  return <CustomerDashboard />
+};
+
+const CustomerRouter = () => {
+  const { role } = useAuth();
+  return role === 'ROLE_authenticatedUser' || role === 'ROLE_expert' ? <Outlet />
+    : <Navigate to={config.routes.public.login} />;
+};
 //* ==================== Define children routes: PUBLIC, NOT FOUND ==================== */
 const publicRoutes = {
   children: [
@@ -30,13 +51,30 @@ const publicRoutes = {
   ]
 }
 
+const dashboardRoutes = {
+  path: config.routes.customer.dashboard,
+  element: <DashboardRouter />,
+  children: [
+    { path: config.routes.customer.manageMomInfor, element: <MomInfor /> },
+    { path: config.routes.customer.dashboardFetus, element: <DashboardFetus /> }
+  ]
+}
+
+const customerRoutes = {
+  element: <CustomerRouter />,
+  children: [
+    { path: config.routes.customer.profile, element: <Profile /> }, dashboardRoutes
+  ]
+};
+
+
 const notFoundRoutes = { path: '*', element: <NotFound /> }
 
 //* ==================== Define main routes ==================== */
 const MainRoutes = {
   path: '/',
   element: <MainRouter />,
-  children: [publicRoutes, notFoundRoutes]
+  children: [publicRoutes, customerRoutes, notFoundRoutes]
 }
 
 export default MainRoutes

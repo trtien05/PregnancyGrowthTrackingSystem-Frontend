@@ -14,6 +14,13 @@ const routes = {
     blogToolOvulation: '/blogs/tool-ovulation',
     blogToolPregWeight: '/blogs/tool-preg-weight',
   },
+  customer: {
+    profile: '/profile',
+    dashboard: '/dashboard',
+    manageMomInfor: '/dashboard/manage-mom-infor',
+    dashboardFetus: '/dashboard/fetus',
+
+  },
 };
 
 export default routes;

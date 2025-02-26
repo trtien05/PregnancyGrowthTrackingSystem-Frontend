@@ -1,0 +1,116 @@
+.mom-info-container {
+  padding: 0 15px;
+}
+.mom-info-container h1 {
+  color: #e65050;
+  font-size: 32px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.ant-steps-item-icon {
+  background-color: rgb(248 162 162) !important;
+  color: #fff !important;
+  border-color: rgb(219, 158, 158) !important;
+}
+.ant-steps-icon {
+  color: #fff !important;
+}
+.form-container {
+  background: #fff;
+  border-radius: 8px;
+}
+
+.step-content {
+  margin-top: 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.form-item {
+  flex: 1;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #1890ff;
+}
+
+.required-field::after {
+  content: '*';
+  color: #ff4d4f;
+  margin-left: 4px;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.custom-steps .ant-steps-item-content {
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .buttons-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .buttons-container button {
+    width: 100%;
+  }
+}
+.ant-input {
+  width: 91% !important;
+  padding: 16px 20px !important;
+  border-radius: 12px !important;
+  border: 1px solid #d1d5db !important;
+  outline: none !important;
+}
+.ant-picker-input {
+  width: 91% !important;
+  padding: 16px 20px !important;
+  border-radius: 12px !important;
+  border: 1px solid #d1d5db !important;
+  outline: none !important;
+}
+.ant-picker-outlined {
+  border: none !important;
+}
+.ant-picker-outlined:focus {
+  box-shadow: none !important;
+}
+.ant-picker-outlined:focus-within {
+  box-shadow: none !important;
+}
+.ant-picker {
+  border-radius: 12px !important;
+  padding: 0 !important;
+}
+.ant-select-selector {
+  border-radius: 12px !important;
+}
+.ant-input-number {
+  width: 91% !important;
+  padding: 12px 10px !important;
+  border-radius: 12px !important;
+}

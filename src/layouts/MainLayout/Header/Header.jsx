@@ -15,26 +15,31 @@ const navLinks = [
   { title: 'Pricing', href: '/pricing' }
 ]
 
-const items = [
-  {
-    label: <Link>Profile</Link>,
-    key: "profile",
-  },
-  {
-    label: (
-      <Link to={config.routes.public.login} onClick={() => cookieUtils.clear()}>
-        Log Out
-      </Link>
-    ),
-    key: config.routes.public.login,
-  },
-];
-
 function Header(props) {
   // eslint-disable-next-line react/prop-types
-  const { user } = props
+  const { user, role } = props
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  const items = [
+    {
+      label: <Link to={config.routes.customer.profile}>Profile</Link>,
+      key: config.routes.customer.profile,
+    },
+    ...(role === 'ROLE_authenticatedUser' ? [
+      {
+        label: <Link to={config.routes.customer.manageMomInfor}>Dashboard</Link>,
+        key: config.routes.customer.manageMomInfor
+      }
+    ] : []),
+    {
+      label: (
+        <Link to={config.routes.public.login} onClick={() => cookieUtils.clear()}>
+          Log Out
+        </Link>
+      ),
+      key: config.routes.public.login,
+    },
+  ];
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
   }
