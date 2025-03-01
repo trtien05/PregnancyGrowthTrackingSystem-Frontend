@@ -1,116 +1,93 @@
 .mom-info-container {
-  padding: 0 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
-.mom-info-container h1 {
-  color: #e65050;
+
+.pregnancy-title {
+  text-align: center;
   font-size: 32px;
-  margin-bottom: 16px;
-  text-align: center;
+  margin-bottom: 30px;
+  font-weight: bold;
 }
-.ant-steps-item-icon {
-  background-color: rgb(248 162 162) !important;
-  color: #fff !important;
-  border-color: rgb(219, 158, 158) !important;
+
+.week-slider {
+  margin: 30px 0;
 }
-.ant-steps-icon {
-  color: #fff !important;
+
+.week-card-wrapper {
+  width: 20%;
+  padding: 8px;
 }
-.form-container {
-  background: #fff;
+
+.week-card {
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
-}
-
-.step-content {
-  margin-top: 24px;
-}
-
-.form-row {
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 150px;
   display: flex;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-@media (max-width: 768px) {
-  .form-row {
-    flex-direction: column;
-    gap: 8px;
-  }
-}
-
-.form-item {
-  flex: 1;
-}
-
-.buttons-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 24px;
-}
-
-.title {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  margin-bottom: 24px;
+}
+
+.week-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.week-number {
+  font-size: 28px;
+  font-weight: bold;
   color: #1890ff;
 }
 
-.required-field::after {
-  content: '*';
-  color: #ff4d4f;
-  margin-left: 4px;
+.week-image {
+  font-size: 32px;
+  margin: 10px 0;
 }
 
-.input-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
+.week-description {
+  color: #5c5c5c;
+  font-size: 14px;
 }
 
-.custom-steps .ant-steps-item-content {
-  text-align: center;
+/* Override Ant Design Carousel styles */
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+  font-size: 16px;
+  color: #1890ff;
 }
 
-@media (max-width: 576px) {
-  .buttons-container {
-    flex-direction: column;
-    gap: 12px;
-  }
+.ant-carousel .slick-prev {
+  left: -25px;
+}
 
-  .buttons-container button {
-    width: 100%;
-  }
+.ant-carousel .slick-next {
+  right: -25px;
 }
-.ant-input {
-  width: 91% !important;
-  padding: 16px 20px !important;
-  border-radius: 12px !important;
-  border: 1px solid #d1d5db !important;
-  outline: none !important;
+
+/* Make the carousel arrows visible */
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+  z-index: 2;
+  color: #1890ff;
+  font-size: 16px;
+  height: 32px;
+  width: 32px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
-.ant-picker-input {
-  width: 91% !important;
-  padding: 16px 20px !important;
-  border-radius: 12px !important;
-  border: 1px solid #d1d5db !important;
-  outline: none !important;
-}
-.ant-picker-outlined {
-  border: none !important;
-}
-.ant-picker-outlined:focus {
-  box-shadow: none !important;
-}
-.ant-picker-outlined:focus-within {
-  box-shadow: none !important;
-}
-.ant-picker {
-  border-radius: 12px !important;
-  padding: 0 !important;
-}
-.ant-select-selector {
-  border-radius: 12px !important;
-}
-.ant-input-number {
-  width: 91% !important;
-  padding: 12px 10px !important;
-  border-radius: 12px !important;
+
+/* Add custom navigation arrows */
+.ant-carousel .slick-prev:before,
+.ant-carousel .slick-next:before {
+  color: #1890ff;
 }

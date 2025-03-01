@@ -9,7 +9,7 @@ const Pricing = () => {
   const pricingData = [
     {
       title: 'Each Month',
-      price: '$19',
+      price: '400.000đ',
       period: '/month',
       features: [
         'Full access to all',
@@ -22,7 +22,7 @@ const Pricing = () => {
     },
     {
       title: 'Lifetime Package',
-      price: '$199',
+      price: '4.000.000đ',
       period: '/forever',
       features: [
         'All features unlocked',

@@ -12,7 +12,6 @@ const { Content } = Layout
 
 export default function BlogDetail() {
   const { user } = useAuth();
-  console.log("user", user);
   const id = parseInt(window.location.pathname.split('/').pop())
   const [article, setArticle] = useState(null)
   const [relatedArticles, setRelatedArticles] = useState([])
