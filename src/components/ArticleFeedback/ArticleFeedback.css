@@ -1,0 +1,61 @@
+.feedback-container {
+  background-color: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.feedback-text {
+  color: #374151;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.feedback-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.feedback-button:hover {
+  background-color: #f3f4f6;
+}
+
+.feedback-icon {
+  color: #9ca3af;
+}
+.anticon svg {
+  width: 20px;
+  height: 20px;
+}
+.feedback-button.active-yes {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.feedback-button.active-no {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.feedback-button.active-yes .feedback-icon,
+.feedback-button.active-no .feedback-icon {
+  color: currentColor;
+}
+
+.thank-you-text {
+  color: #374151;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}

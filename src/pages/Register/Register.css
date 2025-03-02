@@ -1,0 +1,181 @@
+.register-container {
+  min-height: 100vh;
+  background-color: var(--third-color); /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.register-card {
+  background-color: white;
+  border-radius: 1.5rem; /* equivalent to 'rounded-3xl' */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* equivalent to 'shadow-lg' */
+  padding: 2rem; /* equivalent to 'p-8' */
+  width: 100%;
+  max-width: 32rem; /* equivalent to 'max-w-lg' */
+}
+
+.register-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.register-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.register-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+.text-label {
+  display: block; /* equivalent to 'block' */
+  font-size: 0.875rem; /* equivalent to 'text-sm' */
+  color: #4b5563; /* equivalent to 'text-gray-600' */
+  margin-bottom: 0.25rem; /* equivalent to 'mb-1' */
+}
+.input-field {
+  width: 100%; /* equivalent to 'w-full' */
+  padding: 0.5rem 1rem; /* equivalent to 'px-4 py-2' */
+  border-radius: 1rem; /* equivalent to 'rounded-xl' */
+  border: 1px solid #d1d5db; /* equivalent to 'border-gray-300' */
+  outline: none; /* equivalent to 'focus:outline-none' */
+  transition: all 0.2s; /* smooth transition for focus ring */
+}
+
+.input-field:focus {
+  border-color: #ec4899; /* equivalent to 'focus:ring-pink-200' */
+  box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.2); /* equivalent to 'focus:ring-2' */
+}
+
+/* Conditional border for password mismatch */
+.input-field.password-mismatch {
+  border-color: #f87171; /* equivalent to 'border-red-500' */
+}
+
+/* Error message styling */
+.error-message {
+  color: #f87171; /* equivalent to 'text-red-500' */
+  font-size: 0.875rem; /* equivalent to 'text-sm' */
+  margin-top: 0.25rem; /* equivalent to 'mt-1' */
+}
+
+.terms {
+  font-size: 12px;
+  color: #666;
+}
+
+.or-divider {
+  position: relative;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.or-divider span {
+  background-color: #fff;
+  padding: 0 10px;
+  color: #555;
+}
+
+.google-logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: flex-start; /* equivalent to 'items-start' */
+  gap: 0.5rem; /* equivalent to 'space-x-2' */
+}
+
+.checkbox-label {
+  font-size: 0.875rem; /* equivalent to 'text-sm' */
+  color: #4b5563; /* equivalent to 'text-gray-600' */
+}
+
+.checkbox-label a {
+  color: #1f2937; /* equivalent to 'text-gray-900' */
+  text-decoration: none; /* removes underline */
+  transition: text-decoration 0.2s ease;
+}
+
+.checkbox-label a:hover {
+  text-decoration: underline; /* equivalent to 'hover:underline' */
+}
+
+.checkbox-input {
+  margin-top: 0.25rem; /* equivalent to 'mt-1' */
+}
+.checkbox-input:checked {
+  background-color: var(--primary-color);
+}
+
+.create-button {
+  width: 100%;
+  background-color: #c3c3c3;
+  color: white;
+  font-weight: 600;
+  padding: 16px;
+  border-radius: 32px;
+  border: none;
+  transition-duration: 200ms;
+  cursor: pointer;
+}
+
+.create-button:hover {
+  background-color: #9ca3af;
+}
+
+.divider-register {
+  position: relative;
+
+  text-align: center;
+}
+
+.divider-register::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #66666640;
+}
+
+.divider-text {
+  position: relative;
+  padding: 0 16px;
+  background-color: white;
+  color: #666666;
+  font-size: 14px;
+}
+
+.google-button {
+  width: 100%;
+  border: 1px solid black;
+  font-weight: 600;
+  padding: 16px;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: white;
+  transition-duration: 200ms;
+  cursor: pointer;
+}
+.register-form > *:not(:last-child) {
+  margin-bottom: 1rem; /* equivalent to 'space-y-4' */
+}

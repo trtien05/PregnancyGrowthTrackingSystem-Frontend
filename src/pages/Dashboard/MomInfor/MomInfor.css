@@ -1,0 +1,93 @@
+.mom-info-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pregnancy-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.week-slider {
+  margin: 30px 0;
+}
+
+.week-card-wrapper {
+  width: 20%;
+  padding: 8px;
+}
+
+.week-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.week-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.week-number {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1890ff;
+}
+
+.week-image {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.week-description {
+  color: #5c5c5c;
+  font-size: 14px;
+}
+
+/* Override Ant Design Carousel styles */
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+  font-size: 16px;
+  color: #1890ff;
+}
+
+.ant-carousel .slick-prev {
+  left: -25px;
+}
+
+.ant-carousel .slick-next {
+  right: -25px;
+}
+
+/* Make the carousel arrows visible */
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+  z-index: 2;
+  color: #1890ff;
+  font-size: 16px;
+  height: 32px;
+  width: 32px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add custom navigation arrows */
+.ant-carousel .slick-prev:before,
+.ant-carousel .slick-next:before {
+  color: #1890ff;
+}
