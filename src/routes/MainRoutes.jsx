@@ -16,6 +16,7 @@ import Profile from '../pages/Profile'
 import DashboardFetus from '../pages/Dashboard/DashboardFetus'
 import CustomerDashboard from '../pages/Dashboard'
 import MomInfor from '../pages/Dashboard/MomInfor'
+import PaymentResult from '../pages/PaymentResult'
 
 //* ====================  Authorization for PUBLIC ==================== */
 const MainRouter = () => {
@@ -63,7 +64,8 @@ const dashboardRoutes = {
 const customerRoutes = {
   element: <CustomerRouter />,
   children: [
-    { path: config.routes.customer.profile, element: <Profile /> }, dashboardRoutes
+    { path: config.routes.customer.profile, element: <Profile /> }, dashboardRoutes,
+    { path: config.routes.customer.paymentResult, element: <PaymentResult /> }
   ]
 };
 

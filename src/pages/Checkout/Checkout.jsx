@@ -3,7 +3,6 @@ import { Button, Col, message, Radio, Row, Skeleton, Space, Typography } from 'a
 import { useEffect, useState } from 'react'
 import vnpayLogo from "../../assets/svg/vnpay-logo.svg"
 import momoLogo from "../../assets/svg/momo-logo.svg"
-import paypalLogo from "../../assets/svg/paypal-logo.svg"
 import './Checkout.css'
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
@@ -40,7 +39,7 @@ function Checkout() {
     }
     try {
       setLoading(true);
-      const response = await axiosClient.get('/payment/create/vnpay', {
+      const response = await axiosClient.get(`/payment/create/${paymentMethod}`, {
         params: {
           amount: calculateTotal(),
         }
@@ -55,7 +54,6 @@ function Checkout() {
           messageApi.success('Payment created successfully');
         }, 3000);
         window.location.href = response.data.paymentUrl;
-
       }
     } catch (error) {
       console.log(error);
@@ -66,9 +64,8 @@ function Checkout() {
 
   // Tính tổng tiền dựa trên plan
   const calculateTotal = () => {
-    let basePrice = parseFloat(plan.price.replace('$', ''));
-
-    return Number(basePrice.toFixed(2));
+    let basePrice = parseInt(plan.price.replace(/\D/g, ""), 10);
+    return basePrice;
   };
   return (
     <>
@@ -152,19 +149,19 @@ function Checkout() {
                       value={paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value)}
                     >
-                      {/* <Radio
-                      value={'momo'}
-                      style={{ visibility: 'hidden' }}
-                    >
-                      <figure className='checkout-payment-img-wrapper'>
-                        <img
-                          src={momoLogo}
-                          loading="lazy"
-                          decoding="async"
-                          alt='MOMO'
-                        />
-                      </figure>
-                    </Radio> */}
+                      <Radio
+                        value={'momo'}
+                        style={{ visibility: 'hidden' }}
+                      >
+                        <figure className='checkout-payment-img-wrapper'>
+                          <img
+                            src={momoLogo}
+                            loading="lazy"
+                            decoding="async"
+                            alt='MOMO'
+                          />
+                        </figure>
+                      </Radio>
                       <Radio
                         value={'vnpay'}
                         style={{ visibility: 'hidden' }}

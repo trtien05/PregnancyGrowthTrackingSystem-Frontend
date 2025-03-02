@@ -19,6 +19,7 @@ const routes = {
     dashboard: '/dashboard',
     manageMomInfor: '/dashboard/manage-mom-infor',
     dashboardFetus: '/dashboard/fetus',
+    paymentResult: '/confirm-payment'
 
   },
 };
