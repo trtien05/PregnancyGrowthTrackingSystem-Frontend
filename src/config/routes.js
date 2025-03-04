@@ -16,11 +16,11 @@ const routes = {
   },
   customer: {
     profile: '/profile',
+    subscription: '/subscription',
     dashboard: '/dashboard',
     manageMomInfor: '/dashboard/manage-mom-infor',
     dashboardFetus: '/dashboard/fetus',
-    paymentResult: '/confirm-payment'
-
+    paymentResult: '/confirm-payment',
   },
 };
 
