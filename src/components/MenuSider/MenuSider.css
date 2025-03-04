@@ -1,3 +1,63 @@
+/* Sidebar styles */
+.sidebar {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ff6b6b;
+  margin: 0;
+}
+
+.logoSubtitle {
+  font-size: 12px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+.menu {
+  border: none;
+}
+
+.menu :global(.ant-menu-item) {
+  height: 48px;
+  line-height: 48px;
+  margin: 4px 0;
+  border-radius: 8px;
+}
+
+.menu :global(.ant-menu-item-selected) {
+  background-color: #fff1f0 !important;
+}
+
+.menu :global(.ant-menu-item-selected .ant-menu-item-icon) {
+  color: #ff6b6b !important;
+}
+
+.menu :global(.ant-menu-item-selected .ant-menu-title-content) {
+  color: #ff6b6b !important;
+}
+
+.menu :global(.ant-menu-item:hover) {
+  color: #ff6b6b !important;
+}
+
+.menu :global(.ant-menu-item-icon) {
+  font-size: 20px;
+}
+
 .menu-sider {
   background: #ffffff;
 }
@@ -10,22 +70,17 @@
   border-inline-end: none !important;
 }
 
-.menu-item {
-  height: 50px !important;
-  line-height: 50px !important;
-  margin: 4px 0 !important;
-  margin-left: 4px !important;
-  padding-left: 24px !important;
-  border-radius: 0 !important;
-  position: relative;
+.ant-menu-submenu-title {
+  color: black !important;
 }
-
 .ant-menu-item-selected {
   background-color: #fff1f1 !important;
   color: #ff6b6b !important;
   font-weight: 500;
 }
-
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  background-color: white !important;
+}
 .ant-menu-item-selected::before {
   content: '';
   position: absolute;
@@ -33,7 +88,7 @@
   top: 0;
   height: 100%;
   width: 4px;
-  background-color: #ff6b6b;
+  background-color: #ff6b6b !important;
 }
 
 .menu-item:hover {
@@ -60,18 +115,4 @@
 /* Remove default Ant Design styles */
 .ant-menu-light .ant-menu-item-selected {
   border-right: none !important;
-}
-.add-new-baby-item {
-  margin-top: 8px;
-  border-top: 1px solid #f0f0f0;
-}
-
-.add-new-baby-link {
-  display: flex;
-  align-items: center;
-  color: #1890ff;
-}
-
-.add-new-baby-link .anticon {
-  margin-right: 8px;
 }

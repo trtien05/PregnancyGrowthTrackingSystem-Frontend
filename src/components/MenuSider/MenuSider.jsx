@@ -1,10 +1,10 @@
 import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
-  ClockCircleOutlined,
   EyeOutlined,
   BellOutlined,
-  PlusOutlined
+  PlusOutlined,
+  CalendarOutlined
 } from '@ant-design/icons';
 import './MenuSider.css';
 import { Link } from 'react-router-dom';
@@ -24,48 +24,53 @@ const MenuSider = () => {
     // Add all the baby names first
     ...babyNames.map(baby => ({
       key: baby.key,
-      label: <Link to={baby.path}>{baby.name}</Link>,
+      label: (
+        <Link
+          to={`${config.routes.customer.pregnancy}/${baby.id}`}
+          style={{ textDecoration: 'none' }}
+        >
+          {baby.name}
+        </Link>
+      ),
     })),
     // Add the "Add New Baby" button at the end
     {
       key: 'add-new-baby',
       label: (
-        <Link to={`${config.routes.customer.dashboardFetus}/add-new`} className="add-new-baby-link">
-          <PlusOutlined /> Thêm mới em bé
+        <Link
+          to={`${config.routes.customer.profile}`}
+          style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}
+        >
+          <PlusOutlined /> Add new fetus
         </Link>
       ),
       className: 'add-new-baby-item'
     }
   ];
   const menuItems = [
-    {
-      key: '1',
-      icon: <HomeOutlined />,
-      label: <Link to={config.routes.customer.manageMomInfor}>Dashboard</Link>,
-
-    },
-    {
-      key: '2',
-      icon: <Baby style={{ marginRight: '12px' }} />,
-      label: 'Fetus',
-      children: fetusChildren
-    },
+    { key: '1', icon: <HomeOutlined />, label: 'Mother Information' },
+    // {
+    //   key: '2',
+    //   icon: <CalendarOutlined />,
+    //   label: (
+    //     <Link
+    //       to={config.routes.member.calendar}
+    //       style={{ textDecoration: 'none' }}
+    //     >
+    //       Calendar
+    //     </Link>
+    //   ),
+    // },
     {
       key: '3',
-      icon: <ClockCircleOutlined />,
-      label: 'Fetal growth chart'
+      icon: <Baby size={16} />,
+      label: 'Fetus',
+      children: fetusChildren,
     },
-    {
-      key: '4',
-      icon: <EyeOutlined />,
-      label: 'Mother status'
-    },
-    {
-      key: '5',
-      icon: <BellOutlined />,
-      label: 'Notification'
-    }
+    { key: '5', icon: <EyeOutlined />, label: 'Mother status' },
+    { key: '6', icon: <BellOutlined />, label: 'Fetal growth chart' },
   ];
+
 
   return (
     <Sider theme="light" width={250} className="menu-sider">

@@ -66,7 +66,7 @@ const SettingsPage = () => {
       <div className="container-profile">
         <div className="planSection-profile">
           <div className="planTitle-profile">Your Plan</div>
-          <div className="planName-profile">Free Trial (3 Days)</div>
+          <div className="planName-profile">Not Subscribed</div>
         </div>
 
         {sections.map((section) => (

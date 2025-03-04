@@ -1,93 +1,67 @@
-.mom-info-container {
-  max-width: 1200px;
+.pregnancy-container {
+  max-width: 1100px;
   margin: 0 auto;
   padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.pregnancy-title {
-  text-align: center;
-  font-size: 32px;
-  margin-bottom: 30px;
-  font-weight: bold;
+.scrollContainerTimeline {
+  margin-top: 20px;
+  display: flex;
+  scrollbar-width: none;
 }
 
-.week-slider {
-  margin: 30px 0;
-}
-
-.week-card-wrapper {
-  width: 20%;
-  padding: 8px;
-}
-
-.week-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: all 0.3s ease;
+.indiana-card {
+  border: 1px solid #d87b7d;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-right: 15px;
+  padding: 2px 0 4px;
+  color: #d87b7d;
   cursor: pointer;
-  height: 150px;
+}
+.indiana-card.active-card {
+  border: 2px solid #ff6600;
+}
+.indiana-scroll-container {
+  overflow-x: auto;
+}
+.indiana-scroll-container--dragging {
+  scroll-behavior: auto !important;
+}
+.left-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 
-.week-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 12px;
+  line-height: 16px;
 }
-
 .week-number {
-  font-size: 28px;
   font-weight: bold;
-  color: #1890ff;
+  font-size: 24px;
+  line-height: 20px;
 }
-
-.week-image {
-  font-size: 32px;
-  margin: 10px 0;
-}
-
-.week-description {
-  color: #5c5c5c;
-  font-size: 14px;
-}
-
-/* Override Ant Design Carousel styles */
-.ant-carousel .slick-prev,
-.ant-carousel .slick-next {
-  font-size: 16px;
-  color: #1890ff;
-}
-
-.ant-carousel .slick-prev {
-  left: -25px;
-}
-
-.ant-carousel .slick-next {
-  right: -25px;
-}
-
-/* Make the carousel arrows visible */
-.ant-carousel .slick-prev,
-.ant-carousel .slick-next {
-  z-index: 2;
-  color: #1890ff;
-  font-size: 16px;
-  height: 32px;
-  width: 32px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex !important;
-  align-items: center;
+.right-card-week {
+  width: 60px;
+  height: 66px;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 5px;
 }
-
-/* Add custom navigation arrows */
-.ant-carousel .slick-prev:before,
-.ant-carousel .slick-next:before {
-  color: #1890ff;
+.right-card-week img {
+  max-width: 100%;
+  max-height: 100%;
+  pointer-events: none;
+}
+.content-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  border-radius: 5px;
 }
