@@ -1,0 +1,102 @@
+.calculator-form .input-field {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #fff;
+    outline: none;
+  }
+
+  .calculator-form {
+    margin-top: 35px;
+  }
+  
+  .calculator-form .ant-select {
+    width: 100%; 
+    margin-bottom: 16px; 
+    padding: 25px 9px;
+  }
+  
+  .calculator-form .ant-select-selector {
+    padding: 19px 12px; 
+    font-size: 16px;
+    border: none !important;
+  }
+  
+  .ant-select-selection-item {
+    line-height: 30px; /* Căn giữa văn bản trong dropdown */
+    
+  }
+  
+  .calculator-form .ant-select-arrow {
+    color: black; 
+    transform: scale(0.8) !important;
+  }
+  
+  
+  .input-field:focus {
+    border-color: #1890ff; 
+    box-shadow: 0 0 5px rgba(24, 144, 255, 0.3);
+  }
+  
+  .submit-btn {
+    background-color: #FAACAA; 
+    border-color: #FAACAA; 
+    color: white; 
+    width: 100%; 
+    padding: 20px; 
+    font-size: 18px; 
+    font-weight: 600; 
+    border-radius: 20px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.submit-btn:hover {
+    background-color: #FF9CD2 !important; 
+    border-color: #FF9CD2; 
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); 
+}
+
+.submit-btn:active {
+    background-color: #D68A8A; 
+    border-color: #D68A8A; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+  
+
+  
+  .submit-btn:focus {
+    box-shadow: 0 0 0 2px #FF9CD2;
+  }
+  
+  
+  .submit-btn:disabled {
+    background-color: #b0f5f0;
+    color: #ddd;
+  }
+  
+  .submit-btn:disabled:hover {
+    background-color: #b0f5f0;
+    border-color: #b0f5f0;
+  }
+  
+  .cycle-dropdown .ant-select-item-option {
+    background-color: #fff; 
+  }
+  
+  .cycle-dropdown .ant-select-item-option-selected {
+    background-color: #1677ff; 
+    color: white;
+  }
+  
+  .cycle-dropdown .ant-select-item-option-active {
+    background-color: #e6f7ff; 
+  }
