@@ -54,10 +54,10 @@ function AuthForm() {
           {/* Form Section */}
           {/* Điều kiện hiển thị */}
           <div className="form-section">
-            <h1 className="form-title">Sign in</h1>
+            <h1 className="form-title">Sign In</h1>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label className="form-label">Username</label>
+                <label className="form-label">Email</label>
                 <input type="text" name="username" value={formData.username} onChange={handleChange} className="form-input" />
               </div>
 
@@ -84,10 +84,10 @@ function AuthForm() {
               </div>
 
               <div className="form-links">
-                <a href="/register" className="form-link">
+                <a href={config.routes.public.register} className="form-link">
                   Don&apos;t have an account?
                 </a>
-                <a href="#" className="form-link">
+                <a href={config.routes.public.forgotPassword} className="form-link">
                   Reset password
                 </a>
               </div>

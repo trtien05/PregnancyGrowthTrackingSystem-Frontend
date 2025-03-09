@@ -12,7 +12,9 @@ const { Title, Text } = Typography;
 
 function Checkout() {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, role } = useAuth();
+  console.log("user", user)
+  console.log("role", role)
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage()
 
@@ -35,6 +37,10 @@ function Checkout() {
   const handleOrder = async () => {
     if (!user) {
       messageApi.error('Please login to continue');
+      return;
+    }
+    if (role === 'ROLE_admin') {
+      messageApi.error('Admin cannot buy plan');
       return;
     }
     try {
@@ -82,11 +88,11 @@ function Checkout() {
                     <div className='info-grid'>
                       <div className='info-item'>
                         <Text type="secondary">Full Name</Text>
-                        <Text strong>Ho Tran Tien</Text>
+                        <Text strong>{user?.username || ""}</Text>
                       </div>
                       <div className='info-item'>
                         <Text type="secondary">Email</Text>
-                        <Text strong>trantien100700@gmail.com</Text>
+                        <Text strong>{user?.email || ""}</Text>
                       </div>
                       <div className='info-item'>
                         <Text type="secondary">Phone</Text>

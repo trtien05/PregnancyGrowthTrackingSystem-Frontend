@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { DashboardOutlined, LogoutOutlined, MenuOutlined, UserOutlined } from '@ant-design/icons'
-import { Avatar, Button, Drawer, Dropdown, Space } from 'antd'
+import { Avatar, Button, Drawer, Dropdown } from 'antd'
 import logo from '../../../assets/images/logo.svg'
 import './Header.css'
 import { Link } from 'react-router-dom'
@@ -37,7 +37,7 @@ function Header(props) {
         </Link>,
       key: config.routes.customer.profile,
     },
-    ...(role === 'ROLE_authenticatedUser' ? [
+    ...(role === 'ROLE_user' ? [
       {
         label:
           <Link

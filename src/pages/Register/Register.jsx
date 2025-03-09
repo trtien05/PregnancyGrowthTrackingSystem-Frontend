@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import config from '../../config'
 import axiosClient from '../../utils/apiCaller'
 import { LoadingOutlined } from '@ant-design/icons'
+import { EyeIcon, EyeOffIcon } from 'lucide-react'
 
 function Register() {
   useDocumentTitle('PregnaJoy | Register')
@@ -17,6 +18,10 @@ function Register() {
     agreeToTerms: false
   })
   const [messageApi, contextHolder] = message.useMessage()
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setConfirmShowPassword] = useState(false)
+
+
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -105,11 +110,20 @@ function Register() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
+              <div className="password-group">
+                <label className="form-label">Password</label>
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="password-toggle">
+                  {showPassword ? (
+                    <EyeOffIcon style={{ color: '#666666' }} size={16} />
+                  ) : (
+                    <EyeIcon style={{ color: '#666666' }} size={16} />
+                  )}
+                  <span>{showPassword ? 'Hide' : 'Show'}</span>
+                </button>
+              </div>
+
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 name="password"
                 value={formData.password}
@@ -121,11 +135,22 @@ function Register() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="form-label">
+              {/* <label htmlFor="confirmPassword" className="form-label">
                 Confirm Password
-              </label>
+              </label> */}
+              <div className="password-group">
+                <label className="form-label">Confirm Password</label>
+                <button type="button" onClick={() => setConfirmShowPassword(!showConfirmPassword)} className="password-toggle">
+                  {showConfirmPassword ? (
+                    <EyeOffIcon style={{ color: '#666666' }} size={16} />
+                  ) : (
+                    <EyeIcon style={{ color: '#666666' }} size={16} />
+                  )}
+                  <span>{showConfirmPassword ? 'Hide' : 'Show'}</span>
+                </button>
+              </div>
               <input
-                type="password"
+                type={showConfirmPassword ? 'text' : 'password'}
                 id="confirmPassword"
                 name="confirmPassword"
                 value={formData.confirmPassword}

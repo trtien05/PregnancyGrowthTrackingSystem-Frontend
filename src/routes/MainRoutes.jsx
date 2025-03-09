@@ -12,11 +12,12 @@ import BlogPage from '../pages/Blogs/Blogs'
 import Checkout from '../pages/Checkout'
 import Home from '../pages/Home'
 import Pricing from '../pages/Pricing'
-import Profile from '../pages/Profile'
 import DashboardFetus from '../pages/Dashboard/DashboardFetus'
 import CustomerDashboard from '../pages/Dashboard'
 import MomInfor from '../pages/Dashboard/MomInfor'
 import PaymentResult from '../pages/PaymentResult'
+import SettingsPage from '../pages/Member/Account'
+import ForgotPasswod from '../pages/ForgotPassword'
 
 //* ====================  Authorization for PUBLIC ==================== */
 const MainRouter = () => {
@@ -26,7 +27,7 @@ const MainRouter = () => {
 }
 
 const DashboardRouter = () => {
-  const { role } = useAuth();
+  // const { role } = useAuth();
   // return role === 'ROLE_authenticatedUser' ? <CustomerDashboard />
   // : <Navigate to={config.routes.public.home} />;
   return <CustomerDashboard />
@@ -34,7 +35,7 @@ const DashboardRouter = () => {
 
 const CustomerRouter = () => {
   const { role } = useAuth();
-  return role === 'ROLE_authenticatedUser' || role === 'ROLE_expert' ? <Outlet />
+  return role === 'ROLE_user' ? <Outlet />
     : <Navigate to={config.routes.public.login} />;
 };
 //* ==================== Define children routes: PUBLIC, NOT FOUND ==================== */
@@ -48,7 +49,9 @@ const publicRoutes = {
     { path: config.routes.public.blogToolWorksheet, element: <BirthPlanWorksheet /> },
     { path: config.routes.public.blogToolDueDate, element: <DueDateCalculator /> },
     { path: config.routes.public.blogToolOvulation, element: <OvulationCalculator /> },
-    { path: config.routes.public.blogToolPregWeight, element: <PregnancyWeight /> }
+    { path: config.routes.public.blogToolPregWeight, element: <PregnancyWeight /> },
+    { path: config.routes.public.forgotPassword, element: <ForgotPasswod /> },
+
   ]
 }
 
@@ -64,8 +67,10 @@ const dashboardRoutes = {
 const customerRoutes = {
   element: <CustomerRouter />,
   children: [
-    { path: config.routes.customer.profile, element: <Profile /> }, dashboardRoutes,
-    { path: config.routes.customer.paymentResult, element: <PaymentResult /> }
+    dashboardRoutes,
+    { path: config.routes.customer.paymentResult, element: <PaymentResult /> },
+    { path: config.routes.customer.profile, element: <SettingsPage /> }
+
   ]
 };
 

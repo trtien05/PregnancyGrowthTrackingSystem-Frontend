@@ -81,9 +81,13 @@ function VerifyEmail() {
         setTimeout(() => {
           navigate(config.routes.public.login)
         }, 2000)
+      } else {
+        messageApi.error(response.message)
       }
     } catch (error) {
-      console.log('Error: ', error)
+      const { response } = error
+      const { data } = response
+      messageApi.error(data.message)
     } finally {
       setLoading(false)
     }

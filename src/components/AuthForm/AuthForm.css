@@ -21,6 +21,11 @@
 .form-section {
   width: 50%;
 }
+.form-section-forgot {
+  margin-bottom: auto;
+  margin-top: auto;
+  width: 50%;
+}
 
 .image-section {
   width: 50%;
@@ -36,7 +41,7 @@
   font-size: 30px;
   font-weight: 600;
   color: #333333;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .form-group {
@@ -182,4 +187,56 @@
     margin-top: 32px;
     padding-top: 32px;
   }
+}
+.forgot-password-desc-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  margin-bottom: 10px;
+}
+
+.forgot-password-desc {
+  margin-bottom: 0;
+  color: var(--text-primary);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.73333;
+}
+
+.forgot-password-text {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+  margin-bottom: 0;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.forgot-password-text .ant-typography,
+.forgot-password-text .ant-statistic-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.forgot-password-countdown {
+  margin-left: 4px;
+  color: var(--primary);
+}
+.form-redirect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
+  margin-top: 36px;
+  color: var(--text-primary);
+}
+
+.form-redirect-link {
+  text-decoration: underline;
+  color: var(--primary);
+}
+.form-redirect-link:hover {
+  color: pink;
 }

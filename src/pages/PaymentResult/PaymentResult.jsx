@@ -1,7 +1,7 @@
 import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, Loading3QuartersOutlined } from '@ant-design/icons';
-import { Button, Col, Result, Row, Skeleton, Typography, Space } from 'antd';
-import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Button, Col, Result, Row, Typography, Space } from 'antd';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axiosClient from '../../utils/apiCaller';
 import cookieUtils from '../../utils/cookieUtils';
 import './PaymentResult.css';
@@ -14,7 +14,6 @@ function PaymentResult() {
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [error, setError] = useState(null);
-  const [isPageReload, setIsPageReload] = useState(false);
 
   // Extract URL parameters
   const urlParams = new URLSearchParams(window.location.search);
@@ -23,33 +22,10 @@ function PaymentResult() {
   const orderId = urlParams.get("orderId");
 
   useEffect(() => {
-    // Check if this is a page reload
-    const detectPageReload = () => {
-      // Performance navigation type 1 indicates a page reload
-      const navType = window.performance?.navigation?.type;
-      if (navType === 1 || window.performance?.getEntriesByType('navigation')[0]?.type === 'reload') {
-        setIsPageReload(true);
-      }
-      // For browsers that don't support the above
-      if (!sessionStorage.getItem('paymentResultVisited')) {
-        sessionStorage.setItem('paymentResultVisited', 'true');
-      } else {
-        setIsPageReload(true);
-      }
-    };
-    detectPageReload();
 
     const verifyPayment = async () => {
       try {
         setLoading(true);
-
-        // If page reload is detected and no URL parameters
-        if (isPageReload && !vnp_ResponseCode && !orderId) {
-          setPaymentStatus('no_data');
-          setError('No payment data available. The page may have been reloaded or accessed directly.');
-          setLoading(false);
-          return;
-        }
 
         // Get stored payment data from cookies
         const storedPaymentData = cookieUtils.getItem('paymentData');
@@ -118,7 +94,7 @@ function PaymentResult() {
   };
 
   const handleViewSubscription = () => {
-    // navigate('/account/subscription');
+    navigate('/profile');
   };
 
   const handleTryAgain = () => {
