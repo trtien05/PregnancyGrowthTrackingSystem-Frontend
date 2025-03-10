@@ -22,7 +22,7 @@ const SettingsPage = () => {
           key: 'profile',
           icon: <EditOutlined />,
           label: 'Edit profile',
-          link: config.routes.customer.profile,
+          link: config.routes.customer.profileInformation,
         },
         {
           key: 'subscription',
@@ -50,12 +50,7 @@ const SettingsPage = () => {
           icon: <HistoryOutlined />,
           label: 'Order history',
         },
-        {
-          key: 'payment',
-          icon: <CreditCardOutlined />,
-          label: 'Saved payment cards',
-          // link: config.routes.auth.checkout,
-        },
+        
       ],
     },
   ];

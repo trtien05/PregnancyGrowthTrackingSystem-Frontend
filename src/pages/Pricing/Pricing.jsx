@@ -2,41 +2,43 @@ import { Card, Button } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import './Pricing.css';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axiosClient from '../../utils/apiCaller'
+
+// Format price function to convert number to format with dots and đ symbol
+const formatPrice = (price) => {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
+};
 
 const Pricing = () => {
   const navigate = useNavigate();
+  const [pricingData, setPringData] = useState([]);
 
-  const pricingData = [
-    {
-      title: 'Each Month',
-      price: '400.000đ',
-      period: '/month',
-      features: [
-        'Full access to all',
-        'Priority customer support',
-        'Cancel anytime with no extra charges'
-      ],
-      buttonText: 'Choose plan',
-      type: 'monthly',
-      popular: true
-    },
-    {
-      title: 'Lifetime Package',
-      price: '4.000.000đ',
-      period: '/forever',
-      features: [
-        'All features unlocked',
-        'Exclusive lifetime',
-        'No recurring payments'
-      ],
-      buttonText: 'Choose plan',
-      type: 'lifetime'
-    },
+  useEffect(() => {
+    const fetchPlan = async () => {
+      const response = await axiosClient.get('/membership-plans/active');
+      console.log("response", response)
+      if (response.code === 200) {
+        setPringData(response.data);
 
-  ];
+      } else {
+        console.log('Error: ', response.message)
+      }
+    }
+    fetchPlan();
+  }, []);
 
-  const handleChoosePlan = (plan) => {
-    navigate('/checkout', { state: { plan } });
+  const features = [
+    'Full access to all',
+    'Priority customer support',
+    'Cancel anytime with no extra charges',
+    'All features unlocked',
+    'Exclusive lifetime',
+    'No recurring payments'
+  ]
+
+  const handleChoosePlan = (planId) => {
+    navigate(`/checkout/${planId}`);
   }
 
   return (
@@ -48,27 +50,38 @@ const Pricing = () => {
         </div>
 
         <div className="pricing-cards">
-          {pricingData.map((plan, index) => (
+          {pricingData?.map((plan, index) => (
             <Card
               key={index}
-              className={`pricing-card ${plan.type} ${plan.popular ? 'popular' : ''}`}
+              className={`pricing-card ${plan.id === 1 ? 'popular' : ''}`}
             >
               {plan.popular && <div className="popular-tag">POPULAR</div>}
               <div className="price-section">
-                <span className="price">{plan.price}</span>
-                <span className="period">{plan.period}</span>
+                <span className="price">{formatPrice(plan.price)}</span>
+                <span className="period">/{plan.durationMonths} month</span>
               </div>
-              <h3 className="plan-title">{plan.title}</h3>
+              <h3 className="plan-title">{plan.name}</h3>
               <ul className="features-list">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx}>
-                    <CheckOutlined className="check-icon" />
-                    {feature}
-                  </li>
-                ))}
+                {index === 0 ?
+                  // First plan - display first 3 features
+                  features.slice(0, 3).map((feature, idx) => (
+                    <li key={idx}>
+                      <CheckOutlined className="check-icon" />
+                      {feature}
+                    </li>
+                  ))
+                  :
+                  // Second plan - display remaining 3 features
+                  features.slice(3).map((feature, idx) => (
+                    <li key={idx}>
+                      <CheckOutlined className="check-icon" />
+                      {feature}
+                    </li>
+                  ))
+                }
               </ul>
-              <Button className="choose-plan-btn" type="primary" onClick={() => handleChoosePlan(plan)}>
-                {plan.buttonText}
+              <Button className="choose-plan-btn" type="primary" onClick={() => handleChoosePlan(plan.id)}>
+                Choose plan
               </Button>
             </Card>
           ))}

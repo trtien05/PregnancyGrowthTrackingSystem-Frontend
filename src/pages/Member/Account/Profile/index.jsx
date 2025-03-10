@@ -11,13 +11,13 @@ import {
 } from 'antd';
 import {
   UserOutlined,
+  PhoneOutlined,
+  CalendarOutlined,
   EditOutlined,
   ArrowLeftOutlined,
 } from '@ant-design/icons';
-// import styles from './Profile.module.css';
 import { useNavigate } from 'react-router-dom';
-
-const { Option } = Select;
+import './Profile.css'
 
 
 const UpdateUserForm = () => {
@@ -26,7 +26,6 @@ const UpdateUserForm = () => {
 
   const onFinish = (values) => {
     console.log('Form values:', values);
-    // Here you would typically send the data to your backend
   };
 
   const handleBack = () => {
@@ -45,19 +44,18 @@ const UpdateUserForm = () => {
         },
       }}
     >
-      <Card >
-        <div >
+      <Card className="form-card">
+        <div className="form-header">
           <Button
             type="link"
             icon={<ArrowLeftOutlined />}
             onClick={handleBack}
-
+            className="back-button"
           >
             Back
           </Button>
-          <h2 >
-            <EditOutlined /> Update User
-            Information
+          <h2 className="form-title-profile">
+            <EditOutlined className="title-icon" /> Update User Information
           </h2>
         </div>
         <Form
@@ -65,19 +63,17 @@ const UpdateUserForm = () => {
           name="updateUserForm"
           onFinish={onFinish}
           layout="vertical"
-
+          className="form"
         >
           <Row gutter={16}>
             <Col xs={24} sm={12}>
               <Form.Item
                 name="firstName"
                 label="First Name"
-                rules={[
-                  { required: true, message: 'Please input your first name!' },
-                ]}
+                rules={[{ required: true, message: 'Please input your first name!' }]}
               >
                 <Input
-                  prefix={<UserOutlined />}
+                  prefix={<UserOutlined className="input-icon" />}
                   placeholder="First Name"
                 />
               </Form.Item>
@@ -86,59 +82,27 @@ const UpdateUserForm = () => {
               <Form.Item
                 name="lastName"
                 label="Last Name"
-                rules={[
-                  { required: true, message: 'Please input your last name!' },
-                ]}
+                rules={[{ required: true, message: 'Please input your last name!' }]}
               >
                 <Input
-                  prefix={<UserOutlined />}
+                  prefix={<UserOutlined className="input-icon" />}
                   placeholder="Last Name"
                 />
               </Form.Item>
             </Col>
           </Row>
 
-          <Row gutter={16}>
-            <Col xs={24} sm={12}>
-              <Form.Item
-                name="bloodType"
-                label="Blood Type"
-                rules={[
-                  {
-                    required: false,
-                    message: 'Please select your blood type!',
-                  },
-                ]}
-              >
-                <Select placeholder="Select blood type">
-                  <Option value="A+">A+</Option>
-                  <Option value="A-">A-</Option>
-                  <Option value="B+">B+</Option>
-                  <Option value="B-">B-</Option>
-                  <Option value="AB+">AB+</Option>
-                  <Option value="AB-">AB-</Option>
-                  <Option value="O+">O+</Option>
-                  <Option value="O-">O-</Option>
-                </Select>
-              </Form.Item>
-            </Col>
 
-          </Row>
 
           <Row gutter={16}>
             <Col xs={24} sm={12}>
               <Form.Item
                 name="phoneNumber"
                 label="Phone Number"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your phone number!',
-                  },
-                ]}
+                rules={[{ required: true, message: 'Please input your phone number!' }]}
               >
                 <Input
-                  // prefix={<PhoneOutlined className={styles.inputIcon} />}
+                  prefix={<PhoneOutlined className="input-icon" />}
                   placeholder="Phone Number"
                 />
               </Form.Item>
@@ -147,28 +111,19 @@ const UpdateUserForm = () => {
               <Form.Item
                 name="dateOfBirth"
                 label="Date of Birth"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select your date of birth!',
-                  },
-                ]}
+                rules={[{ required: true, message: 'Please select your date of birth!' }]}
               >
                 <DatePicker
                   style={{ width: '100%' }}
                   format="YYYY-MM-DD"
-                // suffixIcon={<CalendarOutlined className={styles.inputIcon} />}
+                  suffixIcon={<CalendarOutlined className="input-icon" />}
                 />
               </Form.Item>
             </Col>
           </Row>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-            // className={styles.submitButton}
-            >
+            <Button type="primary" htmlType="submit" className="submit-button-profile">
               Update Information
             </Button>
           </Form.Item>

@@ -6,7 +6,7 @@ const routes = {
     register: '/register',
     verifyEmail: '/verify-email',
     pricing: '/pricing',
-    checkout: '/checkout',
+    checkout: '/checkout/:id',
     blogs: '/blogs',
     blog: '/blogs/:id',
     blogToolWorksheet: '/blogs/tool-worksheet',
@@ -18,6 +18,7 @@ const routes = {
   },
   customer: {
     profile: '/profile',
+    profileInformation: '/profile/information',
     subscription: '/subscription',
     pregnancy: '/pregnancy',
     pregnancyFetus: '/pregnancy/:id',

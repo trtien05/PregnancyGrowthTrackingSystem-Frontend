@@ -1,38 +1,54 @@
-import { Loading3QuartersOutlined } from '@ant-design/icons';
+import { CheckOutlined, Loading3QuartersOutlined } from '@ant-design/icons';
 import { Button, Col, message, Radio, Row, Skeleton, Space, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 import vnpayLogo from "../../assets/svg/vnpay-logo.svg"
 import momoLogo from "../../assets/svg/momo-logo.svg"
 import './Checkout.css'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import axiosClient from '../../utils/apiCaller';
 import cookieUtils from '../../utils/cookieUtils';
 const { Title, Text } = Typography;
 
+
+
 function Checkout() {
-  const location = useLocation();
   const { user, role } = useAuth();
-  console.log("user", user)
-  console.log("role", role)
-  const navigate = useNavigate();
+  const { id } = useParams();
+  const [plan, setPlan] = useState({});
   const [messageApi, contextHolder] = message.useMessage()
 
   const [loading, setLoading] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState('vnpay');
 
   useEffect(() => {
-    if (!location.state?.plan) {
-      navigate('/pricing');
-      return;
+    const fetchPlan = async () => {
+      try {
+        setLoading(true);
+        const response = await axiosClient.get(`/membership-plans/${id}`);
+        console.log("response", response)
+        if (response.code === 200) {
+          setPlan(response.data);
+        } else {
+          messageApi.error('Error: ' + response.message);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     }
-  }, [location.state, navigate]);
+    fetchPlan();
+  }, [id]);
 
-  // Nếu không có plan, không render gì cả
-  if (!location.state?.plan) {
-    return null;
-  }
-  const { plan } = location.state;
+  const features = [
+    'Full access to all',
+    'Priority customer support',
+    'Cancel anytime with no extra charges',
+    'All features unlocked',
+    'Exclusive lifetime',
+    'No recurring payments'
+  ]
 
   const handleOrder = async () => {
     if (!user) {
@@ -45,11 +61,14 @@ function Checkout() {
     }
     try {
       setLoading(true);
-      const response = await axiosClient.get(`/payment/create/${paymentMethod}`, {
-        params: {
-          amount: calculateTotal(),
-        }
-      });
+      const response = await axiosClient.post(`/payment/order`, 
+        {
+          provider:paymentMethod,
+          membershipPlanId: id,
+          userId: user.id
+      }
+    );
+      console.log("response order", response)
       cookieUtils.setItem('paymentData', JSON.stringify({
         paymentMethod: paymentMethod,
         planPrice: plan.price,
@@ -68,13 +87,13 @@ function Checkout() {
     }
   }
 
-  // Tính tổng tiền dựa trên plan
-  const calculateTotal = () => {
-    let basePrice = parseInt(plan.price.replace(/\D/g, ""), 10);
-    return basePrice;
+  // Format price function to convert number to format with dots and đ symbol
+  const formatPrice = (price) => {
+    if (price === undefined || price === null) return "0đ";
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
   };
   return (
-    <>
+    <>Ư
       {contextHolder}
       <div className='checkout-container'>
         <div className='checkout-section'>
@@ -108,19 +127,35 @@ function Checkout() {
                     <Title level={2}>Order Details</Title>
                     <div className='plan-details'>
                       <div className='plan-header'>
-                        <Text strong>{plan.title}</Text>
-                        <Text type="success">{plan.period}</Text>
+                        <Text strong>{plan.name}</Text>
+                        <Text type="success">{plan.durationMonths} months</Text>
                       </div>
                       <div className='plan-features'>
-                        {plan.features.map((feature, index) => (
-                          <Text key={index} type="secondary" className='feature-item'>
-                            ✓ {feature}
-                          </Text>
-                        ))}
+                        <ul className="features-list">
+                          {id === 1 ?
+                            // First plan - display first 3 features
+                            features.slice(0, 3).map((feature, idx) => (
+                              <li key={idx}>
+                                <CheckOutlined className="check-icon" />
+                                {feature}
+                              </li>
+                            ))
+                            :
+                            // Second plan - display remaining 3 features
+                            features.slice(3).map((feature, idx) => (
+                              <li key={idx}>
+                                <CheckOutlined className="check-icon" />
+                                {feature}
+                              </li>
+                            ))
+                          }
+                        </ul>
                       </div>
                       <div className='plan-price'>
                         <Text>Base Price:</Text>
-                        <Text strong>{plan.price}</Text>
+                        <Text strong>
+                          {plan.price !== undefined ? formatPrice(plan.price) : "Loading..."}
+                        </Text>
                       </div>
                     </div>
                   </div>
@@ -137,7 +172,7 @@ function Checkout() {
                       </Text>
                     </Space>
                     <Title level={2} type="success">
-                      {plan.price}
+                      {plan.price !== undefined ? formatPrice(plan.price) : "Loading..."}
                     </Title>
                   </div>
                 </div>
@@ -229,7 +264,7 @@ function Checkout() {
                       style={{ marginRight: '10px', width: `60%` }}
                       type="primary"
                       size="large"
-                      onClick={handleOrder}
+                    onClick={handleOrder}
                     >
                       {loading ? (
                         <Loading3QuartersOutlined
@@ -241,9 +276,6 @@ function Checkout() {
                       )}
                     </Button>
                   </div>
-
-                  {/* <Countdown style={{ width: `fit-content`, margin: `auto` }} title="Remaining Time" value={deadline} onFinish={handleTimerEnd} /> */}
-
                 </div>
               </Skeleton>
             </Col>

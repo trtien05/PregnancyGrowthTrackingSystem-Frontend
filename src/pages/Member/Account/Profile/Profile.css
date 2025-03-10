@@ -1,0 +1,131 @@
+.form-card {
+  max-width: 800px;
+  margin: 40px auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(210, 63, 87, 0.12);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.form-card:hover {
+  box-shadow: 0 12px 32px rgba(210, 63, 87, 0.18);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.back-button {
+  font-size: 16px;
+  color: #d23f57;
+  padding: 0;
+  height: auto;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  color: #b83548 !important;
+}
+
+.form-title-profile {
+  color: #d23f57;
+  font-size: 28px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0.8;
+  margin: 0;
+}
+
+.title-icon {
+  margin-right: 12px;
+  font-size: 24px;
+}
+
+.form {
+  padding: 0 16px;
+}
+
+.form :global(.ant-form-item-label > label) {
+  color: #4a4a4a;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.form :global(.ant-input),
+.form :global(.ant-select-selector),
+.form :global(.ant-picker) {
+  border-color: #e0e0e0 !important;
+  border-radius: 8px;
+  padding: 12px;
+  height: auto;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form :global(.ant-select-selector) {
+  height: 52px !important;
+  padding: 0 12px !important;
+  display: flex;
+  align-items: center;
+}
+
+.form :global(.ant-select-selection-item) {
+  line-height: 52px;
+}
+
+.form :global(.ant-input:hover),
+.form :global(.ant-select-selector:hover),
+.form :global(.ant-picker:hover),
+.form :global(.ant-input:focus),
+.form :global(.ant-select-selector:focus),
+.form :global(.ant-picker-focused),
+.form :global(.ant-input-focused),
+.form :global(.ant-select-focused .ant-select-selector),
+.form :global(.ant-select-open .ant-select-selector) {
+  border-color: #d23f57 !important;
+  box-shadow: 0 0 0 2px rgba(210, 63, 87, 0.2) !important;
+}
+
+.input-icon {
+  color: #d23f57;
+  font-size: 18px;
+}
+
+.submit-button-profile {
+  width: 100%;
+  height: 52px;
+  background-color: #d23f57;
+  border-color: #d23f57;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.submit-button-profile:hover,
+.submit-button-profile:focus {
+  background-color: #b83548 !important;
+  border-color: #b83548 !important;
+}
+
+@media (max-width: 768px) {
+  .form-card {
+    margin: 20px;
+  }
+
+  .form-title-profile {
+    font-size: 24px;
+  }
+
+  .form {
+    padding: 0;
+  }
+}

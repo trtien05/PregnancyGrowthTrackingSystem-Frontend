@@ -18,6 +18,7 @@ import MomInfor from '../pages/Dashboard/MomInfor'
 import PaymentResult from '../pages/PaymentResult'
 import SettingsPage from '../pages/Member/Account'
 import ForgotPasswod from '../pages/ForgotPassword'
+import UpdateUserForm from '../pages/Member/Account/Profile/index'
 
 //* ====================  Authorization for PUBLIC ==================== */
 const MainRouter = () => {
@@ -69,7 +70,9 @@ const customerRoutes = {
   children: [
     dashboardRoutes,
     { path: config.routes.customer.paymentResult, element: <PaymentResult /> },
-    { path: config.routes.customer.profile, element: <SettingsPage /> }
+    { path: config.routes.customer.profile, element: <SettingsPage /> },
+    { path: config.routes.customer.profileInformation, element: <UpdateUserForm /> },
+
 
   ]
 };
