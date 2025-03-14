@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosClient from '../../utils/apiCaller';
 import cookieUtils from '../../utils/cookieUtils';
 import './PaymentResult.css';
+import config from '../../config';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -47,6 +48,16 @@ function PaymentResult() {
 
             if (response.code === 200) {
               setPaymentStatus('success');
+              cookieUtils.removeItem('paymentData');
+              
+              // Update payment status in the user's token instead of replacing the token
+              const currentToken = cookieUtils.getItem(config.cookies.token);
+              if (currentToken && response.data.token) {
+                // Merge the existing token with the new payment information
+                // This assumes the server returns only the updated fields in response.token
+                const updatedToken = response.data.token;
+                cookieUtils.setItem(config.cookies.token, updatedToken);
+              } 
             } else {
               setPaymentStatus('failed');
               setError(response.message || 'Payment verification failed');
@@ -57,12 +68,20 @@ function PaymentResult() {
           }
         } else if (orderId) {
           // Handle other payment methods verification here
-          // Example for future implementation
           const response = await axiosClient.get('/payment/check/momo', {
             params: { orderId }
           });
 
           if (response.code === 200) {
+            cookieUtils.removeItem('paymentData');
+            
+            // Update payment status in the user's token instead of replacing the token
+            const currentToken = cookieUtils.getItem(config.cookies.token);
+            if (currentToken && response.token) {
+              // Merge the existing token with the new payment information
+              const updatedToken = response.data.token;
+              cookieUtils.setItem(config.cookies.token, updatedToken);
+            }
             setPaymentStatus('success');
           } else {
             setPaymentStatus('failed');

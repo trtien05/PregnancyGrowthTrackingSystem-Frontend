@@ -20,6 +20,7 @@ const routes = {
     profile: '/profile',
     profileInformation: '/profile/information',
     subscription: '/subscription',
+    oderHistory: '/order-history',
     pregnancy: '/pregnancy',
     pregnancyFetus: '/pregnancy/:id',
     dashboard: '/dashboard',

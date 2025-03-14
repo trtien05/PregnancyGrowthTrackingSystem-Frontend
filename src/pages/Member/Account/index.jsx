@@ -1,7 +1,6 @@
 import {
   RightOutlined,
   EditOutlined,
-  CreditCardOutlined,
   HistoryOutlined,
   UserOutlined,
   HeartOutlined,
@@ -10,11 +9,13 @@ import { Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import config from '../../../config';
 import './Setting.css';
+import useAuth from '../../../hooks/useAuth';
 
 const { Title } = Typography;
 
 const SettingsPage = () => {
-  const sections = [
+  const {role} = useAuth();
+  const allSections = [
     {
       title: 'Account',
       items: [
@@ -49,11 +50,26 @@ const SettingsPage = () => {
           key: 'history',
           icon: <HistoryOutlined />,
           label: 'Order history',
+          link: config.routes.customer.oderHistory,
         },
         
       ],
     },
   ];
+
+  // Filter sections and items based on user role
+  const sections = allSections
+    .filter(section => role === 'ROLE_user' ? 
+      (section.title !== 'Fetus' && section.title !== 'Payment') : true)
+    .map(section => {
+      if (section.title === 'Account' && role === 'ROLE_user') {
+        return {
+          ...section,
+          items: section.items.filter(item => item.key !== 'subscription')
+        };
+      }
+      return section;
+    });
 
   return (
     <div className="wrapper-profile">

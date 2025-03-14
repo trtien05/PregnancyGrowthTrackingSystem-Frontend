@@ -93,7 +93,7 @@ function Checkout() {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
   };
   return (
-    <>Ư
+    <>
       {contextHolder}
       <div className='checkout-container'>
         <div className='checkout-section'>

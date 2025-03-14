@@ -37,7 +37,7 @@ function Header(props) {
         </Link>,
       key: config.routes.customer.profile,
     },
-    ...(role === 'ROLE_user' ? [
+    ...(role === 'ROLE_member' ? [
       {
         label:
           <Link

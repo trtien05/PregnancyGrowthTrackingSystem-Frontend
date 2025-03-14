@@ -19,6 +19,8 @@ import PaymentResult from '../pages/PaymentResult'
 import SettingsPage from '../pages/Member/Account'
 import ForgotPasswod from '../pages/ForgotPassword'
 import UpdateUserForm from '../pages/Member/Account/Profile/index'
+import SubscriptionPage from '../pages/Member/Account/Subscription'
+import OrderHistoryPage from '../pages/Member/Account/OrderHistory'
 
 //* ====================  Authorization for PUBLIC ==================== */
 const MainRouter = () => {
@@ -28,17 +30,17 @@ const MainRouter = () => {
 }
 
 const DashboardRouter = () => {
-  // const { role } = useAuth();
-  // return role === 'ROLE_authenticatedUser' ? <CustomerDashboard />
-  // : <Navigate to={config.routes.public.home} />;
-  return <CustomerDashboard />
+  const { role } = useAuth();
+  return role === 'ROLE_member' ? <CustomerDashboard />
+  : <Navigate to={config.routes.public.home} />;
 };
 
-const CustomerRouter = () => {
+const AuthenticatedUserRouter = () => {
   const { role } = useAuth();
-  return role === 'ROLE_user' ? <Outlet />
+  return role ? <Outlet />
     : <Navigate to={config.routes.public.login} />;
 };
+
 //* ==================== Define children routes: PUBLIC, NOT FOUND ==================== */
 const publicRoutes = {
   children: [
@@ -65,13 +67,17 @@ const dashboardRoutes = {
   ]
 }
 
+
 const customerRoutes = {
-  element: <CustomerRouter />,
+  element: <AuthenticatedUserRouter />,
   children: [
     dashboardRoutes,
     { path: config.routes.customer.paymentResult, element: <PaymentResult /> },
     { path: config.routes.customer.profile, element: <SettingsPage /> },
     { path: config.routes.customer.profileInformation, element: <UpdateUserForm /> },
+    {path: config.routes.customer.subscription, element: <SubscriptionPage />},
+    { path: config.routes.customer.oderHistory, element: <OrderHistoryPage /> },
+
 
 
   ]
