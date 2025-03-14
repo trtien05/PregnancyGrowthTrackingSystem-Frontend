@@ -28,6 +28,15 @@ const routes = {
     dashboardFetus: '/dashboard/fetus',
     paymentResult: '/confirm-payment',
   },
+  admin: {
+    dashboard: '/admin/dashboard',
+    manageMember: '/admin/manage-member',
+    manageBlogPost: '/admin/manage-blog-post',
+    growthMatrics: '/admin/growth-matrics',
+    managePlans: '/admin/manage-plans',
+    formPlan: '/admin/form-plan',
+    formGrwothMatrics: '/admin/form-growth-matrics',
+  },
 };
 
 export default routes;

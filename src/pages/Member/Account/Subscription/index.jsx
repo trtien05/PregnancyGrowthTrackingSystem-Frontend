@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Layout,
   Typography,
@@ -22,6 +22,7 @@ import {
   CloseCircleOutlined,
 } from '@ant-design/icons';
 import './Subscription.css'
+import axiosClient from '../../../../utils/apiCaller';
 
 
 const { Content } = Layout;
@@ -36,6 +37,22 @@ const SubscriptionPage = () => {
     useState(false);
   const [selectedPlan, setSelectedPlan] = useState('premium');
   const [loading, setLoading] = useState(false);
+  const [subscriptionPlan, setSubscriptionPlan] = useState();
+  useEffect(() => {
+    const fetchSubscriptionPlan = async () => {
+      try {
+        const response = await axiosClient.get('/orders/latest');
+        if(response.code === 200) {
+          setSubscriptionPlan(response.data);
+        }
+      }
+      catch (error) {
+        console.error('Error fetching subscription plan:', error);
+      }
+    }
+    fetchSubscriptionPlan();
+  }, []);
+  console.log("subscriptionPlan", subscriptionPlan);
 
   const subscriptionPlans= [
     {
@@ -88,6 +105,14 @@ const SubscriptionPage = () => {
       color: '#722ed1',
     },
   ];
+
+  const formatPrice = (price) => {
+    if (!price) return '0 VNĐ';
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'decimal',
+      maximumFractionDigits: 0
+    }).format(price) + ' VNĐ';
+  };
 
   const handleUpdatePlan = () => {
     setLoading(true);
@@ -176,7 +201,7 @@ const SubscriptionPage = () => {
               <div className={'plan-info-subscription'}>
                 <div className={'plan-name-container-subscription'}>
                   <Title level={3} className={'plan-name-subscription'}>
-                    {getCurrentPlan()?.name}
+                    {subscriptionPlan?.amount === 400000 ? 'Each Month' : 'Lifetime Package'}
                   </Title>
                   <Badge
                     status="success"
@@ -186,10 +211,11 @@ const SubscriptionPage = () => {
                 </div>
                 <div className={'plan-price-subscription'}>
                   <Text className={'price-subscription'}>
-                    ${getCurrentPlan()?.price}
+                    {subscriptionPlan?.amount ? formatPrice(subscriptionPlan.amount) : ''}
                   </Text>
                   <Text type="secondary" className={'period-subscription'}>
-                    per {getCurrentPlan()?.period}
+                    /{subscriptionPlan?.amount === 400000 ? '1 month' : '10 months'}
+
                   </Text>
                 </div>
               </div>

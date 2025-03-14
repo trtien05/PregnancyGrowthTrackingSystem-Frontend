@@ -1,0 +1,143 @@
+.admin-layout {
+  min-height: 100vh;
+}
+
+.logo {
+  padding: 20px;
+}
+
+/* Header styles */
+.header {
+  background: transparent;
+  padding: 0 24px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.welcome-text {
+  color: #666;
+}
+
+.create-button {
+  padding: 22px 20px !important;
+  border: 1px solid #ff5252 !important;
+  border-radius: 18px;
+  border: none;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* Content styles */
+.main-content {
+  background: #f5f7f9;
+}
+
+.content {
+  margin: 24px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 24px;
+  min-height: 280px;
+}
+
+.content-header {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-input {
+  width: 200px;
+}
+
+.sort-dropdown {
+  color: #666;
+}
+
+/* Table styles */
+.data-table {
+  background: #fff;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-button {
+  color: #ff6b6b;
+}
+
+.delete-button {
+  color: #4a6ee0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .content {
+    margin: 12px;
+    padding: 16px;
+  }
+
+  .content-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+.sidebar-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ea6666;
+}
+.sidebar-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #b9bbbd;
+}
+.sidebar-top {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+.header-name {
+  padding: 0 0 0 30px;
+  border-left: 1px solid #b9bbbd;
+  height: 50px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.header-name span {
+  font-size: 15px;
+  font-weight: 600;
+}
