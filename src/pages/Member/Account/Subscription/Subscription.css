@@ -56,12 +56,30 @@
   gap: 16px;
 }
 
-.update-button-subscription {
-  background-color: #ff7875;
+.update-button-subscription  {
+  background-color: #ff7875 ;
   border-color: #ff7875;
 }
 
 .update-button-subscription:hover {
+  background-color: #ff9c9a;
+  border-color: #ff9c9a;
+}
+
+/* Override Ant Design button hover background for update button */
+.update-button-subscription:hover {
+  background-color: #ff9c9a !important;
+  color: white !important;
+}
+
+/* Target specifically the Ant Design class structure to ensure override works */
+:where(.css-dev-only-do-not-override-1enmt9a).ant-btn-primary.update-button-subscription:hover {
+  background-color: #ff9c9a;
+  border-color: #ff9c9a;
+}
+
+/* For disabled buttons */
+.ant-tooltip .ant-btn[disabled]:hover {
   background-color: #ff9c9a;
   border-color: #ff9c9a;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Layout,
   Typography,
@@ -12,32 +12,38 @@ import {
   Tag,
   Row,
   Col,
-  notification,
+  Tooltip,
 } from 'antd';
 import {
   CheckCircleFilled,
   CrownFilled,
   SafetyCertificateFilled,
-  RocketFilled,
-  CloseCircleOutlined,
 } from '@ant-design/icons';
 import './Subscription.css'
 import axiosClient from '../../../../utils/apiCaller';
-
+import { useNavigate } from 'react-router-dom';
 
 const { Content } = Layout;
 const { Title, Text, Paragraph } = Typography;
 
-
 const SubscriptionPage = () => {
-  const [currentPlan, setCurrentPlan] = useState('premium');
-  const [isUpdateModalVisible, setIsUpdateModalVisible] =
-    useState(false);
-  const [isCancelModalVisible, setIsCancelModalVisible] =
-    useState(false);
-  const [selectedPlan, setSelectedPlan] = useState('premium');
-  const [loading, setLoading] = useState(false);
-  const [subscriptionPlan, setSubscriptionPlan] = useState();
+  const navigate = useNavigate();
+
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+
+  const [selectedPlan, setSelectedPlan] = useState('1');
+  const [loading, setLoading] = useState(true);
+  const [subscriptionPlan, setSubscriptionPlan] = useState(null);
+  const [pricingData, setPricingData] = useState([]);
+
+  const isMonthlyPlan = subscriptionPlan?.amount === 400000;
+  const currentPlan = isMonthlyPlan ? '1' : '2';
+  const planColor = isMonthlyPlan ? '#52c41a' : '#ff7875';
+  const planIcon = isMonthlyPlan ? <SafetyCertificateFilled /> : <CrownFilled />;
+  const planName = isMonthlyPlan ? 'Each Month' : 'Lifetime Package';
+  const planPeriod = isMonthlyPlan ? '1 month' : '10 months';
+
+
   useEffect(() => {
     const fetchSubscriptionPlan = async () => {
       try {
@@ -48,63 +54,41 @@ const SubscriptionPage = () => {
       }
       catch (error) {
         console.error('Error fetching subscription plan:', error);
+      } finally {
+        setLoading(false);
       }
     }
+    const fetchPlans = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosClient.get('/membership-plans/active');
+        if (response.code === 200) {
+          setPricingData(response.data);
+        } else {
+          console.log('Error: ', response.message)
+        }
+      } catch (error) {
+        console.error('Error fetching pricing plans:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPlans();
     fetchSubscriptionPlan();
   }, []);
-  console.log("subscriptionPlan", subscriptionPlan);
 
-  const subscriptionPlans= [
-    {
-      id: 'basic',
-      name: 'Basic Plan',
-      price: 4.99,
-      period: 'month',
-      features: [
-        'Weekly pregnancy updates',
-        'Basic pregnancy tracker',
-        'Limited articles access',
-        'Email support',
-      ],
-      icon: <SafetyCertificateFilled />,
-      color: '#52c41a',
-    },
-    {
-      id: 'premium',
-      name: 'Premium Plan',
-      price: 9.99,
-      period: 'month',
-      features: [
-        'Daily pregnancy updates',
-        'Advanced pregnancy tracker',
-        'Full articles access',
-        'Nutrition guidance',
-        'Personalized tips',
-        'Priority support',
-        'Symptom tracker',
-      ],
-      recommended: true,
-      icon: <CrownFilled />,
-      color: '#ff7875',
-    },
-    {
-      id: 'annual',
-      name: 'Annual Premium',
-      price: 89.99,
-      period: 'year',
-      features: [
-        'All Premium features',
-        'Save 25% compared to monthly',
-        'Exclusive content',
-        'Priority support',
-        'Baby development videos',
-        'Personalized birth plan',
-        'Expert Q&A access',
-      ],
-      icon: <RocketFilled />,
-      color: '#722ed1',
-    },
-  ];
+  const features = [
+    'Full access to all',
+    'Priority customer support',
+    'Cancel anytime with no extra charges',
+    'All features unlocked',
+    'Exclusive lifetime',
+    'No recurring payments'
+  ]
+
+  const monthlyFeatures = features.slice(0, 3);
+  const lifetimeFeatures = features.slice(3);
+  const currentFeatures = isMonthlyPlan ? monthlyFeatures : lifetimeFeatures;
 
   const formatPrice = (price) => {
     if (!price) return '0 VNĐ';
@@ -114,48 +98,27 @@ const SubscriptionPage = () => {
     }).format(price) + ' VNĐ';
   };
 
-  const handleUpdatePlan = () => {
-    setLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setCurrentPlan(selectedPlan);
-      setLoading(false);
-      setIsUpdateModalVisible(false);
-
-      notification.success({
-        message: 'Plan Updated',
-        description: `You have successfully updated to the ${
-          subscriptionPlans.find((plan) => plan.id === selectedPlan)?.name
-        }.`,
-        placement: 'topRight',
-      });
-    }, 1500);
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    });
   };
 
-  const handleCancelPlan = () => {
-    setLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      setIsCancelModalVisible(false);
-
-      notification.info({
-        message: 'Subscription Canceled',
-        description:
-          'Your subscription has been canceled. You will still have access until the end of your billing period.',
-        placement: 'topRight',
-      });
-    }, 1500);
+  const handleUpdatePlan = () => {
+    const selectedPlanObj = pricingData.find(plan => plan.id.toString() === selectedPlan);
+    console.log('Selected plan:', selectedPlanObj);
+    if (selectedPlanObj) {
+      navigate(`/checkout/${selectedPlanObj.id}`);
+    }
+    setIsUpdateModalVisible(false);
   };
 
   const handlePlanChange = (e) => {
     setSelectedPlan(e.target.value);
-  };
-
-  const getCurrentPlan = () => {
-    return subscriptionPlans.find((plan) => plan.id === currentPlan);
   };
 
   return (
@@ -172,21 +135,26 @@ const SubscriptionPage = () => {
               </Text>
             </div>
             <div className={'header-actions-subscription'}>
-              <Button
-                type="primary"
-                size="large"
-                onClick={() => setIsUpdateModalVisible(true)}
-                className={'update-button-subscription'}
-              >
-                Update Plan
-              </Button>
-              <Button
-                danger
-                size="large"
-                onClick={() => setIsCancelModalVisible(true)}
-              >
-                Cancel Plan
-              </Button>
+              {currentPlan === '2' ? (
+                <Tooltip title="You are at the highest plan">
+                  <Button
+                    type="primary"
+                    size="large"
+                    disabled={true}
+                  >
+                    Update Plan
+                  </Button>
+                </Tooltip>
+              ) : (
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => setIsUpdateModalVisible(true)}
+                  className={'update-button-subscription'}
+                >
+                  Update Plan
+                </Button>
+              )}
             </div>
           </div>
 
@@ -194,14 +162,14 @@ const SubscriptionPage = () => {
             <div className={'plan-header-subscription'}>
               <div
                 className={'plan-badge-subscription'}
-                style={{ backgroundColor: getCurrentPlan()?.color }}
+                style={{ backgroundColor: planColor }}
               >
-                {getCurrentPlan()?.icon}
+                {planIcon}
               </div>
               <div className={'plan-info-subscription'}>
                 <div className={'plan-name-container-subscription'}>
                   <Title level={3} className={'plan-name-subscription'}>
-                    {subscriptionPlan?.amount === 400000 ? 'Each Month' : 'Lifetime Package'}
+                    {planName}
                   </Title>
                   <Badge
                     status="success"
@@ -214,10 +182,16 @@ const SubscriptionPage = () => {
                     {subscriptionPlan?.amount ? formatPrice(subscriptionPlan.amount) : ''}
                   </Text>
                   <Text type="secondary" className={'period-subscription'}>
-                    /{subscriptionPlan?.amount === 400000 ? '1 month' : '10 months'}
-
+                    /{planPeriod}
                   </Text>
                 </div>
+                
+              </div>
+              <div className={'subscription-dates'}>
+                <Text type="secondary">
+                  Start: <Text strong>{formatDate(subscriptionPlan?.startDate)}</Text> - 
+                  End:  <Text strong>{formatDate(subscriptionPlan?.endDate)}</Text>
+                </Text>
               </div>
             </div>
 
@@ -228,12 +202,12 @@ const SubscriptionPage = () => {
                 Plan Features
               </Title>
               <Row gutter={[24, 16]} className={'features-grid-subscription'}>
-                {getCurrentPlan()?.features.map((feature, index) => (
+                {currentFeatures.map((feature, index) => (
                   <Col xs={24} sm={12} md={8} key={index}>
                     <div className={'feature-item-subscription'}>
                       <CheckCircleFilled
                         className={'feature-icon-subscription'}
-                        style={{ color: getCurrentPlan()?.color }}
+                        style={{ color: planColor }}                     
                       />
                       <Text>{feature}</Text>
                     </div>
@@ -272,111 +246,67 @@ const SubscriptionPage = () => {
           your plan at any time.
         </Paragraph>
 
-        <Radio.Group
-          onChange={handlePlanChange}
-          value={selectedPlan}
-          className={'plan-radio-group-subscription'}
-        >
-          <Space direction="vertical" className={'plan-options-subscription'}>
-            {subscriptionPlans.map((plan) => (
-              <Radio
-                key={plan.id}
-                value={plan.id}
-                className={'plan-option-subscription'}
-              >
-                <Card
-                  className={`${'plan-selection-card-subscription'} ${
-                    selectedPlan === plan.id ? 'selected-plan-card-subscription' : ''
-                  }`}
-                  bordered={false}
-                >
-                  <div className={'plan-selection-header-subscription'}>
-                    <div>
-                      <div className={'plan-selection-title-subscription'}>
-                        <Text strong className={'plan-name-subscription'}>
-                          {plan.name}
-                        </Text>
-                        {plan.recommended && (
-                          <Tag color="gold">RECOMMENDED</Tag>
-                        )}
-                      </div>
-                      <div className={'plan-selection-price-subscription'}>
-                        <Text className={'price-subscription'}>${plan.price}</Text>
-                        <Text type="secondary" className={'period-subscription'}>
-                          per {plan.period}
-                        </Text>
-                      </div>
-                    </div>
-                    <div
-                      className={'plan-icon-subscription'}
-                      style={{ backgroundColor: plan.color }}
-                    >
-                      {plan.icon}
-                    </div>
-                  </div>
-
-                  <div className={'plan-selection-features-subscription'}>
-                    {plan.features.slice(0, 3).map((feature, index) => (
-                      <div key={index} className={'plan-selection-feature-subscription'}>
-                        <CheckCircleFilled
-                          className={'feature-icon-subscription'}
-                          style={{ color: plan.color }}
-                        />
-                        <Text>{feature}</Text>
-                      </div>
-                    ))}
-                    {plan.features.length > 3 && (
-                      <Text type="secondary" className={'more-features-subscription'}>
-                        +{plan.features.length - 3} more features
-                      </Text>
-                    )}
-                  </div>
-                </Card>
-              </Radio>
-            ))}
-          </Space>
-        </Radio.Group>
-      </Modal>
-
-      {/* Cancel Plan Modal */}
-      <Modal
-        title="Cancel Your Subscription"
-        open={isCancelModalVisible}
-        onCancel={() => setIsCancelModalVisible(false)}
-        footer={[
-          <Button key="back" onClick={() => setIsCancelModalVisible(false)}>
-            Keep Subscription
-          </Button>,
-          <Button
-            key="submit"
-            danger
-            loading={loading}
-            onClick={handleCancelPlan}
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '20px' }}>Loading pricing plans...</div>
+        ) : (
+          <Radio.Group
+            onChange={handlePlanChange}
+            value={selectedPlan}
+            className={'plan-radio-group-subscription'}
           >
-            Confirm Cancellation
-          </Button>,
-        ]}
-        className={'cancel-modal-subscription'}
-      >
-        <div className={'cancel-modal-content-subscription'}>
-          <div className={'cancel-icon-subscription'}>
-            <CloseCircleOutlined />
-          </div>
-          <Title level={4}>Are you sure you want to cancel?</Title>
-          <Paragraph>If you cancel your subscription:</Paragraph>
-          <ul className={'cancel-list-subscription'}>
-            <li>
-              You will lose access to all premium features at the end of your
-              billing period
-            </li>
-            <li>Your subscription will remain active until March 15, 2024</li>
-            <li>You can resubscribe at any time</li>
-          </ul>
-          <Paragraph type="secondary" className={'cancel-note-subscription'}>
-            We're sorry to see you go! If you're having any issues with your
-            subscription, our support team is always here to help.
-          </Paragraph>
-        </div>
+            <Space direction="vertical" className={'plan-options-subscription'}>
+              {pricingData.map((plan) => (
+                <Radio
+                  key={plan.id}
+                  value={plan.id.toString()}
+                  className={'plan-option-subscription'}
+                >
+                  <Card
+                    className={`plan-selection-card-subscription ${
+                      selectedPlan === plan.id.toString() ? 'selected-plan-card-subscription' : ''
+                    }`}
+                    bordered={false}
+                  >
+                    <div className={'plan-selection-header-subscription'}>
+                      <div>
+                        <div className={'plan-selection-title-subscription'}>
+                          <Text strong className={'plan-name-subscription'}>
+                            {plan.name}
+                          </Text>
+                          {plan.popular && <Tag color="gold">RECOMMENDED</Tag>}
+                        </div>
+                        <div className={'plan-selection-price-subscription'}>
+                          <Text className={'price-subscription'}>{formatPrice(plan.price)}</Text>
+                          <Text type="secondary" className={'period-subscription'}>
+                            /{plan.durationMonths} {plan.durationMonths > 1 ? 'months' : 'month'}
+                          </Text>
+                        </div>
+                      </div>
+                      <div
+                        className={'plan-icon-subscription'}
+                        style={{ backgroundColor: plan.durationMonths === 1 ? '#52c41a' : '#ff7875' }}
+                      >
+                        {plan.durationMonths === 1 ? <SafetyCertificateFilled /> : <CrownFilled />}
+                      </div>
+                    </div>
+
+                    <div className={'plan-selection-features-subscription'}>
+                      {(plan.durationMonths === 1 ? monthlyFeatures : lifetimeFeatures).map((feature, index) => (
+                        <div key={index} className={'plan-selection-feature-subscription'}>
+                          <CheckCircleFilled
+                            className={'feature-icon-subscription'}
+                            style={{ color: plan.durationMonths === 1 ? '#52c41a' : '#ff7875' }}
+                          />
+                          <Text>{feature}</Text>
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
+                </Radio>
+              ))}
+            </Space>
+          </Radio.Group>
+        )}
       </Modal>
     </Layout>
   );

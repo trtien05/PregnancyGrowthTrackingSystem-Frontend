@@ -17,7 +17,6 @@ const Pricing = () => {
   useEffect(() => {
     const fetchPlan = async () => {
       const response = await axiosClient.get('/membership-plans/active');
-      console.log("response", response)
       if (response.code === 200) {
         setPringData(response.data);
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import vnpayLogo from "../../assets/svg/vnpay-logo.svg"
 import momoLogo from "../../assets/svg/momo-logo.svg"
 import './Checkout.css'
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import axiosClient from '../../utils/apiCaller';
 import cookieUtils from '../../utils/cookieUtils';
@@ -26,7 +26,6 @@ function Checkout() {
       try {
         setLoading(true);
         const response = await axiosClient.get(`/membership-plans/${id}`);
-        console.log("response", response)
         if (response.code === 200) {
           setPlan(response.data);
         } else {
@@ -67,8 +66,7 @@ function Checkout() {
           membershipPlanId: id,
           userId: user.id
       }
-    );
-      console.log("response order", response)
+      );
       cookieUtils.setItem('paymentData', JSON.stringify({
         paymentMethod: paymentMethod,
         planPrice: plan.price,
@@ -79,6 +77,8 @@ function Checkout() {
           messageApi.success('Payment created successfully');
         }, 3000);
         window.location.href = response.data.paymentUrl;
+      }else{
+        messageApi.error('Error: ' + response.message);
       }
     } catch (error) {
       console.log(error);
@@ -92,6 +92,7 @@ function Checkout() {
     if (price === undefined || price === null) return "0đ";
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
   };
+  console.log("plan", plan)
   return (
     <>
       {contextHolder}
@@ -132,7 +133,7 @@ function Checkout() {
                       </div>
                       <div className='plan-features'>
                         <ul className="features-list">
-                          {id === 1 ?
+                          {id === '1' ?
                             // First plan - display first 3 features
                             features.slice(0, 3).map((feature, idx) => (
                               <li key={idx}>
@@ -191,7 +192,7 @@ function Checkout() {
                       onChange={(e) => setPaymentMethod(e.target.value)}
                     >
                       <Radio
-                        value={'momo'}
+                        value={'MOMO'}
                         style={{ visibility: 'hidden' }}
                       >
                         <figure className='checkout-payment-img-wrapper'>
@@ -204,7 +205,7 @@ function Checkout() {
                         </figure>
                       </Radio>
                       <Radio
-                        value={'vnpay'}
+                        value={'VNPAY'}
                         style={{ visibility: 'hidden' }}
                       >
                         <figure className='checkout-payment-img-wrapper'>
@@ -216,32 +217,7 @@ function Checkout() {
                           />
                         </figure>
                       </Radio>
-                      {/* <div style={{ height: `100%`, width: `100%` }}>
-                      <Title level={2}>Overseas?</Title>
-                    </div>
-                    <div style={{ height: `100%`, width: `70%`, marginBottom: `10px` }}>
-                      <Text>We will use
-                        <span style={{ fontWeight: `bold` }}> VCB&apos;s latest currency transfer rate</span>.</Text>
-                      <br />
-                      <Text>Paypal also charges you additional fee of
-                        <span style={{ fontWeight: `bold` }}> 4.4% rate </span>
-                        + <span style={{ fontWeight: `bold` }}>0.3$ fixed fee</span> per transaction.
-                      </Text>
-                    </div> */}
-                      {/* <Radio
-                      value={'paypal'}
-                      style={{ visibility: 'hidden' }}
-                    >
-                      <figure className='checkout-payment-img-wrapper' style={{ width: `80px`, height: `80px`, marginTop: `0` }}>
-                        <img
-                          src={paypalLogo}
-                          loading="lazy"
-                          decoding="async"
-                          alt="PAYPAL"
-                        />
-                      </figure>
-                    </Radio> */}
-
+                    
                     </Radio.Group>
                   </div>
                   <div className='btn-div'>

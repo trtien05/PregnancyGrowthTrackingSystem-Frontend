@@ -49,12 +49,8 @@ function PaymentResult() {
             if (response.code === 200) {
               setPaymentStatus('success');
               cookieUtils.removeItem('paymentData');
-              
-              // Update payment status in the user's token instead of replacing the token
               const currentToken = cookieUtils.getItem(config.cookies.token);
               if (currentToken && response.data.token) {
-                // Merge the existing token with the new payment information
-                // This assumes the server returns only the updated fields in response.token
                 const updatedToken = response.data.token;
                 cookieUtils.setItem(config.cookies.token, updatedToken);
               } 
@@ -71,14 +67,10 @@ function PaymentResult() {
           const response = await axiosClient.get('/payment/check/momo', {
             params: { orderId }
           });
-
           if (response.code === 200) {
             cookieUtils.removeItem('paymentData');
-            
-            // Update payment status in the user's token instead of replacing the token
             const currentToken = cookieUtils.getItem(config.cookies.token);
-            if (currentToken && response.token) {
-              // Merge the existing token with the new payment information
+            if (currentToken && response.data.token) {
               const updatedToken = response.data.token;
               cookieUtils.setItem(config.cookies.token, updatedToken);
             }
