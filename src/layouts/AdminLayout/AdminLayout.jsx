@@ -1,4 +1,4 @@
-import { Layout} from 'antd';
+import { Layout } from 'antd';
 import {
   HomeOutlined,
   DesktopOutlined,
@@ -39,11 +39,6 @@ const AdminLayout = () => {
     },
     {
       key: '5',
-      icon: <EyeOutlined />,
-      label: 'Mother status',
-    },
-    {
-      key: '6',
       icon: <BellOutlined />,
       label: <Link to={config.routes.admin.growthMatrics}>Grouth Matrics</Link>,
     },
@@ -56,7 +51,7 @@ const AdminLayout = () => {
         <Header className="header">
           {/* <HeaderAuth user={user} onLogout={handleLogout} /> */}
         </Header>
-  
+
         <Content className="content">
           {/* Admin Content */}
           <Outlet />

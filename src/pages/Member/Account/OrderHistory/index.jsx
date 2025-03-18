@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axiosClient from '../../../../utils/apiCaller'
 import { Table, Tag, Empty } from 'antd'
 import './OderHistory.css'
@@ -8,7 +8,7 @@ function OrderHistoryPage() {
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalElements, setTotalElements] = useState(0)
-  
+
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -54,10 +54,10 @@ function OrderHistoryPage() {
   // Define table columns
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
+      title: 'No.',
+      key: 'index',
       width: 70,
+      render: (_, __, index) => (currentPage - 1) * 5 + index + 1,
     },
     {
       title: 'Amount',
@@ -98,15 +98,15 @@ function OrderHistoryPage() {
       key: 'status',
       render: (status) => {
         if (!status) return <Tag color="default">UNKNOWN</Tag>;
-        
+
         let color = 'green';
-        
+
         if (status === 'PENDING') {
           color = 'orange';
         } else if (status === 'FAILED') {
           color = 'red';
         }
-        
+
         return (
           <Tag color={color}>
             {status}
@@ -125,13 +125,12 @@ function OrderHistoryPage() {
         dataSource={order}
         rowKey="id"
         loading={loading}
-        pagination={{ 
+        pagination={{
           pageSize: 5,
           total: totalElements,
           current: currentPage,
           onChange: handlePageChange,
           showSizeChanger: false,
-          showTotal: (total) => `Total ${total} transactions`
         }}
         locale={{
           emptyText: <Empty description="No transaction history found" />

@@ -36,7 +36,7 @@ const SubscriptionPage = () => {
   const [subscriptionPlan, setSubscriptionPlan] = useState(null);
   const [pricingData, setPricingData] = useState([]);
 
-  const isMonthlyPlan = subscriptionPlan?.amount === 400000;
+  const isMonthlyPlan = subscriptionPlan?.order?.amount === 400000;
   const currentPlan = isMonthlyPlan ? '1' : '2';
   const planColor = isMonthlyPlan ? '#52c41a' : '#ff7875';
   const planIcon = isMonthlyPlan ? <SafetyCertificateFilled /> : <CrownFilled />;
@@ -48,7 +48,7 @@ const SubscriptionPage = () => {
     const fetchSubscriptionPlan = async () => {
       try {
         const response = await axiosClient.get('/orders/latest');
-        if(response.code === 200) {
+        if (response.code === 200) {
           setSubscriptionPlan(response.data);
         }
       }
@@ -185,11 +185,11 @@ const SubscriptionPage = () => {
                     /{planPeriod}
                   </Text>
                 </div>
-                
+
               </div>
               <div className={'subscription-dates'}>
                 <Text type="secondary">
-                  Start: <Text strong>{formatDate(subscriptionPlan?.startDate)}</Text> - 
+                  Start: <Text strong>{formatDate(subscriptionPlan?.startDate)}</Text> -
                   End:  <Text strong>{formatDate(subscriptionPlan?.endDate)}</Text>
                 </Text>
               </div>
@@ -207,7 +207,7 @@ const SubscriptionPage = () => {
                     <div className={'feature-item-subscription'}>
                       <CheckCircleFilled
                         className={'feature-icon-subscription'}
-                        style={{ color: planColor }}                     
+                        style={{ color: planColor }}
                       />
                       <Text>{feature}</Text>
                     </div>
@@ -262,9 +262,8 @@ const SubscriptionPage = () => {
                   className={'plan-option-subscription'}
                 >
                   <Card
-                    className={`plan-selection-card-subscription ${
-                      selectedPlan === plan.id.toString() ? 'selected-plan-card-subscription' : ''
-                    }`}
+                    className={`plan-selection-card-subscription ${selectedPlan === plan.id.toString() ? 'selected-plan-card-subscription' : ''
+                      }`}
                     bordered={false}
                   >
                     <div className={'plan-selection-header-subscription'}>

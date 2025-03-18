@@ -67,8 +67,8 @@ const MenuSider = () => {
       label: 'Fetus',
       children: fetusChildren,
     },
-    { key: '5', icon: <EyeOutlined />, label: 'Mother status' },
-    { key: '6', icon: <BellOutlined />, label: 'Fetal growth chart' },
+    // { key: '5', icon: <EyeOutlined />, label: 'Mother status' },
+    // { key: '6', icon: <BellOutlined />, label: 'Fetal growth chart' },
   ];
 
 

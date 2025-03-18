@@ -1,7 +1,20 @@
 .wrapper-profile {
   background-color: #fdf2f4;
 }
-
+.ant-picker-outlined:hover{
+  border-color: var(--second-color);
+}
+.ant-picker-outlined:focus-within{
+  border-color: var(--second-color);
+}
+.calculate-due-date{
+  font-size: 14px;
+  color: rgb(61, 61, 61);
+}
+.calculate-due-date:hover{
+  color: var(--second-color);
+  cursor: pointer;
+}
 .container-profile {
   max-width: 1200px;
   margin: 0 auto;
