@@ -39,6 +39,7 @@ function Fetus(props) {
 
 
   const handleFetusClick = (e) => {
+    fetchFetus()
     e.preventDefault();
     if (fetus.length !== 0) {
       fetchFetus()

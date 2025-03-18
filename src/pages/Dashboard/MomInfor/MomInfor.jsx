@@ -3,6 +3,7 @@ import { Button, Card, Carousel } from 'antd';
 import './MomInfor.css';
 import { useParams } from 'react-router-dom';
 import { weeksImages } from './WeekImage';
+import AddPregnancy from './AddPregnancy';
 
 const MomInfo = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -91,12 +92,12 @@ const MomInfo = () => {
       <div>
         <p>This is the content for week {activeIndex + 1}.</p>
       </div>
-      {/* <AddPregnancy
+      <AddPregnancy
         id={id || ''}
         week={activeIndex + 1}
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-      /> */}
+      />
     </div>
   );
 };

@@ -26,6 +26,7 @@ const routes = {
     dashboard: '/dashboard',
     manageMomInfor: '/dashboard/manage-mom-infor',
     dashboardFetus: '/dashboard/fetus',
+    dashboardFetusDetail: '/dashboard/fetus/:id',
     paymentResult: '/confirm-payment',
   },
   admin: {

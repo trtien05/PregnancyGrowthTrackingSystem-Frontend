@@ -33,7 +33,7 @@ const MainRouter = () => {
 const DashboardRouter = () => {
   const { role } = useAuth();
   return role === 'ROLE_member' ? <CustomerDashboard />
-  : <Navigate to={config.routes.public.home} />;
+    : <Navigate to={config.routes.public.home} />;
 };
 
 const AuthenticatedUserRouter = () => {
@@ -63,8 +63,8 @@ const dashboardRoutes = {
   path: config.routes.customer.dashboard,
   element: <DashboardRouter />,
   children: [
-    { path: config.routes.customer.manageMomInfor, element: <MomInfor /> },
-    { path: config.routes.customer.dashboardFetus, element: <DashboardFetus /> }
+    { path: config.routes.customer.manageMomInfor, element: <DashboardFetus /> },
+    { path: config.routes.customer.dashboardFetusDetail, element: <MomInfor /> }
   ]
 }
 
@@ -76,7 +76,7 @@ const customerRoutes = {
     { path: config.routes.customer.paymentResult, element: <PaymentResult /> },
     { path: config.routes.customer.profile, element: <SettingsPage /> },
     { path: config.routes.customer.profileInformation, element: <UpdateUserForm /> },
-    {path: config.routes.customer.subscription, element: <SubscriptionPage />},
+    { path: config.routes.customer.subscription, element: <SubscriptionPage /> },
     { path: config.routes.customer.oderHistory, element: <OrderHistoryPage /> },
     { path: config.routes.customer.pregnancy, element: <PregnancyPage /> },
 

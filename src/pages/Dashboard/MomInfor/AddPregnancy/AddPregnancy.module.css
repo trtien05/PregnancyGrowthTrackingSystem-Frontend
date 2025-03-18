@@ -1,0 +1,36 @@
+.form :global(.ant-input) {
+  border-radius: 8px;
+  padding: 8px;
+  height: auto;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+.form :global(.ant-select-selector) {
+  border-color: #d23f57 !important;
+  box-shadow: 0 0 0 2px rgba(210, 63, 87, 0.2) !important;
+
+  border-radius: 8px;
+  padding: 8px;
+  height: auto;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form :global(.ant-form-item-label > label) {
+  color: #4a4a4a;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.form :global(.ant-input:hover),
+.form :global(.ant-input:focus),
+.form :global(.ant-input-focused) {
+  border-color: #d23f57 !important;
+  box-shadow: 0 0 0 2px rgba(210, 63, 87, 0.2) !important;
+}
+
+.form :global(.ant-select-selector:hover),
+.form :global(.ant-select-selector:focus),
+.form :global(.ant-select-focused) {
+  border-color: #d23f57 !important;
+}
