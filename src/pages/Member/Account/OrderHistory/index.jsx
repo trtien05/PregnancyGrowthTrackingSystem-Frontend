@@ -6,6 +6,8 @@ import './OderHistory.css'
 function OrderHistoryPage() {
   const [order, setOrder] = useState([])
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalElements, setTotalElements] = useState(0)
   
   useEffect(() => {
     const fetchOrder = async () => {
@@ -13,7 +15,8 @@ function OrderHistoryPage() {
         setLoading(true)
         const response = await axiosClient.get('/orders/my-orders');
         if (response.code === 200) {
-          setOrder(response.data)
+          setOrder(response.data.content)
+          setTotalElements(response.data.totalElements)
         }
       } catch (error) {
         console.log("Failed to fetch order: ", error)
@@ -29,10 +32,8 @@ function OrderHistoryPage() {
     if (!dateString) return "-";
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+      month: '2-digit',
+      day: '2-digit'
     });
   };
 
@@ -41,6 +42,13 @@ function OrderHistoryPage() {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
       .format(amount)
       .replace('₫', 'VND');
+  };
+
+  // Handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    // If you need to fetch data for specific pages from API
+    // You could add pagination logic here
   };
 
   // Define table columns
@@ -80,7 +88,7 @@ function OrderHistoryPage() {
       key: 'membershipPeriod',
       render: (record) => (
         <span>
-          {formatDate(record['startDate'])} - {formatDate(record.endDate)}
+          {formatDate(record.startDate)} - {formatDate(record.endDate)}
         </span>
       ),
     },
@@ -117,7 +125,14 @@ function OrderHistoryPage() {
         dataSource={order}
         rowKey="id"
         loading={loading}
-        pagination={{ pageSize: 5 }}
+        pagination={{ 
+          pageSize: 5,
+          total: totalElements,
+          current: currentPage,
+          onChange: handlePageChange,
+          showSizeChanger: false,
+          showTotal: (total) => `Total ${total} transactions`
+        }}
         locale={{
           emptyText: <Empty description="No transaction history found" />
         }}

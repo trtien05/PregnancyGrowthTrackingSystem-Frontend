@@ -21,6 +21,7 @@ import ForgotPasswod from '../pages/ForgotPassword'
 import UpdateUserForm from '../pages/Member/Account/Profile/index'
 import SubscriptionPage from '../pages/Member/Account/Subscription'
 import OrderHistoryPage from '../pages/Member/Account/OrderHistory'
+import PregnancyPage from '../pages/Member/Account/Pregnancy'
 
 //* ====================  Authorization for PUBLIC ==================== */
 const MainRouter = () => {
@@ -77,6 +78,7 @@ const customerRoutes = {
     { path: config.routes.customer.profileInformation, element: <UpdateUserForm /> },
     {path: config.routes.customer.subscription, element: <SubscriptionPage />},
     { path: config.routes.customer.oderHistory, element: <OrderHistoryPage /> },
+    { path: config.routes.customer.pregnancy, element: <PregnancyPage /> },
 
 
 

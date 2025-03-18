@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import config from '../../../config';
 import './Setting.css';
 import useAuth from '../../../hooks/useAuth';
+import { BabyIcon } from 'lucide-react';
 
 const { Title } = Typography;
 
@@ -40,6 +41,17 @@ const SettingsPage = () => {
           key: 'fetus',
           icon: <HeartOutlined />,
           label: 'Your Babies',
+        },
+      ],
+    },
+    {
+      title: 'Pregnancy',
+      items: [
+        {
+          key: 'pregnancy',
+          icon: <BabyIcon size={22} style={{marginTop:'8px'}} />,
+          label: 'Manage your pregnancy',
+          link: config.routes.customer.pregnancy,
         },
       ],
     },
