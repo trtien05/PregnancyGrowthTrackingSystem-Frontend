@@ -4,8 +4,6 @@ import styles from './AddPregnancy.module.css';
 import axiosClient from '../../../../utils/apiCaller';
 
 const AddPregnancy = ({ week, open, onClose, id }) => {
-  console.log("id", id);
-  console.log("week", week);
   const [loading, setLoading] = useState(false);
   const [fetchingData, setFetchingData] = useState(false);
   const [form] = Form.useForm();
@@ -17,7 +15,6 @@ const AddPregnancy = ({ week, open, onClose, id }) => {
         try {
           setFetchingData(true);
           const response = await axiosClient.get(`/metrics/week/${week}`);
-          console.log("API response:", response);
 
           if (response.code === 200) {
             setFetusStandardsByWeek(response.data);
@@ -37,7 +34,6 @@ const AddPregnancy = ({ week, open, onClose, id }) => {
     }
   }, [open, week]);
 
-  console.log("fetusStandardsByWeek", fetusStandardsByWeek);
 
   const handleSubmit = async (values) => {
     if (!id) {
@@ -57,15 +53,15 @@ const AddPregnancy = ({ week, open, onClose, id }) => {
 
       console.log("Sending formatted data:", formattedData);
 
-      // // Submit data to server
-      // const response = await axiosClient.post(`/pregnancies/${id}/metrics`, formattedData);
+      // Submit data to server
+      const response = await axiosClient.post(`/fetus-metrics?week=${week}`, formattedData);
 
-      // if (response.code === 200 || response.code === 201) {
-      //   message.success('Metrics saved successfully');
-      //   onClose();
-      // } else {
-      //   message.error('Failed to save metrics');
-      // }
+      if (response.code === 200 || response.code === 201) {
+        message.success('Metrics saved successfully');
+        onClose();
+      } else {
+        message.error('Failed to save metrics');
+      }
     } catch (error) {
       message.error('An error occurred while saving metrics');
       console.error('error', error);
