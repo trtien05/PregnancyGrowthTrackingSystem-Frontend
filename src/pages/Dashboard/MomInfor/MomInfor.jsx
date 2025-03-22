@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { weeksImages } from './WeekImage';
 import AddPregnancy from './AddPregnancy';
 import axiosClient from '../../../utils/apiCaller';
-import ChartRadar from '../../../components/ChartRadar';
+import ColumnChart from '../../../components/ColumnChart';
 
 const MomInfo = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -111,25 +111,39 @@ const MomInfo = () => {
       </div>
 
       <div>
-        <AddPregnancy
-          id={id || ''}
-          week={activeIndex + 1}
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          fetchAllGrowthMetricByWeek={fetchGrowthMetricByWeek}
-        />
-        {Array.isArray(metrics) && metrics.length > 2 ? (
-          <ChartRadar week={activeIndex + 1} id={id} metrics={metrics} />
-        ) : (
-          <div className="no-data-message">
-            No sufficient data available for Week {activeIndex + 1}. Chart requires at least 3 metrics.
+        <div>
+          <Button
+            type="primary"
+            onClick={() => setIsModalOpen(true)}
+            style={{ marginTop: '20px' }}
+            className={'update-button-subscription'}
+          >
+            Add Pregnancy
+          </Button>
+        </div>
+
+        {/* Display metrics data if available */}
+        {metrics && metrics.length > 0 && (
+          <div className="metrics-container" style={{ marginTop: '20px' }}>
+            <h2>Week {week} Metrics</h2>
+            <ColumnChart
+              fetusId={id}
+              week={week}
+              metrics={metrics}
+            />
           </div>
         )}
       </div>
 
 
+      <AddPregnancy
+        id={id || ''}
+        week={activeIndex + 1}
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        fetchAllGrowthMetricByWeek={fetchGrowthMetricByWeek}
+      />
     </div>
   );
 };
-
 export default MomInfo;
