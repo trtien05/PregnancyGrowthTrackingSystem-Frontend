@@ -1,0 +1,27 @@
+
+.formItemLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.metricName {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.metricUnit {
+  margin-left: 4px;
+  color: #666;
+  font-size: 13px;
+}
+
+.metricRange {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+
+.form {
+  margin-top: 16px;
+}

@@ -22,6 +22,7 @@
 }
 .indiana-card.active-card {
   border: 2px solid #ff6600;
+  box-shadow: #ff6600 0px 2px 8px 0px;
 }
 .indiana-scroll-container {
   overflow-x: auto;
