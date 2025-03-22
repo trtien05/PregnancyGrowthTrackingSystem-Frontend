@@ -14,50 +14,50 @@ function ChartRadar({ week, id }) {
   useEffect(() => {
     if (id && week) {
       const fetchRadarGrowhChart = async () => {
-        try{
+        try {
           const response = await axiosClient.get(`/dashboard/radar`, {
             params: {
-              fetusId : id,
+              fetusId: id,
               week: week
             }
           });
-          if(response.code === 200){
+          if (response.code === 200) {
             setRadarChartGrowthMetricsByWeek(response.data)
           }
-        } catch (error){
+        } catch (error) {
           console.log("Error", error)
         }
       }
       fetchRadarGrowhChart()
     }
-  }, [ id, week]);
-  
+  }, [id, week]);
+
   const { data, max } = radarChartGrowthMetricsByWeek;
   console.log("data", data);
-  
+
   // Process data for Recharts radar chart
   const processedData = [];
   const metrics = new Set();
-  
+
   if (data) {
     // Extract unique metric names
     data.forEach(item => {
       metrics.add(item.name);
     });
-    
+
     // Create data structure for each metric
     metrics.forEach(metric => {
       const metricData = { name: metric };
-      
+
       // Find values for this metric
       const maxValue = data.find(d => d.type === 'max' && d.name === metric)?.value || 0;
       const minValue = data.find(d => d.type === 'min' && d.name === metric)?.value || 0;
       const actualValue = data.find(d => d.type === 'value' && d.name === metric)?.value || 0;
-      
+
       metricData.max = maxValue;
       metricData.min = minValue;
       metricData.value = actualValue;
-      
+
       processedData.push(metricData);
     });
   }
@@ -70,7 +70,7 @@ function ChartRadar({ week, id }) {
             <PolarGrid />
             <PolarAngleAxis dataKey="name" />
             <PolarRadiusAxis angle={30} domain={[0, max]} />
-            
+
             <Radar
               name="Maximum Value"
               dataKey="max"
@@ -78,7 +78,7 @@ function ChartRadar({ week, id }) {
               fill="#8884d8"
               fillOpacity={0.2}
             />
-            
+
             <Radar
               name="Minimum Value"
               dataKey="min"
@@ -86,7 +86,7 @@ function ChartRadar({ week, id }) {
               fill="#82ca9d"
               fillOpacity={0.2}
             />
-            
+
             <Radar
               name="Actual Value"
               dataKey="value"
@@ -94,7 +94,7 @@ function ChartRadar({ week, id }) {
               fill="#ff8042"
               fillOpacity={0.6}
             />
-            
+
             <Legend />
             <Tooltip />
           </RadarChart>

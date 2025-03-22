@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { weeksImages } from './WeekImage';
 import AddPregnancy from './AddPregnancy';
 import axiosClient from '../../../utils/apiCaller';
+import ChartRadar from '../../../components/ChartRadar';
 
 const MomInfo = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -12,6 +13,36 @@ const MomInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [weeks, setWeeks] = useState([]);
   const scrollContainerRef = useRef(null);
+  const [metrics, setMetrics] = useState([]);
+  const [week, setWeek] = useState(1);
+
+  useEffect(() => {
+    const fetchMetric = async () => {
+      try {
+        const response = await axiosClient.get(`/metrics/week/${week}`);
+        if (response.code === 200) {
+          setMetrics(response.data);
+          console.log(`Week ${week} metrics:`, response.data); // Debug metrics data
+        }
+      } catch (error) {
+        console.error('Failed to fetch metric: ', error);
+      }
+    }
+    fetchMetric();
+  }, [week]);
+
+  // Ensure activeIndex and week are synchronized
+  useEffect(() => {
+    setActiveIndex(week - 1);
+  }, [week]);
+
+  const handleMouseDown = (e, index) => {
+    if ((e.target).closest('.indiana-card')) {
+      setIsDragging(true);
+      setActiveIndex(index);
+      setWeek(index + 1); // Update week when card is selected
+    }
+  };
   const { id } = useParams();
 
   const fetchGrowthMetricByWeek = async () => {
@@ -31,15 +62,6 @@ const MomInfo = () => {
     }
   }, [id]);
   console.log("weeks", weeks);
-
-
-  const handleMouseDown = (e, index) => {
-    if ((e.target).closest('.indiana-card')) {
-      setIsDragging(true);
-      setActiveIndex(index);
-      setWeek(index + 1); // Update week when card is selected
-    }
-  };
 
   const handleMouseUp = () => {
     setIsDragging(false);
@@ -69,6 +91,8 @@ const MomInfo = () => {
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseUp}
               onMouseUp={handleMouseUp}
+              onClick={() => setWeek(index + 1)}
+
             >
               <div className="left-card">
                 <div className="week-number">{index + 1}</div>
@@ -86,30 +110,24 @@ const MomInfo = () => {
         })}
       </div>
 
-      <div className="content-box">
-        <h2>Week {week} Details</h2>
-        <Button onClick={() => setIsModalOpen(true)} className="content-button">
-          Add Pregnancy Details
-        </Button>
-      </div>
-
       <div>
+        <AddPregnancy
+          id={id || ''}
+          week={activeIndex + 1}
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          fetchAllGrowthMetricByWeek={fetchGrowthMetricByWeek}
+        />
         {Array.isArray(metrics) && metrics.length > 2 ? (
-          <ChartRadar week={week} id={id} metrics={metrics} />
+          <ChartRadar week={activeIndex + 1} id={id} metrics={metrics} />
         ) : (
           <div className="no-data-message">
-            No sufficient data available for Week {week}. Chart requires at least 3 metrics.
+            No sufficient data available for Week {activeIndex + 1}. Chart requires at least 3 metrics.
           </div>
         )}
       </div>
 
-      <AddPregnancy
-        id={id || ''}
-        week={week}
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        fetchAllGrowthMetricByWeek={fetchGrowthMetricByWeek}
-      />
+
     </div>
   );
 };

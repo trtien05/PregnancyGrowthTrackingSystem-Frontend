@@ -49,14 +49,12 @@ const AddPregnancy = ({ week, open, onClose, id, fetchAllGrowthMetricByWeek }) =
           setFetchingData(true);
           setExistingMetrics([]); // Clear existing metrics when fetching new ones
           const response = await axiosClient.get(`/fetus-metrics/fetus/${id}/weeks/${week}`);
-          console.log("Existing metrics response for week " + week + ":", response);
 
           if (response.code === 200) {
             setExistingMetrics(response.data || []);
 
             // Only pre-populate the form if response.data.length > 0
             if (response.data && response.data.length > 0) {
-              console.log("Pre-filling form with existing data for week " + week);
               const formValues = {};
               response.data.forEach(metric => {
                 formValues[metric.metricName] = metric.value;
@@ -64,7 +62,6 @@ const AddPregnancy = ({ week, open, onClose, id, fetchAllGrowthMetricByWeek }) =
               form.setFieldsValue(formValues);
               message.info('Loaded existing data for this week');
             } else {
-              console.log("No existing data for week " + week + ", form not pre-filled");
               form.resetFields(); // Ensure form is reset if no data exists
             }
           } else {
