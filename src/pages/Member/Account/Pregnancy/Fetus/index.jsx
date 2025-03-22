@@ -39,10 +39,8 @@ function Fetus(props) {
 
 
   const handleFetusClick = (e) => {
-    fetchFetus()
     e.preventDefault();
     if (fetus.length !== 0) {
-      fetchFetus()
       setIsModalVisible(true);
     } else {
       setIsAddModalVisible(true);
@@ -79,6 +77,7 @@ function Fetus(props) {
         message.success("Fetus information added successfully");
         setIsAddModalVisible(false);
         setFetusName('');
+        fetchFetus()
         setFetusGender('unknown');
       } else {
         message.error("Failed to add fetus information");

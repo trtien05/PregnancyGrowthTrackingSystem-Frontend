@@ -82,7 +82,47 @@ const AddPregnancy = ({ week, open, onClose, id, fetchAllGrowthMetricByWeek }) =
     }
   }, [open, id, week, form]);
 
-  console.log("fetusStandardsByWeek", fetusStandardsByWeek);
+  // Fetch existing metrics for this fetus and week
+  useEffect(() => {
+    if (open && id && week) {
+      const fetchExistingMetrics = async () => {
+        try {
+          setFetchingData(true);
+          setExistingMetrics([]); // Clear existing metrics when fetching new ones
+          const response = await axiosClient.get(`/fetus-metrics/fetus/${id}/weeks/${week}`);
+          console.log("Existing metrics response for week " + week + ":", response);
+
+          if (response.code === 200) {
+            setExistingMetrics(response.data || []);
+
+            // Only pre-populate the form if response.data.length > 0
+            if (response.data && response.data.length > 0) {
+              console.log("Pre-filling form with existing data for week " + week);
+              const formValues = {};
+              response.data.forEach(metric => {
+                formValues[metric.metricName] = metric.value;
+              });
+              form.setFieldsValue(formValues);
+              message.info('Loaded existing data for this week');
+            } else {
+              console.log("No existing data for week " + week + ", form not pre-filled");
+              form.resetFields(); // Ensure form is reset if no data exists
+            }
+          } else {
+            console.error('API error when fetching existing metrics:', response);
+            form.resetFields(); // Reset form on error
+          }
+        } catch (error) {
+          console.error("Error fetching existing metrics for week " + week, error);
+          form.resetFields(); // Reset form on error
+        } finally {
+          setFetchingData(false);
+        }
+      };
+      fetchExistingMetrics();
+    }
+  }, [open, id, week, form]);
+
 
   const handleSubmit = async (values) => {
     if (!id) {
@@ -108,6 +148,12 @@ const AddPregnancy = ({ week, open, onClose, id, fetchAllGrowthMetricByWeek }) =
       if (response.code === 200 || response.code === 201) {
         message.success('Metrics saved successfully');
         fetchAllGrowthMetricByWeek(); // Refresh metrics data
+        onClose();
+      } else {
+        message.error('Failed to save metrics');
+      }
+      if (response.code === 200 || response.code === 201) {
+        message.success('Metrics saved successfully');
         onClose();
       } else {
         message.error('Failed to save metrics');

@@ -37,7 +37,7 @@ const MomInfo = () => {
     if ((e.target).closest('.indiana-card')) {
       setIsDragging(true);
       setActiveIndex(index);
-
+      setWeek(index + 1); // Update week when card is selected
     }
   };
 
@@ -54,11 +54,9 @@ const MomInfo = () => {
     <div className="pregnancy-container">
       <h1 className="pregnancy-title">My pregnancy week by week</h1>
 
-
       <div
         ref={scrollContainerRef}
         className={`scrollContainerTimeline indiana-scroll-container ${isDragging ? 'indiana-scroll-container--dragging' : ''}`}
-
       >
         {[...Array(41)].map((_, index) => {
           const hasMetrics = weeks.some(week => week === index + 1);
@@ -87,23 +85,27 @@ const MomInfo = () => {
           );
         })}
       </div>
+
       <div className="content-box">
-
-        <h2>Week {activeIndex + 1} Details</h2>
-
-
+        <h2>Week {week} Details</h2>
         <Button onClick={() => setIsModalOpen(true)} className="content-button">
           Add Pregnancy Details
         </Button>
-
-
       </div>
+
       <div>
-        <p>This is the content for week {activeIndex + 1}.</p>
+        {Array.isArray(metrics) && metrics.length > 2 ? (
+          <ChartRadar week={week} id={id} metrics={metrics} />
+        ) : (
+          <div className="no-data-message">
+            No sufficient data available for Week {week}. Chart requires at least 3 metrics.
+          </div>
+        )}
       </div>
+
       <AddPregnancy
         id={id || ''}
-        week={activeIndex + 1}
+        week={week}
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         fetchAllGrowthMetricByWeek={fetchGrowthMetricByWeek}
