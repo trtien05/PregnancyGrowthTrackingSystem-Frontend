@@ -21,7 +21,7 @@ const BarChart = ({ fetusId, week, metrics }) => {
         const dataPromises = metrics
           .filter(metric => metric && metric.metricId)
           .map(async (metric) => {
-            const response = await axiosClient.get(`/dashboard/column?fetusId=${fetusId}&metricId=${metric.metricId}&week=${week}`);
+            const response = await axiosClient.get(`/dashboard/bar?fetusId=${fetusId}&week=${week}`);
 
             if (response.code === 200 && response.data) {
               return response.data;
@@ -49,24 +49,25 @@ const BarChart = ({ fetusId, week, metrics }) => {
     if (!chartData || chartData.length === 0) return;
 
     const formattedData = chartData.map((item, index) => {
-      // Extract metric info
-      const metricName = item.metric.name;
-      const unit = item.metric.unit;
-      
+      // Extract metric info from the first data point to get name
+      const firstDataPoint = item.data[0];
+      const metricName = firstDataPoint ? firstDataPoint.name : item.metric?.name || 'Unknown';
+      const unit = item.metric?.unit || '';
+
       // Find min, max and value data points
       const valueData = item.data.find(d => d.type === 'value');
       const minData = item.data.find(d => d.type === 'min');
       const maxData = item.data.find(d => d.type === 'max');
-      
+
       const value = valueData ? valueData.value : null;
       const minValue = minData ? minData.value : null;
       const maxValue = maxData ? maxData.value : null;
-      
+
       // Determine status
       let status = 'normal';
       let statusText = 'Normal';
       let statusColor = '#4caf50';
-      
+
       if (value !== null && minValue !== null && maxValue !== null) {
         if (value < minValue) {
           status = 'low';
@@ -78,13 +79,7 @@ const BarChart = ({ fetusId, week, metrics }) => {
           statusColor = '#ff5252';
         }
       }
-      
-      // Create a single data item for this metric's chart
-      const chartData = [{
-        name: metricName,
-        value: value
-      }];
-      
+
       return {
         id: `metric_${index}`,
         metricName,
@@ -95,16 +90,34 @@ const BarChart = ({ fetusId, week, metrics }) => {
         status,
         statusText,
         statusColor,
-        color: COLORS[index % COLORS.length],
-        chartData
+        color: COLORS[index % COLORS.length]
       };
     });
-    
+
     setProcessedData(formattedData);
   }, [chartData]);
 
   // Render a single bar chart for one metric
   const renderMetricBarChart = (metric) => {
+    // Create a comparative bar chart data structure
+    const visualizationData = [
+      {
+        name: "Min",
+        value: metric.minValue,
+        fill: "#8884d8"
+      },
+      {
+        name: "Current",
+        value: metric.value,
+        fill: metric.status === 'normal' ? '#4caf50' : '#ff5252'
+      },
+      {
+        name: "Max",
+        value: metric.maxValue,
+        fill: "#82ca9d"
+      }
+    ];
+
     return (
       <Card
         title={metric.metricName}
@@ -116,60 +129,42 @@ const BarChart = ({ fetusId, week, metrics }) => {
           <Text strong>Value: {metric.value} {metric.unit}</Text>
           <Text style={{ color: metric.statusColor }}>{metric.statusText}</Text>
         </div>
-        
+
         <div style={{ height: 200 }}>
           <ResponsiveContainer width="100%" height="100%">
             <RechartsBarChart
-              data={[{ name: metric.metricName, value: metric.value }]}
+              data={visualizationData}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              layout="vertical"
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="name" />
-              <YAxis 
-                domain={[
-                  // Set domain to ensure min/max lines are visible
-                  Math.min(metric.minValue * 0.9 || 0, metric.value * 0.9 || 0),
-                  Math.max(metric.maxValue * 1.1 || 100, metric.value * 1.1 || 100)
-                ]}
+              <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+              <XAxis type="number" />
+              <YAxis
+                type="category"
+                dataKey="name"
+                width={80}
+                tick={{ fontSize: 12 }}
               />
               <Tooltip
-                formatter={(value) => [`${value} ${metric.unit}`, metric.metricName]}
-                labelFormatter={() => metric.metricName}
+                formatter={(value) => [`${value} ${metric.unit}`, ""]}
+                labelFormatter={(label) => `${label} Value`}
               />
-              <Bar dataKey="value" fill={metric.color} name={metric.metricName} />
-              
-              {/* Add reference lines for min and max values */}
-              {metric.minValue !== null && (
-                <ReferenceLine 
-                  y={metric.minValue} 
-                  stroke="#666" 
-                  strokeDasharray="3 3" 
-                  label={{ 
-                    value: `Min: ${metric.minValue}`, 
-                    position: 'insideLeft', 
-                    fontSize: 10 
-                  }} 
-                />
-              )}
-              {metric.maxValue !== null && (
-                <ReferenceLine 
-                  y={metric.maxValue} 
-                  stroke="#666" 
-                  strokeDasharray="3 3" 
-                  label={{ 
-                    value: `Max: ${metric.maxValue}`, 
-                    position: 'insideLeft', 
-                    fontSize: 10 
-                  }} 
-                />
-              )}
+              <Bar
+                dataKey="value"
+                background={{ fill: '#eee' }}
+                label={{
+                  position: 'right',
+                  formatter: (value) => `${value} ${metric.unit}`,
+                  fontSize: 12
+                }}
+              />
             </RechartsBarChart>
           </ResponsiveContainer>
         </div>
-        
+
         <div style={{ marginTop: 8, textAlign: 'center' }}>
           <Text type="secondary" style={{ fontSize: '12px' }}>
-            {metric.minValue !== null && metric.maxValue !== null 
+            {metric.minValue !== null && metric.maxValue !== null
               ? `Normal range: ${metric.minValue} - ${metric.maxValue} ${metric.unit}`
               : 'Normal range not available'}
           </Text>
@@ -197,16 +192,23 @@ const BarChart = ({ fetusId, week, metrics }) => {
         borderRadius: 10,
         boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
         overflow: 'hidden',
-        background: 'white'
+        background: 'white',
       }}
     >
       <Title level={4} style={{ textAlign: 'center', marginBottom: 16 }}>
         Baby Growth Metrics - Week {week}
       </Title>
-      
-      <Row gutter={[16, 16]}>
+      <Row
+        gutter={[16, 16]}
+        justify={processedData.length === 1 ? 'center' : 'start'}
+      >
         {processedData.map((metric, index) => (
-          <Col xs={24} sm={12} lg={8} key={index}>
+          <Col
+            xs={24}
+            sm={processedData.length === 1 ? 16 : 12}
+            lg={processedData.length === 1 ? 12 : 8}
+            key={index}
+          >
             {renderMetricBarChart(metric)}
           </Col>
         ))}
@@ -214,7 +216,8 @@ const BarChart = ({ fetusId, week, metrics }) => {
 
       <div style={{ textAlign: 'center', marginTop: 16, padding: '0 16px' }}>
         <Text type="secondary">
-          Each chart shows the measured value and normal range for a specific metric.
+          Biểu đồ hiển thị các chỉ số thai nhi trong tuần {week}.
+          Cột màu biểu thị giá trị đo được, đường đứt nét biểu thị giới hạn bình thường.
         </Text>
       </div>
     </Card>

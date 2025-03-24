@@ -14,12 +14,6 @@ import useAuth from '../../hooks/useAuth';
 import axiosClient from '../../utils/apiCaller';
 
 const MenuSider = () => {
-  // Remove or comment out the hard-coded babyNames since we'll use real data
-  // const babyNames = [
-  //   { key: 'baby1', name: 'Nguyen Van A', path: `${config.routes.customer.dashboardFetus}` },
-  //   { key: 'baby2', name: 'Le Thi C', path: `${config.routes.customer.dashboardFetus}` },
-  //   { key: 'baby3', name: 'Tran Van B', path: `${config.routes.customer.dashboardFetus}` },
-  // ];
   const { user } = useAuth();
   const [fetus, setFetus] = useState([]);
 
@@ -45,7 +39,7 @@ const MenuSider = () => {
 
 
   // Create children for the Fetus menu item
-  const fetusChildren = [
+  const fetusChildrenByWeek = [
     // Use the fetched fetus data instead of the hard-coded babyNames
     ...fetus.map(baby => ({
       key: `fetus-${baby.id}`,
@@ -72,8 +66,27 @@ const MenuSider = () => {
       className: 'add-new-baby-item'
     }
   ];
+
+  const fetusChildren = [
+    ...fetus.map(baby => ({
+      key: `fetus-${baby.id}`,
+      label: (
+        <Link
+          to={`${config.routes.customer.manageMomInfor}/${baby.id}`}
+          style={{ textDecoration: 'none' }}
+        >
+          {baby.nickName || `Baby ${baby.id}`}
+        </Link>
+      ),
+    })),
+  ];
   const menuItems = [
-    { key: '1', icon: <HomeOutlined />, label: 'Mother Information' },
+    {
+      key: '1',
+      icon: <HomeOutlined />,
+      label: 'Tracking All Babies',
+      children: fetusChildren,
+    },
     // {
     //   key: '2',
     //   icon: <CalendarOutlined />,
@@ -89,8 +102,8 @@ const MenuSider = () => {
     {
       key: '3',
       icon: <Baby size={16} />,
-      label: 'Fetus',
-      children: fetusChildren,
+      label: 'Tracking Baby by Week',
+      children: fetusChildrenByWeek,
     },
     // { key: '5', icon: <EyeOutlined />, label: 'Mother status' },
     // { key: '6', icon: <BellOutlined />, label: 'Fetal growth chart' },

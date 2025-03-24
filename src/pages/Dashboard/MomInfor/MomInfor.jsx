@@ -16,6 +16,7 @@ const MomInfo = () => {
   const scrollContainerRef = useRef(null);
   const [metrics, setMetrics] = useState([]);
   const [week, setWeek] = useState(1);
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchMetric = async () => {
@@ -23,7 +24,6 @@ const MomInfo = () => {
         const response = await axiosClient.get(`/metrics/week/${week}`);
         if (response.code === 200) {
           setMetrics(response.data);
-          console.log(`Week ${week} metrics:`, response.data); // Debug metrics data
         }
       } catch (error) {
         console.error('Failed to fetch metric: ', error);
@@ -44,8 +44,7 @@ const MomInfo = () => {
       setWeek(index + 1); // Update week when card is selected
     }
   };
-  const { id } = useParams();
-  
+
   // Add a check to ensure id is valid
   useEffect(() => {
     if (!id) {

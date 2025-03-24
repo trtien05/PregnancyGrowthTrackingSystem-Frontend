@@ -54,27 +54,27 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
       // Extract metric info
       const metricName = item.metric.name;
       const unit = item.metric.unit;
-      
+
       // Find min, max and value data points
       const valueData = item.data.find(d => d.type === 'value');
       const minData = item.data.find(d => d.type === 'min');
       const maxData = item.data.find(d => d.type === 'max');
-      
+
       const value = valueData ? valueData.value : null;
       const minValue = minData ? minData.value : null;
       const maxValue = maxData ? maxData.value : null;
-      
+
       // Calculate percentage within normal range
       let percentage = 50; // Default to middle
       let status = 'Không có đủ dữ liệu';
       let statusColor = '#8c8c8c';
-      
+
       if (value !== null && minValue !== null && maxValue !== null) {
         const range = maxValue - minValue;
         if (range > 0) {
           percentage = Math.min(Math.max(((value - minValue) / range) * 100, 0), 100);
         }
-        
+
         if (value < minValue) {
           status = 'Thấp hơn mức bình thường';
           statusColor = '#ff5252';
@@ -86,7 +86,7 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
           statusColor = '#4caf50';
         }
       }
-      
+
       return {
         id: `metric_${index}`,
         metricName,
@@ -100,7 +100,7 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
         color: COLORS[index % COLORS.length]
       };
     });
-    
+
     setProcessedData(formattedData);
   }, [chartData]);
 
@@ -112,7 +112,7 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
       min: metric.minValue,
       max: metric.maxValue
     }];
-    
+
     // Set Y-axis domain
     const yDomain = [
       Math.min(metric.minValue * 0.9 || 0, metric.value * 0.9 || 0),
@@ -132,7 +132,7 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
           </Text>
           <Text style={{ color: metric.statusColor }}>{metric.status}</Text>
         </div>
-        
+
         {/* Progress bar showing position within range */}
         {metric.minValue !== null && metric.maxValue !== null && (
           <div style={{ marginBottom: 16 }}>
@@ -149,7 +149,7 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
             </div>
           </div>
         )}
-        
+
         {/* Bar chart */}
         <div style={{ height: 180 }}>
           <ResponsiveContainer width="100%" height="100%">
@@ -160,24 +160,24 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="name" />
               <YAxis domain={yDomain} />
-              <Tooltip 
-                formatter={(value) => [`${value} ${metric.unit}`, metric.metricName]} 
+              <Tooltip
+                formatter={(value) => [`${value} ${metric.unit}`, metric.metricName]}
                 labelFormatter={() => metric.metricName}
               />
               {metric.minValue !== null && (
-                <ReferenceLine 
-                  y={metric.minValue} 
-                  stroke="#666" 
-                  strokeDasharray="3 3" 
-                  label={{ value: 'Min', position: 'insideBottomLeft', fontSize: 11 }} 
+                <ReferenceLine
+                  y={metric.minValue}
+                  stroke="#666"
+                  strokeDasharray="3 3"
+                  label={{ value: 'Min', position: 'insideBottomLeft', fontSize: 11 }}
                 />
               )}
               {metric.maxValue !== null && (
-                <ReferenceLine 
-                  y={metric.maxValue} 
-                  stroke="#666" 
-                  strokeDasharray="3 3" 
-                  label={{ value: 'Max', position: 'insideTopLeft', fontSize: 11 }} 
+                <ReferenceLine
+                  y={metric.maxValue}
+                  stroke="#666"
+                  strokeDasharray="3 3"
+                  label={{ value: 'Max', position: 'insideTopLeft', fontSize: 11 }}
                 />
               )}
               <Bar dataKey="value" fill={metric.color} name={metric.metricName} />
@@ -189,9 +189,17 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
   };
 
   const renderCharts = () => (
-    <Row gutter={[16, 16]}>
+    <Row
+      gutter={[16, 16]}
+      justify={processedData.length === 1 ? 'center' : 'start'}
+    >
       {processedData.map((metric, index) => (
-        <Col xs={24} sm={12} lg={8} key={index}>
+        <Col
+          xs={24}
+          sm={processedData.length === 1 ? 16 : 12}
+          lg={processedData.length === 1 ? 12 : 8}
+          key={index}
+        >
           {renderMetricCard(metric)}
         </Col>
       ))}
@@ -287,7 +295,7 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
 
       <div style={{ textAlign: 'center', marginTop: 16, padding: '0 16px' }}>
         <Text type="secondary">
-          Biểu đồ hiển thị các chỉ số thai nhi trong tuần {week}. 
+          Biểu đồ hiển thị các chỉ số thai nhi trong tuần {week}.
           Cột màu biểu thị giá trị đo được, đường đứt nét biểu thị giới hạn bình thường.
         </Text>
       </div>

@@ -63,7 +63,7 @@ const dashboardRoutes = {
   path: config.routes.customer.dashboard,
   element: <DashboardRouter />,
   children: [
-    { path: config.routes.customer.manageMomInfor, element: <DashboardFetus /> },
+    { path: config.routes.customer.manageMomInforDetail, element: <DashboardFetus /> },
     { path: config.routes.customer.dashboardFetusDetail, element: <MomInfor /> }
   ]
 }
