@@ -5,8 +5,7 @@ import axiosClient from '../utils/apiCaller';
 const getRole = () => {
   const decoded = cookieUtils.decodeJwt();
 
-  if (!decoded || !decoded.role) return null;
-
+  if (!decoded || !decoded.authorities) return null;
   return decoded.authorities;
 };
 
@@ -56,7 +55,6 @@ const useAuth = () => {
     } finally {
       setLoading(false);
     }
-
     // Set up an interval to check token expiration every 5 seconds
     const intervalId = setInterval(checkTokenExpiration, 5000);
 

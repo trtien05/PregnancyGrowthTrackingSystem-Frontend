@@ -6,13 +6,13 @@ import { useEffect, useState } from 'react'
 import ArticleFeedback from '../../components/ArticleFeedback'
 import useAuth from '../../hooks/useAuth'
 import axiosClient from '../../utils/apiCaller'
+import { Link } from 'react-router-dom'
 
 const { Title, Text } = Typography
 const { Content } = Layout
 
 export default function BlogDetail() {
   const { user } = useAuth();
-  console.log("user", user);
   const id = parseInt(window.location.pathname.split('/').pop())
   const [article, setArticle] = useState(null)
   const [relatedArticles, setRelatedArticles] = useState([])
@@ -86,10 +86,10 @@ export default function BlogDetail() {
               </>
             ) : (
               relatedArticles.map((article, index) => (
-                <a key={index} href={`/blogs/${article.id}`} className="article-item">
+                <Link key={index} to={`/blogs/${article.id}`} className="article-item">
                   <img src={article.featuredImageUrl} alt={article.pageTitle} className="article-image-read" />
                   <h3 className="article-title-read">{article.pageTitle}</h3>
-                </a>
+                </Link>
               ))
             )}
           </div>

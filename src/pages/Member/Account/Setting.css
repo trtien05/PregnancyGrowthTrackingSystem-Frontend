@@ -1,0 +1,115 @@
+.wrapper-profile {
+  background-color: #fdf2f4;
+}
+.ant-picker-outlined:hover{
+  border-color: var(--second-color);
+}
+.ant-picker-outlined:focus-within{
+  border-color: var(--second-color);
+}
+.calculate-due-date{
+  font-size: 14px;
+  color: rgb(61, 61, 61);
+}
+.calculate-due-date:hover{
+  color: var(--second-color);
+  cursor: pointer;
+}
+.container-profile {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  min-height: 100vh;
+  color: #4a4a4a;
+}
+
+.section-profile {
+  margin-bottom: 40px;
+}
+
+.sectionTitle-profile {
+  color: #d23f57 !important;
+  font-size: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.planSection-profile {
+  background-color: #f8d7da;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 6px rgba(210, 63, 87, 0.1);
+}
+
+.planTitle-profile {
+  color: #721c24;
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.planName-profile {
+  color: #d23f57;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.menuItem-profile {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  margin: 8px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #fff;
+  color: #4a4a4a;
+  box-shadow: 0 2px 4px rgba(210, 63, 87, 0.05);
+}
+
+.menuItemLabel-profile {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.menuItemLink-profile {
+  text-decoration: none !important;
+  color: inherit;
+  display: block;
+}
+
+.menuItemArrow-profile {
+  margin-left: auto;
+  color: #d23f57;
+}
+
+.menuItem-profile:hover {
+  background: #fce4e7;
+  color: #d23f57;
+  transform: translateY(-2px);
+}
+
+.menuItemIcon-profile {
+  margin-right: 16px;
+  font-size: 20px;
+  color: #d23f57;
+}
+
+@media (max-width: 768px) {
+  .container-profile {
+    padding: 24px 16px;
+  }
+
+  .planSection-profile {
+    padding: 20px;
+  }
+
+  .planName-profile {
+    font-size: 28px;
+  }
+
+  .menuItem-profile {
+    padding: 14px;
+  }
+}

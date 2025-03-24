@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { MenuOutlined, UserOutlined } from '@ant-design/icons'
-import { Avatar, Button, Drawer, Dropdown, Space } from 'antd'
+import { DashboardOutlined, LogoutOutlined, MenuOutlined, UserOutlined } from '@ant-design/icons'
+import { Avatar, Button, Drawer, Dropdown } from 'antd'
 import logo from '../../../assets/images/logo.svg'
 import './Header.css'
 import { Link } from 'react-router-dom'
@@ -12,30 +12,57 @@ const navLinks = [
   { title: 'Pregnancy', href: '#' },
   { title: 'Blog', href: '/blogs' },
   { title: 'FAQ', href: '#' },
-  { title: 'Explore Plans', href: '#' }
+  { title: 'Pricing', href: '/pricing' }
 ]
-
-const items = [
-  {
-    label: <Link>Profile</Link>,
-    key: "profile",
-  },
-  {
-    label: (
-      <Link to={config.routes.public.login} onClick={() => cookieUtils.clear()}>
-        Log Out
-      </Link>
-    ),
-    key: config.routes.public.login,
-  },
-];
 
 function Header(props) {
   // eslint-disable-next-line react/prop-types
-  const { user } = props
-  console.log("user", user)
+  const { user, role } = props
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const handleLogout = () => {
+    cookieUtils.clear()
+    window.location.href = config.routes.public.login
+  }
 
+  const items = [
+    {
+      label:
+        <Link
+          className='menu-item-link'
+          to={config.routes.customer.profile}
+        >
+          <div className='menu-item-header'>
+            <UserOutlined style={{ marginBottom: '2px' }} /> Account
+          </div>
+        </Link>,
+      key: config.routes.customer.profile,
+    },
+    ...(role === 'ROLE_member' ? [
+      {
+        label:
+          <Link
+            className='menu-item-link'
+            to={config.routes.customer.manageMomInfor}
+          >
+            <div className='menu-item-header'>
+              <DashboardOutlined /> Dashboard
+            </div>
+          </Link>,
+        key: config.routes.customer.manageMomInfor
+      }
+    ] : []),
+    {
+      label: (
+        <div
+          className={`menu-item-header logoutItem`}
+          onClick={handleLogout}
+        >
+          <LogoutOutlined /> Logout
+        </div>
+      ),
+      key: config.routes.public.login,
+    },
+  ];
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
   }
@@ -72,10 +99,14 @@ function Header(props) {
         </div>
       </Drawer>
       {user ? (
-        <Dropdown menu={{ items }} arrow placement="bottomRight" trigger={['click']}>
-          <Space style={{ cursor: 'pointer' }}>
-            <Avatar size={40} icon={<UserOutlined />} />
-          </Space>
+        <Dropdown
+          menu={{ items }}
+          placement="bottomRight"
+          trigger={['click']}
+        >
+          <Avatar
+            size={40}
+            icon={<UserOutlined />} className='userAvatar' />
         </Dropdown>
       ) : (
         <a href="/login" className="hidden md:block">

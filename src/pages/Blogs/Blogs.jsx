@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { useEffect, useState } from 'react'
 import axiosClient from '../../utils/apiCaller'
+import useAuth from '../../hooks/useAuth'
 
 const { Title, Paragraph } = Typography
 
@@ -33,6 +34,9 @@ const tools = [
 
 const BlogPage = () => {
   const [articles, setArticles] = useState([])
+  const { user, role } = useAuth();
+  console.log("role", role)
+  console.log("user", user)
   const [page, setPage] = useState(0)
   const [totalElements, setTotalElements] = useState(0)
   const limit = 6
@@ -45,7 +49,7 @@ const BlogPage = () => {
         const response = await axiosClient.get(`/blog-posts?page=${page}&size=${limit}`)
         console.log("first response", response)
         setArticles(response.data.content)
-        setTotalElements(response.data.data.totalElements)
+        setTotalElements(response.data.totalElements)
       } catch (error) {
         console.error('Failed to fetch articles: ', error)
       } finally {

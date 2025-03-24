@@ -1,0 +1,8 @@
+.dashboard-container {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+}
+.dashboard-content{
+  padding-bottom: 20px;
+}

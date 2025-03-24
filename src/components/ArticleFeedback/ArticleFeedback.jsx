@@ -7,8 +7,6 @@ const ArticleFeedback = (props) => {
   // eslint-disable-next-line react/prop-types
   const { blogPostId, userId } = props;
 
-  console.log("blogPostId", blogPostId);
-  console.log("userId", userId);
   const [feedback, setFeedback] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 

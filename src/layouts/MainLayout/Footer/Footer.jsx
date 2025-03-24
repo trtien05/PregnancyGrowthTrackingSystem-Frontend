@@ -9,10 +9,10 @@ const { Title, Text } = Typography
 
 const Footer = () => {
   const learnItems = [
-    { id: 1, titleName: 'IELTS' },
-    { id: 2, titleName: 'TOEIC' },
-    { id: 3, titleName: 'MATHEMATICS' },
-    { id: 4, titleName: 'CODING' }
+    { id: 1, titleName: 'Ovulation Calculator' },
+    { id: 2, titleName: 'DueDate Calculator' },
+    { id: 3, titleName: 'Pregnancy Weight Gain Calculator' },
+    { id: 4, titleName: 'Birthday Worksheet' }
   ]
 
   const pageItems = [

@@ -34,10 +34,7 @@
 .feedback-icon {
   color: #9ca3af;
 }
-.anticon svg {
-  width: 20px;
-  height: 20px;
-}
+
 .feedback-button.active-yes {
   background-color: #dcfce7;
   color: #16a34a;
