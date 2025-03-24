@@ -49,44 +49,6 @@ const AddPregnancy = ({ week, open, onClose, id, fetchAllGrowthMetricByWeek }) =
           setFetchingData(true);
           setExistingMetrics([]); // Clear existing metrics when fetching new ones
           const response = await axiosClient.get(`/fetus-metrics/fetus/${id}/weeks/${week}`);
-
-          if (response.code === 200) {
-            setExistingMetrics(response.data || []);
-
-            // Only pre-populate the form if response.data.length > 0
-            if (response.data && response.data.length > 0) {
-              const formValues = {};
-              response.data.forEach(metric => {
-                formValues[metric.metricName] = metric.value;
-              });
-              form.setFieldsValue(formValues);
-              message.info('Loaded existing data for this week');
-            } else {
-              form.resetFields(); // Ensure form is reset if no data exists
-            }
-          } else {
-            console.error('API error when fetching existing metrics:', response);
-            form.resetFields(); // Reset form on error
-          }
-        } catch (error) {
-          console.error("Error fetching existing metrics for week " + week, error);
-          form.resetFields(); // Reset form on error
-        } finally {
-          setFetchingData(false);
-        }
-      };
-      fetchExistingMetrics();
-    }
-  }, [open, id, week, form]);
-
-  // Fetch existing metrics for this fetus and week
-  useEffect(() => {
-    if (open && id && week) {
-      const fetchExistingMetrics = async () => {
-        try {
-          setFetchingData(true);
-          setExistingMetrics([]); // Clear existing metrics when fetching new ones
-          const response = await axiosClient.get(`/fetus-metrics/fetus/${id}/weeks/${week}`);
           console.log("Existing metrics response for week " + week + ":", response);
 
           if (response.code === 200) {

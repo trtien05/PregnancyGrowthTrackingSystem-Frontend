@@ -5,7 +5,8 @@ import { useParams } from 'react-router-dom';
 import { weeksImages } from './WeekImage';
 import AddPregnancy from './AddPregnancy';
 import axiosClient from '../../../utils/apiCaller';
-import ColumnChart from '../../../components/ColumnChart';
+import ColumnChart from '../../../components/ColumnChart/ColumnChart';
+import BarChart from '../../../components/BarChart/BarChart';
 
 const MomInfo = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -44,6 +45,13 @@ const MomInfo = () => {
     }
   };
   const { id } = useParams();
+  
+  // Add a check to ensure id is valid
+  useEffect(() => {
+    if (!id) {
+      console.error('No fetus ID found in URL parameters');
+    }
+  }, [id]);
 
   const fetchGrowthMetricByWeek = async () => {
     const response = await axiosClient.get(`/fetus-metrics/fetus/${id}/weeks`);
@@ -54,7 +62,6 @@ const MomInfo = () => {
   useEffect(() => {
     try {
       if (id) {
-
         fetchGrowthMetricByWeek();
       };
     } catch (error) {
@@ -122,8 +129,8 @@ const MomInfo = () => {
           </Button>
         </div>
 
-        {/* Display metrics data if available */}
-        {metrics && metrics.length > 0 && (
+        {/* Display metrics data if available and week is in weeks array */}
+        {metrics && metrics.length > 0 && id && weeks.includes(week) && (
           <div className="metrics-container" style={{ marginTop: '20px' }}>
             <h2>Week {week} Metrics</h2>
             <ColumnChart
@@ -131,6 +138,13 @@ const MomInfo = () => {
               week={week}
               metrics={metrics}
             />
+            <div style={{ marginTop: '20px' }}>
+              <BarChart
+                fetusId={id}
+                week={week}
+                metrics={metrics}
+              />
+            </div>
           </div>
         )}
       </div>

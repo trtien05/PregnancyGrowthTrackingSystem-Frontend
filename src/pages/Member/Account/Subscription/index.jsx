@@ -189,8 +189,8 @@ const SubscriptionPage = () => {
               </div>
               <div className={'subscription-dates'}>
                 <Text type="secondary">
-                  Start: <Text strong>{formatDate(subscriptionPlan?.startDate)}</Text> -
-                  End:  <Text strong>{formatDate(subscriptionPlan?.endDate)}</Text>
+                  Start: <Text strong>{formatDate(subscriptionPlan?.order.startDate)}</Text> -
+                  End:  <Text strong>{formatDate(subscriptionPlan?.order.endDate)}</Text>
                 </Text>
               </div>
             </div>
