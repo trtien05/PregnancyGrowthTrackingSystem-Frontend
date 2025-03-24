@@ -78,10 +78,6 @@
 }
 
 @media (min-width: 768px) {
-  .nav-links {
-    display: flex;
-  }
-
   .mobile-menu-button {
     display: none;
   }
