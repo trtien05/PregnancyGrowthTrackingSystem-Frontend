@@ -97,6 +97,7 @@ function Header(props) {
             Join us
           </Button>
         </div>
+
       </Drawer>
       {user ? (
         <Dropdown

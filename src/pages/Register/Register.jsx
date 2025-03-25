@@ -22,27 +22,76 @@ function Register() {
   const [showConfirmPassword, setConfirmShowPassword] = useState(false)
 
 
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [fullnameError, setFullnameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState(true);
 
-  const [passwordMatch, setPasswordMatch] = useState(true)
+  const validateFullname = (fullname) => {
+    const trimmedName = fullname.trim();
+    return trimmedName.length > 0 && trimmedName.length <= 20;
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setFormData((prev) => ({
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
-    }))
+    }));
 
-    // Check password match when either password field changes
-    if (name === 'password' || name === 'confirmPassword') {
-      if (name === 'password') {
-        setPasswordMatch(value === formData.confirmPassword)
+    // Validate email
+    if (name === 'email') {
+      if (!validateEmail(value)) {
+        setEmailError("Invalid email address.");
       } else {
-        setPasswordMatch(value === formData.password)
+        setEmailError('');
       }
     }
-  }
+
+    // Validate full name
+    if (name === 'fullName') {
+      if (!validateFullname(value)) {
+        setFullnameError("Full name must be between 1 and 20 characters.");
+      } else {
+        setFullnameError('');
+      }
+    }
+
+    // Validate password
+    // Validate password
+    if (name === 'password') {
+      if (!validatePassword(value)) {
+        setPasswordError("Password must contain at least one uppercase letter, one number, and one special character.");
+      } else {
+        setPasswordError('');
+      }
+    }
+
+    // Validate confirm password
+    if (name === 'confirmPassword') {
+      if (value !== formData.password) {
+        setConfirmPasswordError("Passwords do not match.");
+        setPasswordMatch(false);
+      } else {
+        setConfirmPasswordError('');
+        setPasswordMatch(true);
+      }
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -100,13 +149,21 @@ function Register() {
                 className="form-input"
                 required
               />
+              {fullnameError && <p className="error-message">{fullnameError}</p>}
             </div>
 
             <div className="form-group">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} className="form-input" required autoComplete="username" />
+              <label htmlFor="email" className="form-label">Email</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="form-input"
+                required
+              />
+              {emailError && <p className="error-message">{emailError}</p>}
             </div>
 
             <div className="form-group">
@@ -132,6 +189,7 @@ function Register() {
                 required
                 autoComplete="new-password" // Thêm thuộc tính này
               />
+              {passwordError && <p className="error-message">{passwordError}</p>}
             </div>
 
             <div>
@@ -159,7 +217,7 @@ function Register() {
                 required
                 autoComplete="new-password" // Thêm thuộc tính này
               />
-              {!passwordMatch && <p className="error-message">Passwords do not match</p>}
+              {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
             </div>
 
             <div className="checkbox-container">
