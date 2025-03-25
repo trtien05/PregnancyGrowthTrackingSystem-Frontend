@@ -13,12 +13,12 @@ const BlogPostPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(20); // Changed from 10 to 20 to match backend
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   // Modal states
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [modalMode, setModalMode] = useState('create');
-  
+
   // Detail modal state
   const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
   const [detailBlog, setDetailBlog] = useState(null);
@@ -26,10 +26,10 @@ const BlogPostPage = () => {
   const fetchBlogs = useCallback(async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await blogPostService.getAllBlogPosts(page, rowsPerPage);
-      
+
       if (response && response.data) {
         setBlogs(response.data.content || []);
         setTotalElements(response.data.totalElements || 0);
@@ -42,7 +42,7 @@ const BlogPostPage = () => {
       console.error('Error fetching blog posts:', error);
       setError(error.message || 'Failed to fetch blog posts');
       setBlogs([]);
-      
+
       message.error(`Failed to fetch blog posts: ${error.response?.data?.message || 'Please try again later.'}`);
     } finally {
       setLoading(false);
@@ -73,7 +73,7 @@ const BlogPostPage = () => {
         try {
           await blogPostService.deleteBlogPost(id);
           message.success('Blog post deleted successfully');
-          
+
           fetchBlogs();
         } catch (error) {
           message.error('Failed to delete blog post');
@@ -101,7 +101,7 @@ const BlogPostPage = () => {
         await blogPostService.updateBlogPost(selectedBlog.id, blogData);
         message.success('Blog post updated successfully');
       }
-      
+
       // Close modal and refresh list
       setIsModalVisible(false);
       fetchBlogs();
@@ -115,7 +115,7 @@ const BlogPostPage = () => {
     setModalMode('create');
     setIsModalVisible(true);
   };
-  
+
   const handleView = (blog) => {
     setDetailBlog(blog);
     setIsDetailModalVisible(true);
@@ -129,28 +129,29 @@ const BlogPostPage = () => {
 
   return (
     <div>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        marginBottom: 16 
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 16
       }}>
         <h1>Blog Posts Management</h1>
         <div>
           {error && (
-            <Button 
-              type="primary" 
-              danger 
-              onClick={handleRetry} 
+            <Button
+              type="primary"
+              danger
+              onClick={handleRetry}
               style={{ marginRight: 8 }}
             >
               Retry
             </Button>
           )}
-          <Button 
-            type="primary" 
-            icon={<PlusOutlined />} 
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
             onClick={openCreateModal}
+            className='update-button-subscription'
           >
             Create New Blog Post
           </Button>
@@ -158,10 +159,10 @@ const BlogPostPage = () => {
       </div>
 
       {error && (
-        <div style={{ 
-          padding: '10px', 
-          marginBottom: '16px', 
-          background: '#fff1f0', 
+        <div style={{
+          padding: '10px',
+          marginBottom: '16px',
+          background: '#fff1f0',
           border: '1px solid #ffa39e',
           borderRadius: '2px'
         }}>
@@ -169,7 +170,7 @@ const BlogPostPage = () => {
         </div>
       )}
 
-      <BlogTable 
+      <BlogTable
         blogs={blogs}
         totalElements={totalElements}
         page={page} // Pass the 0-indexed page directly
@@ -189,13 +190,13 @@ const BlogPostPage = () => {
         footer={null}
         width={800}
       >
-        <BlogPostForm 
+        <BlogPostForm
           initialValues={selectedBlog || undefined}
           onSubmit={handleSubmit}
           mode={modalMode}
         />
       </Modal>
-      
+
       <Modal
         title="Blog Post Details"
         open={isDetailModalVisible}
@@ -204,9 +205,9 @@ const BlogPostPage = () => {
           <Button key="back" onClick={() => setIsDetailModalVisible(false)}>
             Close
           </Button>,
-          <Button 
-            key="edit" 
-            type="primary" 
+          <Button
+            key="edit"
+            type="primary"
             onClick={() => {
               setIsDetailModalVisible(false);
               handleEdit(detailBlog);

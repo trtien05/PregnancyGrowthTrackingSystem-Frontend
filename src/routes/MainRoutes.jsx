@@ -25,8 +25,8 @@ import PregnancyPage from '../pages/Member/Account/Pregnancy'
 
 //* ====================  Authorization for PUBLIC ==================== */
 const MainRouter = () => {
-  // const { role } = useAuth();
-  // if (user.role === 'admin') return <Navigate to={config.routes.admin.dashboard} />;
+  const { role } = useAuth();
+  if (role === 'ROLE_admin') return <Navigate to={config.routes.admin.dashboard} />;
   return <MainLayout />
 }
 

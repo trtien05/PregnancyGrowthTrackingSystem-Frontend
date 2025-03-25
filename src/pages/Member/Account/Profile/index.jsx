@@ -38,7 +38,7 @@ const countryList = countries.map((country) => ({
 }));
 
 const UpdateUserForm = () => {
-  const {user} = useAuth();
+  const { user } = useAuth();
   console.log('User:', user);
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -83,19 +83,19 @@ const UpdateUserForm = () => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', import.meta.env.CLOUD_UPLOAD_PRESET || 'pregnancy_tracking');
-    
+
     try {
       const cloudApiUrl = import.meta.env.CLOUD_API_URL || 'https://api.cloudinary.com/v1_1/dsquusdck/image/upload';
-      
+
       const response = await fetch(cloudApiUrl, {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) {
         throw new Error('Upload failed');
       }
-      
+
       const data = await response.json();
       onSuccess(data); // Pass the Cloudinary response to onSuccess
     } catch (error) {
@@ -111,10 +111,10 @@ const UpdateUserForm = () => {
         const response = await axiosClient.get('/auth/profile');
         const data = response.data;
         console.log('User data:', data);
-        
+
         // Parse date of birth properly
         const dateOfBirth = data.dateOfBirth ? dayjs(data.dateOfBirth) : null;
-        
+
         // Set form values
         form.setFieldsValue({
           fullName: data.fullName,
@@ -127,7 +127,7 @@ const UpdateUserForm = () => {
             : undefined,
           symptoms: data.symptoms, // Note: there seems to be a typo here (symtomps vs symptoms)
         });
-        
+
         // Set avatar URL if available
         if (data.avatarUrl) {
           setImageUrl(data.avatarUrl);
@@ -152,42 +152,42 @@ const UpdateUserForm = () => {
       nationality: values.nationality,
       phoneNumber: values.phoneNumber,
       symptoms: values.symptoms,
-      avatarUrl: imageUrl, 
+      avatarUrl: imageUrl,
       dateOfBirth: formattedDateOfBirth,
     };
-    
+
     // Submit to backend
     try {
       message.loading({ content: 'Updating profile...', key: 'updateProfile' });
-      
+
       const response = await axiosClient.put(`/users/${user.id}`, dataToSubmit);
       console.log('Update user information response:', response);
-      
-      message.success({ 
-        content: 'Profile updated successfully!', 
-        key: 'updateProfile', 
-        duration: 2 
+
+      message.success({
+        content: 'Profile updated successfully!',
+        key: 'updateProfile',
+        duration: 2
       });
-      
+
       // Optionally navigate back after successful update
       // setTimeout(() => navigate(-1), 1500);
-      
+
     } catch (error) {
       console.error('Failed to update user information:', error);
-      
+
       // Determine if it's a CORS error
-      const isCorsError = 
+      const isCorsError =
         error.message && (
-          error.message.includes('Network Error') || 
+          error.message.includes('Network Error') ||
           error.message.includes('CORS')
         );
-      
-      message.error({ 
-        content: isCorsError 
-          ? 'CORS error: Unable to connect to the server. Please contact support.' 
+
+      message.error({
+        content: isCorsError
+          ? 'CORS error: Unable to connect to the server. Please contact support.'
           : 'Failed to update profile. Please try again later.',
-        key: 'updateProfile', 
-        duration: 3 
+        key: 'updateProfile',
+        duration: 3
       });
     }
   };
@@ -230,7 +230,7 @@ const UpdateUserForm = () => {
           className="form"
         >
           <Row gutter={16}>
-           <Col xs={24} sm={24}>
+            <Col xs={24} sm={24}>
               <Form.Item
                 name="avatar"
                 rules={[{ required: false, message: 'Please input your avatar!' }]}
@@ -246,9 +246,9 @@ const UpdateUserForm = () => {
                   onChange={handleChange}
                 >
                   {imageUrl ? (
-                    <Avatar 
-                      size={64} 
-                      src={imageUrl} 
+                    <Avatar
+                      size={64}
+                      src={imageUrl}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   ) : (
@@ -260,14 +260,22 @@ const UpdateUserForm = () => {
                 </Upload>
               </Form.Item>
             </Col>
-            
+
           </Row>
           <Row gutter={16}>
             <Col xs={24} sm={12}>
               <Form.Item
                 name="fullName"
                 label="Full Name"
-                rules={[{ required: true, message: 'Please input your full name!' }]}
+                rules={[
+                  { required: true, message: 'Please input your full name!' },
+                  { min: 2, message: 'Full name must be at least 2 characters' },
+                  { max: 50, message: 'Full name cannot exceed 50 characters' },
+                  {
+                    pattern: /^[a-zA-Z\s]+$/,
+                    message: 'Full name should contain only letters and spaces'
+                  }
+                ]}
               >
                 <Input
                   prefix={<UserOutlined className="input-icon" />}
@@ -279,7 +287,15 @@ const UpdateUserForm = () => {
               <Form.Item
                 name="username"
                 label="User Name"
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                rules={[
+                  { required: true, message: 'Please input your username!' },
+                  { min: 3, message: 'Username must be at least 3 characters' },
+                  { max: 20, message: 'Username cannot exceed 20 characters' },
+                  {
+                    pattern: /^[a-zA-Z0-9_]+$/,
+                    message: 'Username can only contain letters, numbers, and underscores'
+                  }
+                ]}
               >
                 <Input
                   prefix={<UserOutlined className="input-icon" />}
@@ -298,7 +314,7 @@ const UpdateUserForm = () => {
                   {
                     required: false,
                     message: 'Please select your blood type!',
-                  },
+                  }
                 ]}
               >
                 <Select placeholder="Select blood type">
@@ -321,7 +337,7 @@ const UpdateUserForm = () => {
                   {
                     required: true,
                     message: 'Please select your nationality!',
-                  },
+                  }
                 ]}
               >
                 <Select
@@ -339,7 +355,7 @@ const UpdateUserForm = () => {
             </Col>
           </Row>
 
-          
+
 
 
           <Row gutter={16}>
@@ -347,7 +363,13 @@ const UpdateUserForm = () => {
               <Form.Item
                 name="phoneNumber"
                 label="Phone Number"
-                rules={[{ required: true, message: 'Please input your phone number!' }]}
+                rules={[
+                  { required: true, message: 'Please input your phone number!' },
+                  {
+                    pattern: /^\+?[0-9]{8,15}$/,
+                    message: 'Please enter a valid phone number (8-15 digits, may start with +)'
+                  }
+                ]}
               >
                 <Input
                   prefix={<PhoneOutlined className="input-icon" />}
@@ -359,12 +381,31 @@ const UpdateUserForm = () => {
               <Form.Item
                 name="dateOfBirth"
                 label="Date of Birth"
-                rules={[{ required: true, message: 'Please select your date of birth!' }]}
+                rules={[
+                  { required: true, message: 'Please select your date of birth!' },
+                  {
+                    validator: (_, value) => {
+                      if (!value) return Promise.resolve();
+
+                      const today = dayjs();
+                      const age = today.diff(value, 'year');
+
+                      if (age < 18) {
+                        return Promise.reject('You must be at least 18 years old');
+                      }
+                      if (age > 70) {
+                        return Promise.reject('Please enter a valid date of birth');
+                      }
+                      return Promise.resolve();
+                    }
+                  }
+                ]}
               >
                 <DatePicker
                   style={{ width: '100%' }}
                   format="YYYY-MM-DD"
                   suffixIcon={<CalendarOutlined className="input-icon" />}
+                  disabledDate={current => current && current > dayjs().endOf('day')}
                 />
               </Form.Item>
             </Col>
@@ -375,7 +416,10 @@ const UpdateUserForm = () => {
               <Form.Item
                 name="symptoms"
                 label="Symptoms"
-                rules={[{ required: false, message: 'Please input your symptoms!' }]}
+                rules={[
+                  { required: false, message: 'Please input your symptoms!' },
+                  { max: 500, message: 'Symptoms description cannot exceed 500 characters' }
+                ]}
               >
                 <Input.TextArea
                   placeholder="Symptoms"

@@ -29,7 +29,7 @@ const Footer = () => {
           {/* Logo Column */}
           <Col xs={24} sm={24} md={6} lg={6}>
             <div className="footer-logo">
-              <img src={logo} alt="MyTutor Logo" />
+              <img src={logo} alt=" Logo" />
               <span className="brand-name">PregnaJoy</span>
             </div>
           </Col>

@@ -2,16 +2,18 @@ import Sider from 'antd/es/layout/Sider';
 import { Menu } from 'antd';
 import './Sidebar.css';
 import { useLocation } from 'react-router-dom';
+import logo from '../../assets/images/logo.svg';
 
 
-export default function Sidebar( sidebarBody ) {
+export default function Sidebar(menuItems) {
   const location = useLocation();
+  console.log('sidebarBody', menuItems);
 
   return (
-    <Sider theme="light" width={260} className="sidebar">
+    <Sider theme="light" width={270} className="sidebar">
       <div className="sidebar-top">
         <div className="logo">
-          {/* <img src={ASSETS.logo} alt="PregnaCare" width={30} /> */}
+          <img src={logo} alt="PregnaCare" width={20} />
         </div>
         <div>
           <p className="sidebar-title">PregnaCare</p>
@@ -19,18 +21,15 @@ export default function Sidebar( sidebarBody ) {
         </div>
       </div>
 
-      <Sider theme="light" width={250} className="menu-sider">
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={[location.pathname ? location.pathname : '1']}
-          // defaultSelectedKeys={['fetuses']}
-          // defaultOpenKeys={['3']}
-          // items={sidebarBody.map((item, index) => ({
-          //   ...item,
-          //   key: item.key || index,
-          // }))}
-        />
-      </Sider>
+      <Menu
+        mode="inline"
+        defaultSelectedKeys={[location.pathname ? location.pathname : '1']}
+        defaultOpenKeys={['3']}
+        items={menuItems.menuItems.map((item, index) => ({
+          ...item,
+          key: item.key || index,
+        }))}
+      />
     </Sider>
   );
 }

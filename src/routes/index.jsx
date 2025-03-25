@@ -8,7 +8,7 @@ import { useRoutes } from 'react-router-dom'
 const RoutesComponent = () => {
   // checkTokenInURL();
 
-  return useRoutes([AuthRoutes, AdminRoutes, MainRoutes])
+  return useRoutes([AuthRoutes, MainRoutes, AdminRoutes])
 }
 
 export default RoutesComponent

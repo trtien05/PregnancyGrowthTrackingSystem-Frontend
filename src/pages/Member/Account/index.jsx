@@ -150,7 +150,7 @@ const SettingsPage = () => {
 
   // Filter sections and items based on user role
   const sections = allSections
-    .filter(section => role === 'ROLE_user' || role === 'ROLE_user' ?
+    .filter(section => role === 'ROLE_user' ?
       (section.title !== 'Payment' && section.title !== 'Pregnancy') : true)
     .map(section => {
       if (section.title === 'Account' && role === 'ROLE_user') {

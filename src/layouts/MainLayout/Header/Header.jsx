@@ -16,7 +16,7 @@ const navLinks = [
 
 function Header(props) {
   // eslint-disable-next-line react/prop-types
-  const { user, role } = props
+  const { user } = props
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const handleLogout = () => {
     cookieUtils.clear()

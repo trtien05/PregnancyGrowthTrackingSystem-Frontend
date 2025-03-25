@@ -116,3 +116,8 @@
 .ant-menu-light .ant-menu-item-selected {
   border-right: none !important;
 }
+.sidebar .ant-menu  {
+  display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
