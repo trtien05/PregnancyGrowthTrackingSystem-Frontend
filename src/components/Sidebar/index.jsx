@@ -7,7 +7,6 @@ import logo from '../../assets/images/logo.svg';
 
 export default function Sidebar(menuItems) {
   const location = useLocation();
-  console.log('sidebarBody', menuItems);
 
   return (
     <Sider theme="light" width={270} className="sidebar">

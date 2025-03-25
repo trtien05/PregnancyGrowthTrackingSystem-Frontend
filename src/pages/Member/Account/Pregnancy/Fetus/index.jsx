@@ -204,11 +204,10 @@ function Fetus(props) {
             <Trash2 size={18} style={{ color: '#ff4d4f', cursor: 'pointer' }} />
           </Popconfirm>
           <Link
-            to={`${config.routes.customer.dashboardFetus}/${record.id}`}
+            to={`${config.routes.customer.dashboardFetus}/${record.id}?pregnancyId=${id}`}
             style={{ textDecoration: 'none' }}
           >
             <LineChartOutlined />
-
           </Link>
         </Space>
       ),
@@ -217,7 +216,7 @@ function Fetus(props) {
 
   return (
     <div >
-      <BabyIcon onClick={handleFetusClick} size={22} style={{ color: '#FAACAA', cursor: 'pointer' }} />
+      <BabyIcon onClick={handleFetusClick} size={22} style={{ color: '#FAACAA', cursor: 'pointer', marginTop:'5px' }} />
 
       <Modal
         title={

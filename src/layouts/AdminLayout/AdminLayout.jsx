@@ -2,7 +2,6 @@ import { Avatar, Dropdown, Layout } from 'antd';
 import {
   UserOutlined,
   LogoutOutlined,
-  InboxOutlined,
 } from '@ant-design/icons';
 import './AdminLayout.css';
 import { Link, Outlet } from 'react-router-dom';
@@ -13,16 +12,18 @@ import { FaRegUser } from "react-icons/fa";
 import { MdBorderColor } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa6";
 import cookieUtils from '../../utils/cookieUtils';
+import { PiStandardDefinitionFill } from "react-icons/pi";
+import { LuLayoutDashboard } from "react-icons/lu";
 
 const { Header, Content } = Layout;
 
 const AdminLayout = () => {
   const menuItems = [
-    // {
-    //   key: '1',
-    //   icon: <HomeOutlined />,
-    //   label: <Link to={config.routes.admin.dashboard}>Dashboard</Link>,
-    // },
+    {
+      key: '1',
+      icon: <LuLayoutDashboard size = { 22 } />,
+      label: <Link to={config.routes.admin.dashboard}>Dashboard</Link>,
+    },
     {
       key: '2',
       icon: <FaRegUser size={22} />,
@@ -41,7 +42,12 @@ const AdminLayout = () => {
     {
       key: '5',
       icon: <FaChartLine size={20} style={{ marginRight: '3px' }} />,
-      label: <Link to={config.routes.admin.growthMetrics}>Grouth Metrics</Link>,
+      label: <Link to={config.routes.admin.growthMetrics}>Growth Metrics</Link>,
+    },
+    {
+      key: '6',
+      icon: <PiStandardDefinitionFill size={20} style={{ marginRight: '3px' }} />,
+      label: <Link to={config.routes.admin.manageStandard}>Manage Standard</Link>,
     },
   ];
   const handleLogout = () => {

@@ -36,6 +36,7 @@ const routes = {
     manageBlogPost: '/admin/manage-blog-post',
     manageMembershipPlan: '/admin/manage-membership-plan',
     growthMetrics: '/admin/growth-metrics',
+    manageStandard: '/admin/manage-standard',
   },
 };
 

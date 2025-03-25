@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot, ReferenceLine } from 'recharts';
 
 const PregnancyCalculationResult = ({ bmi, weightGainRange, onStartOver, currentPregnancyWeek, prePregnancyWeight, currentWeight }) => {
   // Parse weight gain range to get min and max values
@@ -70,7 +70,7 @@ const PregnancyCalculationResult = ({ bmi, weightGainRange, onStartOver, current
             width={500}
             height={250}
             data={chartData}
-            margin={{ top: 5, right: 10, left: 50, bottom: 5 }}
+            margin={{ top: 5, right: 10, left: 50, bottom: 25 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
@@ -107,13 +107,26 @@ const PregnancyCalculationResult = ({ bmi, weightGainRange, onStartOver, current
               name="Minimum recommended"
             />
             {currentPregnancyWeek && (
-              <ReferenceDot
-                x={currentWeekData.week}
-                y={currentGain}
-                r={6}
-                fill="green"
-                stroke="none"
-              />
+              <>
+                <ReferenceDot
+                  x={currentWeekData.week}
+                  y={currentGain}
+                  r={6}
+                  fill="green"
+                  stroke="none"
+                />
+                <ReferenceLine
+                  x={currentWeekData.week}
+                  stroke="green"
+                  strokeDasharray="3 3"
+                  label={{
+                    value: `Week ${currentPregnancyWeek}`,
+                    position: 'top',
+                    fill: 'green',
+                    fontSize: 12
+                  }}
+                />
+              </>
             )}
           </LineChart>
 

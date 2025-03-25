@@ -76,13 +76,13 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
         }
 
         if (value < minValue) {
-          status = 'Thấp hơn mức bình thường';
+          status = 'Below normal';
           statusColor = '#ff5252';
         } else if (value > maxValue) {
-          status = 'Cao hơn mức bình thường';
+          status = 'Above normal';
           statusColor = '#ff5252';
         } else {
-          status = 'Trong phạm vi bình thường';
+          status = 'Normal';
           statusColor = '#4caf50';
         }
       }
@@ -126,7 +126,7 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
         style={{ marginBottom: 16, height: '100%', overflow: 'hidden' }}
         size="small"
       >
-        <div className="flex justify-between items-baseline mb-2">
+        <div  style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
           <Text style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
             {metric.value} {metric.unit}
           </Text>

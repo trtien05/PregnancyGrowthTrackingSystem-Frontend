@@ -146,7 +146,7 @@ const AddPregnancy = ({ week, open, onClose, id, fetchAllGrowthMetricByWeek }) =
                   <span className={'metricUnit'}>({field.unit})</span>
                   {(field.min !== null || field.max !== null) && (
                     <div className={'metricRange'}>
-                      {field.min !== null && <span>Min: {field.min + (field.min * 0.1)}</span>}
+                      {field.min !== null && <span>Min: {field.min - (field.min * 0.1)}</span>}
                       {field.min !== null && field.max !== null && <span> • </span>}
                       {field.max !== null && <span>Max: {field.max + (field.max * 0.1)}</span>}
                     </div>
@@ -158,7 +158,7 @@ const AddPregnancy = ({ week, open, onClose, id, fetchAllGrowthMetricByWeek }) =
                 {
                   validator: (_, value) => {
                     const numValue = Number(value);
-                    const minVal = field.min !== null ? field.min + (field.min * 0.1) : null;
+                    const minVal = field.min !== null ? field.min - (field.min * 0.1) : null;
                     const maxVal = field.max !== null ? field.max + (field.max * 0.1) : null;
 
                     if (value === undefined || value === '') {
