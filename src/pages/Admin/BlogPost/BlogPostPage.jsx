@@ -73,6 +73,7 @@ const BlogPostPage = () => {
         try {
           await blogPostService.deleteBlogPost(id);
           message.success('Blog post deleted successfully');
+          
           fetchBlogs();
         } catch (error) {
           message.error('Failed to delete blog post');

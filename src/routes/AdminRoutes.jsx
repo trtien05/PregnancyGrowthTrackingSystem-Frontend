@@ -2,13 +2,13 @@ import { Navigate } from 'react-router-dom';
 import config from '../config';
 import useAuth from '../hooks/useAuth';
 import AdminLayout from '../layouts/AdminLayout/AdminLayout';
-
+import BlogPostPage from '../pages/Admin/BlogPost/index';
 
 
 // Authorization
 const AdminRouter = () => {
   const { role } = useAuth();
-  if (role !== 'admin') {
+  if (role !== 'ROLE_admin') {
     return <Navigate to={config.routes.home} />;
   }
   return <AdminLayout />;
@@ -16,14 +16,14 @@ const AdminRouter = () => {
 
 // Define routes for admin
 const AdminRoutes = {
-  path: config.routes.admin.dashboard,
+  path: "/",
   element: <AdminRouter />,
   children: [
     //* Admin common routes
     // { path: config.routes.admin.dashboard, element: <Dashboard /> },
     // { path: config.routes.admin.manageMember, element: <ManageMember /> },
     // { path: config.routes.admin.growthMatrics, element: <GrowthMetrics /> },
-    // { path: config.routes.admin.managePlans, element: <ManagePlans /> },
+     { path: config.routes.admin.manageBlogPost, element: <BlogPostPage/> },
     // { path: config.routes.admin.manageBlogPost, element: <ManagePlans /> },
     //* Admin create routes
     // { path: config.routes.admin.formPlan, element: <FormPlan /> },

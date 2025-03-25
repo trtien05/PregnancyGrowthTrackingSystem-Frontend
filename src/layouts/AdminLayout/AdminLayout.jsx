@@ -9,8 +9,8 @@ import {
 } from '@ant-design/icons';
 import './AdminLayout.css';
 import { Link, Outlet } from 'react-router-dom';
-import Sidebar from '@/components/layout/Sidebar';
-import config from '@/config';
+import Sidebar from '../../components/Sidebar/index';
+import config from '../../config/index';
 
 const { Header, Content } = Layout;
 

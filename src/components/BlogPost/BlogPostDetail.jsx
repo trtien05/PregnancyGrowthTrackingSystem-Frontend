@@ -11,11 +11,11 @@ const BlogPostDetail = ({ blog }) => {
     <Card>
       <Title level={3}>{blog.heading}</Title>
       <Space style={{ marginBottom: 16 }}>
-        {blog.nameTags && blog.nameTags.map(tag => (
+        {/* {blog.nameTags && blog.nameTags.map(tag => (
           <Tag key={tag} color="processing">
             {tag}
           </Tag>
-        ))}
+        ))} */}
       </Space>
       
       <Divider orientation="left">Page Title (SEO)</Divider>

@@ -33,7 +33,9 @@ const blogPostService = {
       };
       
       console.log('Creating blog post with data:', processedData);
-      return await axiosClient.post('/blog-posts', processedData);
+      const response = await axiosClient.post('/blog-posts', processedData);
+      console.log('Response:', response , "created:",processedData );
+      return response;
     } catch (error) {
       console.error('Error creating blog post:', error);
       throw error;

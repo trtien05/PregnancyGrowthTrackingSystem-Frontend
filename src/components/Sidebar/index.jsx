@@ -25,10 +25,10 @@ export default function Sidebar( sidebarBody ) {
           defaultSelectedKeys={[location.pathname ? location.pathname : '1']}
           // defaultSelectedKeys={['fetuses']}
           // defaultOpenKeys={['3']}
-          items={sidebarBody.map((item, index) => ({
-            ...item,
-            key: item.key || index,
-          }))}
+          // items={sidebarBody.map((item, index) => ({
+          //   ...item,
+          //   key: item.key || index,
+          // }))}
         />
       </Sider>
     </Sider>
