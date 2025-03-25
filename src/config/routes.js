@@ -1,0 +1,43 @@
+const routes = {
+  public: {
+    home: '/',
+    notFound: '/404',
+    login: '/login',
+    register: '/register',
+    verifyEmail: '/verify-email',
+    pricing: '/pricing',
+    checkout: '/checkout/:id',
+    blogs: '/blogs',
+    blog: '/blogs/:id',
+    blogToolWorksheet: '/blogs/tool-worksheet',
+    blogToolDueDate: '/blogs/tool-due-date',
+    blogToolOvulation: '/blogs/tool-ovulation',
+    blogToolPregWeight: '/blogs/tool-preg-weight',
+    forgotPassword: '/forgot-password',
+    resetPassword: '/reset-password',
+  },
+  customer: {
+    profile: '/profile',
+    profileInformation: '/profile/information',
+    subscription: '/subscription',
+    oderHistory: '/order-history',
+    pregnancy: '/pregnancy',
+    pregnancyFetus: '/pregnancy/:id',
+    dashboard: '/dashboard',
+    manageMomInfor: '/dashboard/manage-mom-infor',
+    manageMomInforDetail: '/dashboard/manage-mom-infor/:id',
+    dashboardFetus: '/dashboard/fetus',
+    dashboardFetusDetail: '/dashboard/fetus/:id',
+    paymentResult: '/confirm-payment',
+  },
+  admin: {
+    dashboard: '/admin/dashboard',
+    manageMember: '/admin/manage-member',
+    manageBlogPost: '/admin/manage-blog-post',
+    manageMembershipPlan: '/admin/manage-membership-plan',
+    growthMetrics: '/admin/growth-metrics',
+    manageStandard: '/admin/manage-standard',
+  },
+};
+
+export default routes;

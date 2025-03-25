@@ -1,0 +1,188 @@
+.blog-container {
+  padding: 24px 100px;
+  margin: 0 auto;
+  background: var(--primary-color);
+}
+
+.featured-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.featured-card .ant-card-body {
+  padding: 0;
+}
+
+.featured-image-container {
+  position: relative;
+}
+
+.featured-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.featured-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.featured-title {
+  color: white !important;
+  margin: 16px 0 !important;
+}
+
+.article-card {
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.article-card:hover {
+  transform: translateY(-4px);
+}
+
+.article-image-container {
+  overflow: hidden;
+}
+
+.article-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.article-card:hover .article-image {
+  transform: scale(1.05);
+}
+
+.article-content {
+  padding: 16px;
+}
+
+.article-title {
+  margin: 12px 0 !important;
+  line-height: 1.4 !important;
+}
+.article-title:hover {
+  color:rgb(168, 75, 126);
+  transition: 0.3s;
+}
+
+.article-excerpt {
+  color: #666;
+  margin-bottom: 16px;
+}
+
+/* Common Styles */
+.category-tag {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.read-more-btn {
+  padding: 10px 20px;
+  border-radius: 12px;
+  border:none;
+  color: white;
+  background-color: var(--second-color);
+  cursor: pointer;
+}
+
+.read-more-btn:hover {
+  background-color:rgb(168, 75, 126);
+  transition: 0.3s;
+
+}
+
+.read-more-link {
+  color: var(--second-color);
+  padding-left: 0;
+  font-weight: 600;
+}
+.read-more-link:hover {
+  color:rgb(168, 75, 126);
+  transition: 0.3s;
+
+}
+/* 🎯 Danh sách công cụ */
+.tools-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.tool-card {
+  text-align: center;
+  padding: 5px;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+}
+
+.tool-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.tool-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pagination-container {
+  margin-top: 48px;
+}
+
+@media (max-width: 768px) {
+  .featured-image {
+    height: 300px;
+  }
+
+  .featured-content {
+    padding: 24px;
+  }
+
+  .featured-title {
+    font-size: 24px !important;
+  }
+
+  .article-card {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .blog-container {
+    padding: 16px;
+  }
+
+  .featured-image {
+    height: 250px;
+  }
+
+  .featured-content {
+    padding: 16px;
+  }
+
+  .featured-title {
+    font-size: 20px !important;
+  }
+}

@@ -1,3 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+*{
+  margin: 0;
+  padding: 0;
+}
+:root {
+    --primary-color: #FDF8F6;
+    --second-color: #FAACAA;
+    --third-color: #F9D0CA;
+    --poppins: 'Poppins', sans-serif;
+    --pacifico: 'Pacifico', cursive;
+}
