@@ -60,12 +60,12 @@ function Checkout() {
     }
     try {
       setLoading(true);
-      const response = await axiosClient.post(`/payment/order`, 
+      const response = await axiosClient.post(`/payment/order`,
         {
-          provider:paymentMethod,
+          provider: paymentMethod,
           membershipPlanId: id,
           userId: user.id
-      }
+        }
       );
       cookieUtils.setItem('paymentData', JSON.stringify({
         paymentMethod: paymentMethod,
@@ -77,7 +77,7 @@ function Checkout() {
           messageApi.success('Payment created successfully');
         }, 3000);
         window.location.href = response.data.paymentUrl;
-      }else{
+      } else {
         messageApi.error('Error: ' + response.message);
       }
     } catch (error) {
@@ -93,6 +93,7 @@ function Checkout() {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
   };
   console.log("plan", plan)
+  console.log("user", user)
   return (
     <>
       {contextHolder}
@@ -108,7 +109,7 @@ function Checkout() {
                     <div className='info-grid'>
                       <div className='info-item'>
                         <Text type="secondary">Full Name</Text>
-                        <Text strong>{user?.username || ""}</Text>
+                        <Text strong>{user?.fullName || ""}</Text>
                       </div>
                       <div className='info-item'>
                         <Text type="secondary">Email</Text>
@@ -217,7 +218,7 @@ function Checkout() {
                           />
                         </figure>
                       </Radio>
-                    
+
                     </Radio.Group>
                   </div>
                   <div className='btn-div'>
@@ -240,7 +241,7 @@ function Checkout() {
                       style={{ marginRight: '10px', width: `60%` }}
                       type="primary"
                       size="large"
-                    onClick={handleOrder}
+                      onClick={handleOrder}
                     >
                       {loading ? (
                         <Loading3QuartersOutlined

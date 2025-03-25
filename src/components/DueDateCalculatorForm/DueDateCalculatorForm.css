@@ -13,7 +13,10 @@
     background-color: #fff;
     outline: none;
   }
-  
+  .form-control .ant-select-selector{
+    padding: 19px 12px; 
+    border: none !important;
+  }
   .due-date-calculator-form .cycle-dropdown .ant-select {
     width: 100%;
     margin-bottom: 16px;
@@ -51,9 +54,7 @@
     
   }
 
-  .ant-select-selector {
-    border: 1px solid white !important;
-}
+
 
 .gestational-age {
   display: flex;

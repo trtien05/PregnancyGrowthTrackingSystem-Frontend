@@ -4,12 +4,12 @@ import './DueDateCalculatorResult.css';
 import { format, addDays, addMonths } from 'date-fns';
 
 const DueDateCalculatorResult = ({ calculationData, onBackToForm }) => {
-  const { 
-    calculationMethod, 
-    date, 
-    weeks, 
-    days, 
-    transferType 
+  const {
+    calculationMethod,
+    date,
+    weeks,
+    days,
+    transferType
   } = calculationData;
 
   const calculateDueDate = () => {
@@ -58,21 +58,21 @@ const DueDateCalculatorResult = ({ calculationData, onBackToForm }) => {
   return (
     <div className="due-date-result-container">
       <div className="result-content">
-        
-        
+
+
         <div className="congratulation-text">
           Congrats! Your due date is
         </div>
-        
+
         <h1 className="due-date">{formattedDueDate}</h1>
-        
+
         <div className="sun-icon">
           <span role="img" aria-label="sun">☀️</span>
         </div>
-        
-        <Button 
-          type="primary" 
-          className="back-button"
+
+        <Button
+          type="primary"
+          className="back-button-cal"
           onClick={onBackToForm}
         >
           Back to calculator

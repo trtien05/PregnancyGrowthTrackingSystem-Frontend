@@ -23,7 +23,9 @@
     padding: 19px 12px; 
     border: none !important;
   }
-  
+  /* .ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector{
+    border: none !important;
+  } */
   .ant-select-selection-item {
     line-height: 30px; /* Căn giữa văn bản trong dropdown */
     

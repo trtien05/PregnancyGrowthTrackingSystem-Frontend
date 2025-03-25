@@ -143,7 +143,7 @@ function DashboardFetus() {
   return (
     <div >
       <div className="mb-4">
-        <h2 className="text-xl font-bold mb-2">Biểu đồ theo dõi thai nhi</h2>
+        <h2 className="text-xl font-bold mb-2" style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px' }}>Fetal monitoring chart</h2>
         <div className="metrics-buttons">
           {metrics.map(measure => (
             <button
@@ -169,7 +169,7 @@ function DashboardFetus() {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="week"
-                label={{ value: 'Tuần thai', position: 'insideBottomRight', offset: 0 }}
+                label={{ value: 'Week', position: 'insideBottomRight', offset: 0 }}
               />
               <YAxis
                 label={{
@@ -199,7 +199,7 @@ function DashboardFetus() {
                 dataKey={`${currentMeasurementKey}_Min`}
                 stroke="#ccc"
                 strokeDasharray="5 5"
-                name="Giới hạn dưới"
+                name="Lower limit"
                 dot={false}
               />
 
@@ -208,23 +208,33 @@ function DashboardFetus() {
                 dataKey={`${currentMeasurementKey}_Max`}
                 stroke="#ccc"
                 strokeDasharray="5 5"
-                name="Giới hạn trên"
+                name="Upper limit"
                 dot={false}
               />
             </LineChart>
           </ResponsiveContainer>
         ) : (
-          <div className="h-full flex items-center justify-center text-gray-500">
-            Không có dữ liệu để hiển thị
+          <div className="empty-data-container" style={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#666',
+            border: '2px dashed #ccc',
+            borderRadius: '8px'
+          }}>
+            <svg xmlns="http://www.w3.org/2000/svg" style={{ height: '64px', width: '64px', marginBottom: '16px', color: '#aaa' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+            </svg>
+            <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>Không có dữ liệu để hiển thị</h3>
+            <p style={{ textAlign: 'center', marginBottom: '8px' }}>Chưa có dữ liệu theo dõi cho thai nhi.</p>
+            <p style={{ textAlign: 'center' }}>Hãy cập nhật các chỉ số của thai nhi theo định kỳ để theo dõi sự phát triển.</p>
           </div>
         )}
       </div>
 
-      <div className="mt-4 text-center text-sm text-gray-500">
-        <p>Biểu đồ này hiển thị giá trị {getCurrentMeasurement().name} theo tuần thai</p>
-        <p>Đường liền nét thể hiện giá trị đo được, đường đứt nét thể hiện giới hạn bình thường</p>
-        <p>Nhập cân nặng và các chỉ số mỗi tuần để theo dõi sự phát triển của thai nhi</p>
-      </div>
+
     </div>
   )
 }

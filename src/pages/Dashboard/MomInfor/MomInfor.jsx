@@ -1,17 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Card, Carousel } from 'antd';
+import { Button, Card, Carousel, Typography } from 'antd';
 import './MomInfor.css';
 import { useParams } from 'react-router-dom';
 import { weeksImages } from './WeekImage';
 import AddPregnancy from './AddPregnancy';
+import BlogModal from './BlogModal';
 import axiosClient from '../../../utils/apiCaller';
 import ColumnChart from '../../../components/ColumnChart/ColumnChart';
 import BarChart from '../../../components/BarChart/BarChart';
+import { weeklyBlogs } from './WeeklyBlogData';
+import MetricExplanationModal from './MetricExplanationModal';
+
+const { Title, Paragraph } = Typography;
 
 const MomInfo = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBlogModalOpen, setIsBlogModalOpen] = useState(false);
+  const [isMetricModalOpen, setIsMetricModalOpen] = useState(false);
   const [weeks, setWeeks] = useState([]);
   const scrollContainerRef = useRef(null);
   const [metrics, setMetrics] = useState([]);
@@ -78,6 +85,15 @@ const MomInfo = () => {
     scrollContainerRef.current.scrollLeft -= e.movementX;
   };
 
+  // Get blog data for current week
+  const getBlogDataForWeek = (weekNumber) => {
+    return weeklyBlogs.find(blog => blog.week === weekNumber) || {
+      week: weekNumber,
+      title: `Week ${weekNumber}`,
+      content: "Information for this week will be coming soon. Stay tuned!"
+    };
+  };
+
   return (
     <div className="pregnancy-container">
       <h1 className="pregnancy-title">My pregnancy week by week</h1>
@@ -117,19 +133,35 @@ const MomInfo = () => {
       </div>
 
       <div>
-        <div>
+        <div style={{ display: 'flex', gap: '10px', marginTop: '20px', justifyContent: 'space-between' }}>
           <Button
             type="primary"
             onClick={() => setIsModalOpen(true)}
-            style={{ marginTop: '20px' }}
             className={'update-button-subscription'}
           >
             Add Pregnancy
           </Button>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Button
+              type="default"
+              onClick={() => setIsBlogModalOpen(true)}
+              className={'blog-button'}
+            >
+              Week {week} Tips
+            </Button>
+            <Button
+              type="default"
+              onClick={() => setIsMetricModalOpen(true)}
+              className={'blog-button'}
+            >
+              Metrics Guide
+            </Button>
+          </div>
+
         </div>
 
         {/* Display metrics data if available and week is in weeks array */}
-        {metrics && metrics.length > 0 && id && weeks.includes(week) && (
+        {metrics && metrics.length > 0 && id && weeks.includes(week) ? (
           <div className="metrics-container" style={{ marginTop: '20px' }}>
             <h2>Week {week} Metrics</h2>
             <ColumnChart
@@ -145,6 +177,28 @@ const MomInfo = () => {
               />
             </div>
           </div>
+        ) : (
+          /* Display weekly blog content when no metrics are available */
+          <div className="blog-content-container" style={{
+            marginTop: '20px',
+            paddingTop: '20px',
+            paddingBottom: '20px',
+
+            borderRadius: '8px',
+          }}>
+            {/* Get blog data for this week */}
+            {(() => {
+              const blogData = getBlogDataForWeek(week);
+              return (
+                <div>
+                  <Title level={3}>Week {week}: {blogData.title}</Title>
+                  <Paragraph style={{ fontSize: '16px', lineHeight: '1.6' }}>
+                    {blogData.content}
+                  </Paragraph>
+                </div>
+              );
+            })()}
+          </div>
         )}
       </div>
 
@@ -153,8 +207,23 @@ const MomInfo = () => {
         id={id || ''}
         week={activeIndex + 1}
         open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          fetchGrowthMetricByWeek();
+        }}
         fetchAllGrowthMetricByWeek={fetchGrowthMetricByWeek}
+      />
+
+      <BlogModal
+        week={week}
+        open={isBlogModalOpen}
+        onClose={() => setIsBlogModalOpen(false)}
+      />
+
+      {/* New Metric Explanation Modal */}
+      <MetricExplanationModal
+        open={isMetricModalOpen}
+        onClose={() => setIsMetricModalOpen(false)}
       />
     </div>
   );

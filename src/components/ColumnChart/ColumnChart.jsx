@@ -295,8 +295,8 @@ const ColumnChart = ({ fetusId, week, metrics }) => {
 
       <div style={{ textAlign: 'center', marginTop: 16, padding: '0 16px' }}>
         <Text type="secondary">
-          Biểu đồ hiển thị các chỉ số thai nhi trong tuần {week}.
-          Cột màu biểu thị giá trị đo được, đường đứt nét biểu thị giới hạn bình thường.
+          The chart shows fetal indices for week {week}.
+          The colored bars represent measured values, the dashed lines represent normal limits.
         </Text>
       </div>
     </Card>

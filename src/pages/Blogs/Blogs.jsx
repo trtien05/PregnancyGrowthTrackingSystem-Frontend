@@ -98,7 +98,7 @@ const BlogPage = () => {
             <Link to={tool.path}>
               <Card hoverable className="tool-card">
                 <img src={tool.icon} alt={tool.name} className="tool-icon" />
-                <Title level={5} className="tool-name">
+                <Title level={5} style={{ fontSize: '14px' }}>
                   {tool.name}
                 </Title>
               </Card>

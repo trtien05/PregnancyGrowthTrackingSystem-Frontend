@@ -313,7 +313,7 @@ function Fetus(props) {
           <Select
             value={fetusGender}
             onChange={(value) => setFetusGender(value)}
-            style={{ width: '100%' }}
+            style={{ width: '100%', borderColor: "#ff7875" }}
             options={[
               { value: 'female', label: 'Female' },
               { value: 'male', label: 'Male' },

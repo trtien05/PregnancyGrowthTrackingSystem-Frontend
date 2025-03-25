@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  cursor: pointer;
 }
 .menu-item-link {
   text-decoration: none !important;
@@ -92,7 +93,8 @@
 @media (min-width: 768px) {
   .nav-links {
     display: flex;
-    gap: 50px;
+    justify-content: center;
+    align-items: center;
   }
   
   .mobile-menu-button {

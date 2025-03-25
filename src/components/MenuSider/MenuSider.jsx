@@ -84,29 +84,16 @@ const MenuSider = () => {
     {
       key: '1',
       icon: <HomeOutlined />,
-      label: 'Tracking All Babies',
+      label: 'Monitoring Chart',
       children: fetusChildren,
     },
-    // {
-    //   key: '2',
-    //   icon: <CalendarOutlined />,
-    //   label: (
-    //     <Link
-    //       to={config.routes.member.calendar}
-    //       style={{ textDecoration: 'none' }}
-    //     >
-    //       Calendar
-    //     </Link>
-    //   ),
-    // },
     {
       key: '3',
       icon: <Baby size={16} />,
       label: 'Tracking Baby by Week',
       children: fetusChildrenByWeek,
     },
-    // { key: '5', icon: <EyeOutlined />, label: 'Mother status' },
-    // { key: '6', icon: <BellOutlined />, label: 'Fetal growth chart' },
+
   ];
 
 

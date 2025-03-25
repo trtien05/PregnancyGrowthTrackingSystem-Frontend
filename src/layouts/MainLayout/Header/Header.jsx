@@ -11,7 +11,6 @@ const navLinks = [
   { title: 'About Us', href: '#' },
   { title: 'Pregnancy', href: '#' },
   { title: 'Blog', href: '/blogs' },
-  { title: 'FAQ', href: '#' },
   { title: 'Pricing', href: '/pricing' }
 ]
 
@@ -37,20 +36,6 @@ function Header(props) {
         </Link>,
       key: config.routes.customer.profile,
     },
-    ...(role === 'ROLE_member' ? [
-      {
-        label:
-          <Link
-            className='menu-item-link'
-            to={`${config.routes.customer.dashboardFetus}/1`}
-          >
-            <div className='menu-item-header'>
-              <DashboardOutlined /> Dashboard
-            </div>
-          </Link>,
-        key: config.routes.customer.manageMomInfor
-      }
-    ] : []),
     {
       label: (
         <div
@@ -69,7 +54,7 @@ function Header(props) {
 
   return (
     <nav className="header">
-      <div className="logo-container">
+      <div className="logo-container" onClick={() => window.location.href = '/'}>
         <img src={logo} alt="logo" width={30} height={24} />
         <span className="brand-name">PregnaJoy</span>
       </div>

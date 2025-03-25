@@ -213,13 +213,6 @@ const BarChart = ({ fetusId, week, metrics }) => {
           </Col>
         ))}
       </Row>
-
-      <div style={{ textAlign: 'center', marginTop: 16, padding: '0 16px' }}>
-        <Text type="secondary">
-          Biểu đồ hiển thị các chỉ số thai nhi trong tuần {week}.
-          Cột màu biểu thị giá trị đo được, đường đứt nét biểu thị giới hạn bình thường.
-        </Text>
-      </div>
     </Card>
   );
 };

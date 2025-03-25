@@ -106,13 +106,7 @@ const AddPregnancy = ({ week, open, onClose, id, fetchAllGrowthMetricByWeek }) =
 
       if (response.code === 200 || response.code === 201) {
         message.success('Metrics saved successfully');
-        fetchAllGrowthMetricByWeek(); // Refresh metrics data
-        onClose();
-      } else {
-        message.error('Failed to save metrics');
-      }
-      if (response.code === 200 || response.code === 201) {
-        message.success('Metrics saved successfully');
+        fetchAllGrowthMetricByWeek(); // This will refresh the data
         onClose();
       } else {
         message.error('Failed to save metrics');

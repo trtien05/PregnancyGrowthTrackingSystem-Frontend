@@ -42,7 +42,7 @@
   margin-bottom: 30px;
 }
 
-.back-button {
+.back-button-cal {
   margin-top: 20px;
   height: 42px;
   font-size: 16px;
@@ -80,7 +80,7 @@
       font-size: 16px;
   }
 
-  .back-button {
+  .back-button-cal {
       height: 38px;
       font-size: 14px;
   }
