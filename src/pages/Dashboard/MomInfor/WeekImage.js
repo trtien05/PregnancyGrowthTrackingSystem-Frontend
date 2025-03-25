@@ -39,4 +39,6 @@ export const weeksImages = [
   'https://assets.babycenter.com/ims/2024/12/week-39-pumpkin-dec-2024.svg',
   'https://assets.babycenter.com/ims/2024/12/week-40-watermelon-dec-2024.svg',
   'https://assets.babycenter.com/ims/2023/12/fruit-week-41-2023.svg',
+  'https://assets.babycenter.com/ims/2023/12/fruit-week-41-2023.svg',
+
 ]

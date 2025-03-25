@@ -5,14 +5,8 @@ import PregnancyCalculationResult from '../PregnancyCalculationResult/PregnancyC
 const calculateBMI = (weight, height) => {
   const weightInKg = weight.unit === 'lb' ? weight.value * 0.45359237 : weight.value;
 
-  let heightInMeters;
-  if (height.unit === 'ft') {
-    const totalInches = (height.feet * 12) + height.inches;
-    heightInMeters = totalInches * 0.0254;
-  } else {
-    // For meters, handle the main value and inches separately
-    heightInMeters = Number(height.feet) + (Number(height.inches) * 0.0254);
-  }
+  // Convert height to meters (meters + centimeters/100)
+  const heightInMeters = Number(height.meters) + (Number(height.centimeters) / 100);
 
   return weightInKg / (heightInMeters * heightInMeters);
 };
@@ -40,9 +34,8 @@ const PregnancyCalculatorForm = () => {
     prePregnancyUnit: 'lb',
     currentWeight: '',
     currentWeightUnit: 'lb',
-    heightFeet: '',
-    heightFeetUnit: 'ft',
-    heightInches: '',
+    heightMeters: '',
+    heightCentimeters: '',
     isCarryingTwins: false,
     pregnancyWeek: ''
   })
@@ -50,8 +43,8 @@ const PregnancyCalculatorForm = () => {
   const [errors, setErrors] = useState({
     prePregnancyWeight: '',
     currentWeight: '',
-    heightFeet: '',
-    heightInches: '',
+    heightMeters: '',
+    heightCentimeters: '',
     pregnancyWeek: ''
   });
 
@@ -63,8 +56,8 @@ const PregnancyCalculatorForm = () => {
     const newErrors = {
       prePregnancyWeight: '',
       currentWeight: '',
-      heightFeet: '',
-      heightInches: '',
+      heightMeters: '',
+      heightCentimeters: '',
       pregnancyWeek: ''
     };
 
@@ -87,19 +80,19 @@ const PregnancyCalculatorForm = () => {
     }
 
     // Validate height
-    if (!formData.heightFeet) {
-      newErrors.heightFeet = 'Height is required';
+    if (!formData.heightMeters) {
+      newErrors.heightMeters = 'Height in meters is required';
       isValid = false;
-    } else if (parseFloat(formData.heightFeet) <= 0) {
-      newErrors.heightFeet = 'Height must be greater than 0';
+    } else if (parseFloat(formData.heightMeters) < 0) {
+      newErrors.heightMeters = 'Height must be a positive number';
       isValid = false;
     }
 
-    if (formData.heightFeetUnit === 'ft' && (!formData.heightInches || formData.heightInches === '')) {
-      newErrors.heightInches = 'Inches is required';
+    if (!formData.heightCentimeters && formData.heightCentimeters !== '0') {
+      newErrors.heightCentimeters = 'Height in centimeters is required';
       isValid = false;
-    } else if (formData.heightFeetUnit === 'ft' && (parseFloat(formData.heightInches) < 0 || parseFloat(formData.heightInches) > 11)) {
-      newErrors.heightInches = 'Inches must be between 0 and 11';
+    } else if (parseFloat(formData.heightCentimeters) < 0 || parseFloat(formData.heightCentimeters) >= 100) {
+      newErrors.heightCentimeters = 'Centimeters must be between 0 and 99';
       isValid = false;
     }
 
@@ -126,9 +119,8 @@ const PregnancyCalculatorForm = () => {
         unit: formData.prePregnancyUnit
       },
       {
-        feet: Number(formData.heightFeet),
-        inches: Number(formData.heightInches) || 0,
-        unit: formData.heightFeetUnit
+        meters: Number(formData.heightMeters),
+        centimeters: Number(formData.heightCentimeters) || 0
       }
     );
 
@@ -158,17 +150,16 @@ const PregnancyCalculatorForm = () => {
       prePregnancyUnit: 'lb',
       currentWeight: '',
       currentWeightUnit: 'lb',
-      heightFeet: '',
-      heightFeetUnit: 'ft',
-      heightInches: '',
+      heightMeters: '',
+      heightCentimeters: '',
       isCarryingTwins: false,
       pregnancyWeek: ''
     });
     setErrors({
       prePregnancyWeight: '',
       currentWeight: '',
-      heightFeet: '',
-      heightInches: '',
+      heightMeters: '',
+      heightCentimeters: '',
       pregnancyWeek: ''
     });
   };
@@ -254,34 +245,32 @@ const PregnancyCalculatorForm = () => {
             <div className="input-group">
               <input
                 type="number"
-                name="heightFeet"
-                value={formData.heightFeet}
+                name="heightMeters"
+                value={formData.heightMeters}
                 onChange={handleInputChange}
-                placeholder="Feet"
+                placeholder="Meters"
                 min="0"
-                className={`height-feet ${errors.heightFeet ? 'error-input' : ''}`}
+                step="0.01"
+                className={`height-meters ${errors.heightMeters ? 'error-input' : ''}`}
               />
-              <select name="heightFeetUnit" value={formData.heightFeetUnit} onChange={handleInputChange}>
-                <option value="ft">ft</option>
-                <option value="m">m</option>
-              </select>
+              <span className="unit-label">m</span>
             </div>
             <div className="input-group">
               <input
                 type="number"
-                name="heightInches"
-                value={formData.heightInches}
+                name="heightCentimeters"
+                value={formData.heightCentimeters}
                 onChange={handleInputChange}
-                placeholder="Inches"
+                placeholder="Centimeters"
                 min="0"
-                max="11"
-                className={errors.heightInches ? 'error-input' : ''}
+                max="99"
+                className={errors.heightCentimeters ? 'error-input' : ''}
               />
-              <span className="unit-label">inch</span>
+              <span className="unit-label">cm</span>
             </div>
           </div>
-          {errors.heightFeet && <p className="error-message">{errors.heightFeet}</p>}
-          {errors.heightInches && <p className="error-message">{errors.heightInches}</p>}
+          {errors.heightMeters && <p className="error-message">{errors.heightMeters}</p>}
+          {errors.heightCentimeters && <p className="error-message">{errors.heightCentimeters}</p>}
         </div>
 
         <div className="checkbox-group">
@@ -290,7 +279,7 @@ const PregnancyCalculatorForm = () => {
         </div>
         <div className="conversion-info">
           <p className="info-text">
-            Conversion reference: 1 lb = 0.45 kg | 1 ft = 0.3 m | 1 inch = 2.5 cm
+            Conversion reference: 1 lb = 0.45 kg | 1 m = 100 cm
           </p>
         </div>
         <div className="form-group">

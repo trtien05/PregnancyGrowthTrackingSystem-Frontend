@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import  { useState, useEffect } from 'react'
 import axiosClient from '../../../utils/apiCaller'
-import { Table, Button, Modal, Form, Input, InputNumber, Switch, message, Popconfirm, Spin } from 'antd'
+import { Table, Button, Modal, Form, Input, InputNumber, Switch, message, Popconfirm} from 'antd'
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 function MembershipPlan() {
@@ -245,12 +245,16 @@ function MembershipPlan() {
           <Form.Item
             name="durationMonths"
             label="Duration (Months)"
-            rules={[{ required: true, message: 'Please enter duration' }]}
+            rules={[
+              { required: true, message: 'Please enter duration' },
+              { type: 'number', max: 12, message: 'Duration cannot exceed 12 months' }
+            ]}
           >
             <InputNumber
               style={{ width: '100%' }}
               placeholder="Enter duration in months"
               min={1}
+              max={12}
             />
           </Form.Item>
           <Form.Item
@@ -296,12 +300,16 @@ function MembershipPlan() {
           <Form.Item
             name="durationMonths"
             label="Duration (Months)"
-            rules={[{ required: true, message: 'Please enter duration' }]}
+            rules={[
+              { required: true, message: 'Please enter duration' },
+              { type: 'number', max: 12, message: 'Duration cannot exceed 12 months' }
+            ]}
           >
             <InputNumber
               style={{ width: '100%' }}
               placeholder="Enter duration in months"
               min={1}
+              max={12}
             />
           </Form.Item>
           <Form.Item

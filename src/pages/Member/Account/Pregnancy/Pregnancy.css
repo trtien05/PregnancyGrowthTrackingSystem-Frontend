@@ -132,3 +132,44 @@
     font-size: 14px;
   }
 }
+
+.pregnancy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-pregnancy-button {
+  background-color: #FAACAA;
+  border-color: #FAACAA;
+}
+
+.add-pregnancy-button:hover {
+  background-color: #f89a97;
+  border-color: #f89a97;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.calculate-due-date {
+  color: #FAACAA;
+}
+
+.calculate-due-date:hover {
+  color: #f89a97;
+}
+
+.update-button-subscription {
+  background-color: #FAACAA;
+  border-color: #FAACAA;
+}
+
+.update-button-subscription:hover {
+  background-color: #f89a97;
+  border-color: #f89a97;
+}

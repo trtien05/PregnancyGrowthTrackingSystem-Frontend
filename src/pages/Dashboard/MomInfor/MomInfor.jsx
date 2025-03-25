@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Card, Carousel, Typography } from 'antd';
 import './MomInfor.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { weeksImages } from './WeekImage';
 import AddPregnancy from './AddPregnancy';
 import BlogModal from './BlogModal';
@@ -23,7 +23,51 @@ const MomInfo = () => {
   const scrollContainerRef = useRef(null);
   const [metrics, setMetrics] = useState([]);
   const [week, setWeek] = useState(1);
+  const [currentWeek, setCurrentWeek] = useState(0);
+  const [pregnancy, setPregnancy] = useState(null);
   const { id } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const pregnancyId = queryParams.get('pregnancyId');
+
+  // Fetch pregnancy data to get dueDate
+  useEffect(() => {
+    const fetchPregnancy = async () => {
+      if (!pregnancyId) return;
+      
+      try {
+        const response = await axiosClient.get(`/pregnancies/${pregnancyId}`);
+        if (response.code === 200) {
+          setPregnancy(response.data);
+          
+          // Calculate current week based on dueDate
+          if (response.data && response.data.dueDate) {
+            const dueDate = new Date(response.data.dueDate);
+            const today = new Date();
+            const totalWeeksPregnancy = 40; // Standard pregnancy length
+            
+            // Time difference in milliseconds
+            const timeDiff = dueDate - today;
+            
+            // Convert to weeks
+            const weeksLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24 * 7));
+            
+            // Calculate current week (40 - weeks left)
+            const calculatedCurrentWeek = Math.min(Math.max(totalWeeksPregnancy - weeksLeft, 1), 40);
+            setCurrentWeek(calculatedCurrentWeek);
+            
+            // Set active week to current week
+            setWeek(calculatedCurrentWeek);
+            setActiveIndex(calculatedCurrentWeek - 1);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch pregnancy: ', error);
+      }
+    };
+    
+    fetchPregnancy();
+  }, [pregnancyId]);
 
   useEffect(() => {
     const fetchMetric = async () => {
@@ -74,7 +118,6 @@ const MomInfo = () => {
       console.log("error", error);
     }
   }, [id]);
-  console.log("weeks", weeks);
 
   const handleMouseUp = () => {
     setIsDragging(false);
@@ -92,6 +135,11 @@ const MomInfo = () => {
       title: `Week ${weekNumber}`,
       content: "Information for this week will be coming soon. Stay tuned!"
     };
+  };
+
+  // Check if a week's data can be added (if week <= currentWeek)
+  const canAddDataForWeek = (weekNum) => {
+    return currentWeek > 0 && weekNum <= currentWeek;
   };
 
   return (
@@ -114,7 +162,6 @@ const MomInfo = () => {
               onMouseLeave={handleMouseUp}
               onMouseUp={handleMouseUp}
               onClick={() => setWeek(index + 1)}
-
             >
               <div className="left-card">
                 <div className="week-number">{index + 1}</div>
@@ -134,14 +181,16 @@ const MomInfo = () => {
 
       <div>
         <div style={{ display: 'flex', gap: '10px', marginTop: '20px', justifyContent: 'space-between' }}>
-          <Button
-            type="primary"
-            onClick={() => setIsModalOpen(true)}
-            className={'update-button-subscription'}
-          >
-            Add Pregnancy
-          </Button>
-          <div style={{ display: 'flex', gap: '10px' }}>
+          {canAddDataForWeek(week) && (
+            <Button
+              type="primary"
+              onClick={() => setIsModalOpen(true)}
+              className={'update-button-subscription'}
+            >
+              Add Pregnancy
+            </Button>
+          )}
+          <div style={{ display: 'flex', gap: '10px', marginLeft: canAddDataForWeek(week) ? '0' : 'auto' }}>
             <Button
               type="default"
               onClick={() => setIsBlogModalOpen(true)}
@@ -157,7 +206,6 @@ const MomInfo = () => {
               Metrics Guide
             </Button>
           </div>
-
         </div>
 
         {/* Display metrics data if available and week is in weeks array */}
@@ -183,7 +231,6 @@ const MomInfo = () => {
             marginTop: '20px',
             paddingTop: '20px',
             paddingBottom: '20px',
-
             borderRadius: '8px',
           }}>
             {/* Get blog data for this week */}
@@ -201,7 +248,6 @@ const MomInfo = () => {
           </div>
         )}
       </div>
-
 
       <AddPregnancy
         id={id || ''}

@@ -143,7 +143,7 @@ function DashboardFetus() {
   return (
     <div >
       <div className="mb-4">
-        <h2 className="text-xl font-bold mb-2" style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px' }}>Fetal monitoring chart</h2>
+        <h2  style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px' }}>Fetal monitoring chart</h2>
         <div className="metrics-buttons">
           {metrics.map(measure => (
             <button
@@ -164,7 +164,7 @@ function DashboardFetus() {
           <ResponsiveContainer width="90%" height="100%">
             <LineChart
               data={formattedData}
-              margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+              margin={{ top: 5, right: 20, left: 30, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
@@ -175,12 +175,14 @@ function DashboardFetus() {
                 label={{
                   value: `${currentMeasurement.name || ''} (${currentMeasurement.unit || ''})`,
                   angle: -90,
-                  position: 'insideLeft'
+                  position: 'insideLeft',
+                  offset: -20,
+                  style: { textAnchor: 'middle' }
                 }}
               />
               <Tooltip
                 formatter={(value) => [`${value} ${currentMeasurement.unit || ''}`, currentMeasurement.name || '']}
-                labelFormatter={(label) => `Tuần ${label}`}
+                labelFormatter={(label) => `Week ${label}`}
               />
               <Legend />
 
@@ -197,8 +199,9 @@ function DashboardFetus() {
               <Line
                 type="monotone"
                 dataKey={`${currentMeasurementKey}_Min`}
-                stroke="#ccc"
+                stroke="#FF8C00"  
                 strokeDasharray="5 5"
+                strokeWidth={3}
                 name="Lower limit"
                 dot={false}
               />
@@ -206,8 +209,9 @@ function DashboardFetus() {
               <Line
                 type="monotone"
                 dataKey={`${currentMeasurementKey}_Max`}
-                stroke="#ccc"
+                stroke="#4CAF50"  
                 strokeDasharray="5 5"
+                strokeWidth={3}
                 name="Upper limit"
                 dot={false}
               />
@@ -227,9 +231,9 @@ function DashboardFetus() {
             <svg xmlns="http://www.w3.org/2000/svg" style={{ height: '64px', width: '64px', marginBottom: '16px', color: '#aaa' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
             </svg>
-            <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>Không có dữ liệu để hiển thị</h3>
-            <p style={{ textAlign: 'center', marginBottom: '8px' }}>Chưa có dữ liệu theo dõi cho thai nhi.</p>
-            <p style={{ textAlign: 'center' }}>Hãy cập nhật các chỉ số của thai nhi theo định kỳ để theo dõi sự phát triển.</p>
+            <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>No data</h3>
+                <p style={{ textAlign: 'center', marginBottom: '8px' }}>No fetal follow-up data are available.</p>
+                <p style={{ textAlign: 'center' }}>Update your baby's indicators periodically to monitor development.</p>
           </div>
         )}
       </div>

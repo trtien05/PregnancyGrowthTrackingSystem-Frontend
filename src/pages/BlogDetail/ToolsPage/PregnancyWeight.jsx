@@ -55,7 +55,7 @@ export default function PregnancyWeight() {
           </div>
 
           <div className="intro-text">
-            This tool will calculate your pre-pregnancy BMI (body mass index), give you a recommendation for pregnancy weight gain, and generate a pregnancy weight gain chart to show how you  &apos;re tracking toward your target weight range.
+            This tool will calculate your pre-pregnancy BMI (body mass index), give you a recommendation for pregnancy weight gain, and generate a pregnancy weight gain chart to show how you  &apos;re tracking toward your target weight range. Height is measured in meters (m) and centimeters (cm) only.
           </div>
 
           <div className="intro-text">

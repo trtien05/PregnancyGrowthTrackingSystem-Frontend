@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import  { useState, useEffect } from 'react'
 import axiosClient from '../../../utils/apiCaller'
-import { Table, Button, Modal, Form, Input, InputNumber, message, Popconfirm, Spin } from 'antd'
+import { Table, Button, Modal, Form, Input,  message, Popconfirm } from 'antd'
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 function GrowthMetric() {
@@ -61,7 +61,7 @@ function GrowthMetric() {
   const openEditModal = (record) => {
     setCurrentMetric(record)
     form.setFieldsValue({
-      metricName: record.metricName,
+      name: record.metricName,
       unit: record.unit,
       min: record.min,
       max: record.max
@@ -132,18 +132,7 @@ function GrowthMetric() {
       dataIndex: 'unit',
       key: 'unit',
     },
-    {
-      title: 'Minimum Value',
-      dataIndex: 'min',
-      key: 'min',
-      render: (min) => min === null ? 'N/A' : min,
-    },
-    {
-      title: 'Maximum Value',
-      dataIndex: 'max',
-      key: 'max',
-      render: (max) => max === null ? 'N/A' : max,
-    },
+   
     {
       title: 'Actions',
       key: 'actions',
@@ -218,7 +207,7 @@ function GrowthMetric() {
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            name="metricName"
+            name="name"
             label="Metric Name"
             rules={[{ required: true, message: 'Please enter metric name' }]}
           >
@@ -231,7 +220,7 @@ function GrowthMetric() {
           >
             <Input placeholder="Enter unit (e.g., mm, g, bpm)" />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="min"
             label="Minimum Value (Optional)"
           >
@@ -248,7 +237,7 @@ function GrowthMetric() {
               style={{ width: '100%' }}
               placeholder="Enter maximum value"
             />
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       </Modal>
 
@@ -262,7 +251,7 @@ function GrowthMetric() {
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            name="metricName"
+            name="name"
             label="Metric Name"
             rules={[{ required: true, message: 'Please enter metric name' }]}
           >
@@ -275,7 +264,7 @@ function GrowthMetric() {
           >
             <Input placeholder="Enter unit (e.g., mm, g, bpm)" />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="min"
             label="Minimum Value (Optional)"
           >
@@ -283,8 +272,8 @@ function GrowthMetric() {
               style={{ width: '100%' }}
               placeholder="Enter minimum value"
             />
-          </Form.Item>
-          <Form.Item
+          </Form.Item> */}
+          {/* <Form.Item
             name="max"
             label="Maximum Value (Optional)"
           >
@@ -292,7 +281,7 @@ function GrowthMetric() {
               style={{ width: '100%' }}
               placeholder="Enter maximum value"
             />
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       </Modal>
     </div>

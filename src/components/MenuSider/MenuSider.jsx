@@ -45,7 +45,7 @@ const MenuSider = () => {
       key: `fetus-week-${baby.id}`,
       label: (
         <Link
-          to={`${config.routes.customer.dashboardFetus}/${baby.id}`}
+          to={`${config.routes.customer.dashboardFetus}/${baby.id}?pregnancyId=${baby.pregnancyId}`}
           style={{ textDecoration: 'none' }}
         >
           {baby.nickName || `Baby ${baby.id}`}
