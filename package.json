@@ -7,21 +7,35 @@
     "dev": "vite",
     "build": "vite build",
     "test": "react-scripts test",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "prettier:check": "prettier --check \"src/**/*.{jsx,json}\"",
+    "prettier:fix": "prettier --write \"src/**/*.{jsx,json}\"",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "antd": "^5.24.0",
+    "axios": "^1.7.9",
+    "date-fns": "^4.1.0",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.475.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.1.5",
+    "recharts": "^2.15.1",
+    "universal-cookie": "^7.2.2",
+    "world-countries": "^5.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.57.0",
+    "autoprefixer": "^10.4.20",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "postcss": "^8.4.49",
+    "prettier": "^2.8.4",
     "vite": "^5.2.0"
   }
 }

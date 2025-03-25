@@ -1,13 +1,11 @@
-import './App.css'
+import { BrowserRouter as Router } from 'react-router-dom'
+import RoutesComponent from './routes'
 
 function App() {
-
   return (
-    <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Router>
+      <RoutesComponent />
+    </Router>
   )
 }
 
