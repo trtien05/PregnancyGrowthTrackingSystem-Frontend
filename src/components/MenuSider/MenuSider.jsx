@@ -42,7 +42,7 @@ const MenuSider = () => {
   const fetusChildrenByWeek = [
     // Use the fetched fetus data instead of the hard-coded babyNames
     ...fetus.map(baby => ({
-      key: `fetus-${baby.id}`,
+      key: `fetus-week-${baby.id}`,
       label: (
         <Link
           to={`${config.routes.customer.dashboardFetus}/${baby.id}`}

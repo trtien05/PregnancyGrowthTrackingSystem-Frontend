@@ -1,8 +1,10 @@
 .dashboard-container {
   display: flex;
   padding: 20px;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
 }
 .dashboard-content{
   padding-bottom: 20px;
+  width: 80%;
 }

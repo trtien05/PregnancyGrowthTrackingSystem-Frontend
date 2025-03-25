@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import './AdminLayout.css';
 import { Link, Outlet } from 'react-router-dom';
-import Sidebar from '@/components/layout/Sidebar';
+import Sidebar from '../../components/Sidebar';
 import config from '@/config';
 
 const { Header, Content } = Layout;

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import './Pregnancy.css'
 import { Table, Tag, Empty } from 'antd'
 import axiosClient from "../../../../utils/apiCaller";
-import { BabyIcon } from "lucide-react";
 import Fetus from "./Fetus";
 
 function PregnancyPage() {

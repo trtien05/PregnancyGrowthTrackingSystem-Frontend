@@ -42,7 +42,7 @@ function Header(props) {
         label:
           <Link
             className='menu-item-link'
-            to={config.routes.customer.manageMomInfor}
+            to={`${config.routes.customer.dashboardFetus}/1`}
           >
             <div className='menu-item-header'>
               <DashboardOutlined /> Dashboard

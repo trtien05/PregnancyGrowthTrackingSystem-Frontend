@@ -2,6 +2,9 @@ import { Button, Modal, Input, Select, message, Table, Empty, Tag, Space, Popcon
 import { BabyIcon, Edit2, Trash2 } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import axiosClient from '../../../../../utils/apiCaller'
+import { Link } from 'react-router-dom'
+import config from '../../../../../config'
+import { LineChartOutlined } from '@ant-design/icons'
 
 function Fetus(props) {
   const { id } = props
@@ -200,6 +203,13 @@ function Fetus(props) {
           >
             <Trash2 size={18} style={{ color: '#ff4d4f', cursor: 'pointer' }} />
           </Popconfirm>
+          <Link
+            to={`${config.routes.customer.dashboardFetus}/${record.id}`}
+            style={{ textDecoration: 'none' }}
+          >
+            <LineChartOutlined />
+
+          </Link>
         </Space>
       ),
     },
