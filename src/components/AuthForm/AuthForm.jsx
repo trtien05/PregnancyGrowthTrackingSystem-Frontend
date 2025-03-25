@@ -12,7 +12,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 function AuthForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   })
   const [loading, setLoading] = useState(false)
@@ -20,16 +20,57 @@ function AuthForm() {
 
   const [messageApi, contextHolder] = message.useMessage()
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    return emailRegex.test(email)
   }
 
+  const [passwordError, setPasswordError] = useState('')
+
+  // Hàm validate mật khẩu (password)
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/
+    return passwordRegex.test(password)
+  }
+
+  const [emailError, setEmailError] = useState('') // Thêm state để theo dõi lỗi email
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+
+    // Kiểm tra mật khẩu khi người dùng nhập vào
+    if (name === 'password') {
+      if (!validatePassword(value)) {
+        setPasswordError('Password must contain at least one uppercase letter, one number, and one special character.')
+      } else {
+        setPasswordError('')
+      }
+    }
+
+    // Kiểm tra email khi người dùng nhập vào
+    if (name === 'email') {
+      if (!value.trim()) {
+        setEmailError("Email is required.");
+      } else if (!validateEmail(value)) {
+        setEmailError("Invalid email address.");
+      } else {
+        setEmailError("");
+      }
+    }
+
+  }
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setPasswordError(''); // Reset lỗi trước khi gửi request
     try {
+
+      console.log('response: ', response)
       setLoading(true)
       const response = await axiosClient.post('/auth/login', {}, { auth: formData })
       const data = response.data
@@ -40,9 +81,19 @@ function AuthForm() {
         navigate(config.routes.public.home)
       }, 2000)
     } catch (error) {
-      console.log('Error: ', error)
-    } finally {
-      setLoading(false)
+      console.log('Error: ', error);
+
+      if (error.response) {
+        if (error.response.status === 401) {
+          setPasswordError("Incorrect password. Please try again.");
+        } else if (error.response.status === 404) {
+          setEmailError("Email not found. Please check again.");
+        } else {
+          messageApi.error("Something went wrong. Please try again.");
+        }
+      } else {
+        messageApi.error("Network error. Please check your connection.");
+      }
     }
   }
 
@@ -58,7 +109,8 @@ function AuthForm() {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label className="form-label">Email</label>
-                <input type="text" name="username" value={formData.username} onChange={handleChange} className="form-input" />
+                <input type="text" name="email" value={formData.email} onChange={handleChange} className="form-input" />
+                {emailError && <p className="error-message">{emailError}</p>}
               </div>
 
               <div className="form-group">
@@ -70,7 +122,7 @@ function AuthForm() {
                     ) : (
                       <EyeIcon style={{ color: '#666666' }} size={16} />
                     )}
-                    <span>{showPassword ? 'Hide' : 'Show'}</span>
+
                   </button>
                 </div>
                 <input
@@ -81,6 +133,7 @@ function AuthForm() {
                   className="form-input"
                   autoComplete="on"
                 />
+                {passwordError && <p className="error-message">{passwordError}</p>}
               </div>
 
               <div className="form-links">
@@ -121,5 +174,6 @@ function AuthForm() {
     </>
   )
 }
+
 
 export default AuthForm

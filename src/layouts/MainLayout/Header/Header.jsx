@@ -12,8 +12,13 @@ const navLinks = [
   { title: 'Pregnancy', href: '#' },
   { title: 'Blog', href: '/blogs' },
   { title: 'FAQ', href: '#' },
+<<<<<<< HEAD
   { title: 'Pricing', href: '/pricing' }
 ]
+=======
+  { title: 'Explore Plans', href: '#' },
+];
+>>>>>>> 8ce031d57189e68e095f965830f75a97eb1a7397
 
 function Header(props) {
   // eslint-disable-next-line react/prop-types
@@ -92,11 +97,19 @@ function Header(props) {
             {link.title}
           </a>
         ))}
+<<<<<<< HEAD
         <div style={{ padding: '16px' }}>
           <Button type="primary" href="/login" block className="join-button">
+=======
+        <a href="/login">
+          <button
+            className="lognin-mobile"
+          >
+>>>>>>> 8ce031d57189e68e095f965830f75a97eb1a7397
             Join us
-          </Button>
-        </div>
+          </button>
+        </a>
+
       </Drawer>
       {user ? (
         <Dropdown
