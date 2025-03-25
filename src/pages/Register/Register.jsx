@@ -21,31 +21,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setConfirmShowPassword] = useState(false)
 
-<<<<<<< HEAD
 
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
-
-  const [passwordMatch, setPasswordMatch] = useState(true)
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }))
-
-    // Check password match when either password field changes
-    if (name === 'password' || name === 'confirmPassword') {
-      if (name === 'password') {
-        setPasswordMatch(value === formData.confirmPassword)
-      } else {
-        setPasswordMatch(value === formData.password)
-      }
-    }
-  }
-=======
-  
   const [fullnameError, setFullnameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -56,7 +32,6 @@ function Register() {
     const trimmedName = fullname.trim();
     return trimmedName.length > 0 && trimmedName.length <= 20;
   };
->>>>>>> 8ce031d57189e68e095f965830f75a97eb1a7397
 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -67,55 +42,55 @@ function Register() {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
     return passwordRegex.test(password);
   };
-  
-  
 
-const handleChange = (e) => {
-  const { name, value, type, checked } = e.target;
-  setFormData(prev => ({
-    ...prev,
-    [name]: type === 'checkbox' ? checked : value
-  }));
 
-  // Validate email
-  if (name === 'email') {
-    if (!validateEmail(value)) {
-      setEmailError("Invalid email address.");
-    } else {
-      setEmailError('');
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+
+    // Validate email
+    if (name === 'email') {
+      if (!validateEmail(value)) {
+        setEmailError("Invalid email address.");
+      } else {
+        setEmailError('');
+      }
     }
-  }
 
-  // Validate full name
-  if (name === 'fullName') {
-    if (!validateFullname(value)) {
-      setFullnameError("Full name must be between 1 and 20 characters.");
-    } else {
-      setFullnameError('');
+    // Validate full name
+    if (name === 'fullName') {
+      if (!validateFullname(value)) {
+        setFullnameError("Full name must be between 1 and 20 characters.");
+      } else {
+        setFullnameError('');
+      }
     }
-  }
 
-  // Validate password
-  // Validate password
-  if (name === 'password') {
-    if (!validatePassword(value)) {
-      setPasswordError("Password must contain at least one uppercase letter, one number, and one special character.");
-    } else {
-      setPasswordError('');
+    // Validate password
+    // Validate password
+    if (name === 'password') {
+      if (!validatePassword(value)) {
+        setPasswordError("Password must contain at least one uppercase letter, one number, and one special character.");
+      } else {
+        setPasswordError('');
+      }
     }
-  }
 
-  // Validate confirm password
-  if (name === 'confirmPassword') {
-    if (value !== formData.password) {
-      setConfirmPasswordError("Passwords do not match.");
-      setPasswordMatch(false);
-    } else {
-      setConfirmPasswordError('');
-      setPasswordMatch(true);
+    // Validate confirm password
+    if (name === 'confirmPassword') {
+      if (value !== formData.password) {
+        setConfirmPasswordError("Passwords do not match.");
+        setPasswordMatch(false);
+      } else {
+        setConfirmPasswordError('');
+        setPasswordMatch(true);
+      }
     }
-  }
-};
+  };
 
 
   const handleSubmit = async (e) => {
@@ -174,16 +149,10 @@ const handleChange = (e) => {
                 className="form-input"
                 required
               />
-               {fullnameError && <p className="error-message">{fullnameError}</p>}
+              {fullnameError && <p className="error-message">{fullnameError}</p>}
             </div>
 
             <div className="form-group">
-<<<<<<< HEAD
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} className="form-input" required autoComplete="username" />
-=======
               <label htmlFor="email" className="form-label">Email</label>
               <input
                 type="text"
@@ -194,8 +163,7 @@ const handleChange = (e) => {
                 className="form-input"
                 required
               />
-               {emailError && <p className="error-message">{emailError}</p>}
->>>>>>> 8ce031d57189e68e095f965830f75a97eb1a7397
+              {emailError && <p className="error-message">{emailError}</p>}
             </div>
 
             <div className="form-group">
@@ -249,11 +217,7 @@ const handleChange = (e) => {
                 required
                 autoComplete="new-password" // Thêm thuộc tính này
               />
-<<<<<<< HEAD
-              {!passwordMatch && <p className="error-message">Passwords do not match</p>}
-=======
-               {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
->>>>>>> 8ce031d57189e68e095f965830f75a97eb1a7397
+              {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
             </div>
 
             <div className="checkbox-container">
