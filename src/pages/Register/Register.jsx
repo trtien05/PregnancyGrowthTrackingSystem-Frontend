@@ -10,6 +10,8 @@ import { EyeIcon, EyeOffIcon } from 'lucide-react'
 
 function Register() {
   useDocumentTitle('PregnaJoy | Register')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',

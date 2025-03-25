@@ -193,7 +193,11 @@ const PregnancyCalculatorForm = () => {
           <input type="checkbox" id="twins" name="isCarryingTwins" checked={formData.isCarryingTwins} onChange={handleInputChange} />
           <label htmlFor="twins">I&apos;m carrying twins</label>
         </div>
-
+        <div className="conversion-info">
+          <p className="info-text">
+            <small>Conversion reference: 1 lb = 0.45 kg | 1 ft = 0.3 m</small>
+          </p>
+        </div>
         <div className="form-group">
           <label className="form-label">Your week of pregnancy</label>
           <div className="input-group">

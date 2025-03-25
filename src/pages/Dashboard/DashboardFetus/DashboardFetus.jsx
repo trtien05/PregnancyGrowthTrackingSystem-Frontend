@@ -1,6 +1,5 @@
-import { Col, Row, Skeleton, Tooltip } from "antd"
+import { Skeleton, Tooltip } from "antd"
 import './DashboardFetus.css'
-import Title from "antd/es/typography/Title"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosClient from "../../../utils/apiCaller";
@@ -136,11 +135,11 @@ function DashboardFetus() {
   // Kết quả mong muốn
   const formattedData = formatChartData(chartData);
   console.log("formattedData", formattedData);
-  
+
   // Get the current measurement name without spaces to match the data keys
   const currentMeasurement = getCurrentMeasurement();
   const currentMeasurementKey = currentMeasurement.name?.replace(/\s+/g, '') || '';
-  
+
   return (
     <div >
       <div className="mb-4">
@@ -162,7 +161,7 @@ function DashboardFetus() {
         {loading ? (
           <Skeleton active paragraph={{ rows: 10 }} />
         ) : formattedData.length > 0 ? (
-            <ResponsiveContainer width="90%" height="100%">
+          <ResponsiveContainer width="90%" height="100%">
             <LineChart
               data={formattedData}
               margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
@@ -179,9 +178,9 @@ function DashboardFetus() {
                   position: 'insideLeft'
                 }}
               />
-              <Tooltip 
-                formatter={(value) => [`${value} ${currentMeasurement.unit || ''}`, currentMeasurement.name || '']} 
-                labelFormatter={(label) => `Tuần ${label}`} 
+              <Tooltip
+                formatter={(value) => [`${value} ${currentMeasurement.unit || ''}`, currentMeasurement.name || '']}
+                labelFormatter={(label) => `Tuần ${label}`}
               />
               <Legend />
 

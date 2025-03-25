@@ -68,20 +68,42 @@ function AuthForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setPasswordError(''); // Reset lỗi trước khi gửi request
-    try {
 
-      console.log('response: ', response)
-      setLoading(true)
-      const response = await axiosClient.post('/auth/login', {}, { auth: formData })
-      const data = response.data
-      const { token } = data
-      cookieUtils.setItem(config.cookies.token, token)
-      messageApi.success('Logged in successfully')
+    // Check if form data is valid before submission
+    if (!formData.email.trim() || !validateEmail(formData.email)) {
+      setEmailError("Please enter a valid email address.");
+      setLoading(false);
+      return;
+    }
+
+    if (!formData.password.trim()) {
+      setPasswordError("Password is required.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // Create Base64 encoded credentials for Basic Auth
+      const credentials = btoa(`${formData.email}:${formData.password}`);
+
+      const response = await axiosClient.post('/auth/login', {}, {
+        headers: {
+          'Authorization': `Basic ${credentials}`
+        }
+      });
+
+      const data = response.data;
+      const { token } = data;
+      cookieUtils.setItem(config.cookies.token, token);
+      messageApi.success('Logged in successfully');
       setTimeout(() => {
-        navigate(config.routes.public.home)
-      }, 2000)
+        navigate(config.routes.public.home);
+      }, 2000);
     } catch (error) {
       console.log('Error: ', error);
+      setLoading(false);
 
       if (error.response) {
         if (error.response.status === 401) {

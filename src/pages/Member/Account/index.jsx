@@ -150,10 +150,10 @@ const SettingsPage = () => {
 
   // Filter sections and items based on user role
   const sections = allSections
-    .filter(section => role === 'ROLE_user' ?
+    .filter(section => role === 'ROLE_User' ?
       (section.title !== 'Payment' && section.title !== 'Pregnancy') : true)
     .map(section => {
-      if (section.title === 'Account' && role === 'ROLE_user') {
+      if (section.title === 'Account' && role === 'ROLE_User') {
         return {
           ...section,
           items: section.items.filter(item => item.key !== 'subscription')
@@ -167,7 +167,7 @@ const SettingsPage = () => {
       <div className="container-profile">
         <div className="planSection-profile">
           <div className="planTitle-profile">Your Plan</div>
-          <div className="planName-profile">{role === 'ROLE_user' ? "Not Subscribed" : "Member"}</div>
+          <div className="planName-profile">{role === 'ROLE_User' ? "Not Subscribed" : "Member"}</div>
         </div>
 
         {sections.map((section) => (
