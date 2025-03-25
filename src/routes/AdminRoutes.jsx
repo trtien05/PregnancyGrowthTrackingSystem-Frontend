@@ -8,7 +8,6 @@ import AdminLayout from '../layouts/AdminLayout/AdminLayout';
 // Authorization
 const AdminRouter = () => {
   const { role } = useAuth();
-  console.log("role", role);
   if (role !== 'admin') {
     return <Navigate to={config.routes.home} />;
   }
