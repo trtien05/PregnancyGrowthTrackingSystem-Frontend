@@ -5,7 +5,7 @@ import {
   UserOutlined,
   HeartOutlined,
 } from '@ant-design/icons';
-import { Typography, Modal, DatePicker, Button, message } from 'antd';
+import { Typography, Modal, DatePicker, Button, message, Form } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import config from '../../../config';
 import './Setting.css';
@@ -25,6 +25,8 @@ const SettingsPage = () => {
   const [dueDate, setDueDate] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showLastPeriodPicker, setShowLastPeriodPicker] = useState(false);
+  const [dueDateError, setDueDateError] = useState(false);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     const fetchPregnancy = async () => {
@@ -39,7 +41,6 @@ const SettingsPage = () => {
     }
     fetchPregnancy();
   }, []);
-  console.log("pregnancy", pregnancy);
 
   const handlePregnancyClick = (e) => {
     e.preventDefault();
@@ -50,9 +51,18 @@ const SettingsPage = () => {
     }
   };
 
+  const validateDueDate = (date) => {
+    if (!date) {
+      setDueDateError(true);
+      return false;
+    }
+    setDueDateError(false);
+    return true;
+  };
+
   const handleModalOk = async () => {
-    if (!dueDate) {
-      message.error('Please select a due date');
+    if (!validateDueDate(dueDate)) {
+      message.error('Please select a valid due date');
       return;
     }
 
@@ -101,6 +111,13 @@ const SettingsPage = () => {
     setIsModalVisible(false);
     setDueDate(null);
     setShowLastPeriodPicker(false);
+  };
+
+  const handleDueDateChange = (date) => {
+    setDueDate(date);
+    if (date) {
+      setDueDateError(false);
+    }
   };
 
   const allSections = [
@@ -242,43 +259,51 @@ const SettingsPage = () => {
           </Button>,
         ]}
       >
-        <p style={{ fontSize: '16px', marginBottom: '20px', }}>
-          To track your pregnancy journey, please provide your expected due date below.
-        </p>
-        <DatePicker
-          style={{ width: '100%' }}
-          onChange={(date) => setDueDate(date)}
-          value={dueDate}
-          placeholder="Due date or child's birthday"
-          disabledDate={(current) => current && current < dayjs().subtract(30, 'day')}
-        />
-        <div style={{ marginTop: '10px' }}>
-          <span style={{ fontSize: '14px', color: 'gray' }}>Don't know your due date? </span>
-          <a
-            href="#"
-            className='calculate-due-date'
-            onClick={handleCalculateDueDateClick}
+        <Form form={form} layout="vertical">
+          <p style={{ fontSize: '16px', marginBottom: '20px', }}>
+            To track your pregnancy journey, please provide your expected due date below.
+          </p>
+          <Form.Item
+            validateStatus={dueDateError ? 'error' : ''}
+            help={dueDateError ? 'Please select a due date' : ''}
           >
-            Calculate my due date
-          </a>
-        </div>
-
-        {showLastPeriodPicker && (
-          <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '5px' }}>
-            <p style={{ marginBottom: '10px', fontSize: '14px' }}>
-              Select the first day of your last period:
-            </p>
             <DatePicker
               style={{ width: '100%' }}
-              onChange={handleLastPeriodChange}
-              placeholder="First day of last period"
-              disabledDate={(current) => current && current > dayjs()}
+              onChange={handleDueDateChange}
+              value={dueDate}
+              placeholder="Due date or child's birthday"
+              disabledDate={(current) => current && current < dayjs().subtract(30, 'day')}
+              status={dueDateError ? 'error' : ''}
             />
-            <p style={{ marginTop: '10px', fontSize: '12px', color: '#888' }}>
-              Your due date will be automatically calculated (280 days from last period)
-            </p>
+          </Form.Item>
+          <div style={{ marginTop: '10px' }}>
+            <span style={{ fontSize: '14px', color: 'gray' }}>Don't know your due date? </span>
+            <a
+              href="#"
+              className='calculate-due-date'
+              onClick={handleCalculateDueDateClick}
+            >
+              Calculate my due date
+            </a>
           </div>
-        )}
+
+          {showLastPeriodPicker && (
+            <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '5px' }}>
+              <p style={{ marginBottom: '10px', fontSize: '14px' }}>
+                Select the first day of your last period:
+              </p>
+              <DatePicker
+                style={{ width: '100%' }}
+                onChange={handleLastPeriodChange}
+                placeholder="First day of last period"
+                disabledDate={(current) => current && current > dayjs()}
+              />
+              <p style={{ marginTop: '10px', fontSize: '12px', color: '#888' }}>
+                Your due date will be automatically calculated (280 days from last period)
+              </p>
+            </div>
+          )}
+        </Form>
       </Modal>
     </div>
   );

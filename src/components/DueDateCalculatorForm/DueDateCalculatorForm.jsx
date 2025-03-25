@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Select, DatePicker, Radio, Space } from 'antd';
+import { Button, Select, DatePicker, Radio, Space, Alert } from 'antd';
 import './DueDateCalculatorForm.css';
 import DueDateCalculatorResult from '../DueDateCalculatorResult/DueDateCalculatorResult';
 
@@ -13,9 +13,11 @@ const DueDateCalculatorForm = () => {
   const [days, setDays] = useState('0');
   const [transferType, setTransferType] = useState('IVF 3 Day Transfer Date');
   const [showResults, setShowResults] = useState(false);
+  const [error, setError] = useState('');
 
   const handleCalculationMethodChange = (value) => {
     setCalculationMethod(value);
+    setError('');
   };
 
   const generateWeeksOptions = () => {
@@ -42,12 +44,44 @@ const DueDateCalculatorForm = () => {
     return options;
   };
 
+  const validateForm = () => {
+    if (!date) {
+      setError('Please select a date');
+      return false;
+    }
+
+    if (calculationMethod === 'Ultrasound') {
+      if (!weeks || !days) {
+        setError('Please select both weeks and days for gestational age');
+        return false;
+      }
+    }
+
+    if (calculationMethod === 'Last period' && cycleLength === 'I don\'t know') {
+      // This is actually allowed, but we might want to show a warning
+      // We'll clear any errors and continue
+    }
+
+    setError('');
+    return true;
+  };
+
   const handleSubmit = () => {
-    setShowResults(true);
+    if (validateForm()) {
+      setShowResults(true);
+    }
   };
 
   const handleBackToForm = () => {
     setShowResults(false);
+    setError('');
+  };
+
+  const handleDateChange = (newDate) => {
+    setDate(newDate);
+    if (error && newDate) {
+      setError('');
+    }
   };
 
   const renderInputFields = () => {
@@ -57,17 +91,19 @@ const DueDateCalculatorForm = () => {
           <>
             <div className="form-group">
               <label>When did your last period start?</label>
-              <DatePicker 
-                className="form-control" 
-                value={date} 
-                onChange={setDate}
+              <DatePicker
+                className="form-control"
+                value={date}
+                onChange={handleDateChange}
                 format="DD-MM-YYYY"
+                status={error && !date ? "error" : ""}
               />
             </div>
             <div className="form-group">
               <label>Cycle length</label>
               <Select
-                className="form-control"
+                // className="form-control"
+                style={{ width: '100%' }}
                 value={cycleLength}
                 onChange={setCycleLength}
               >
@@ -80,11 +116,12 @@ const DueDateCalculatorForm = () => {
         return (
           <div className="form-group">
             <label>When did you conceive?</label>
-            <DatePicker 
-              className="form-control" 
-              value={date} 
-              onChange={setDate}
+            <DatePicker
+              className="form-control"
+              value={date}
+              onChange={handleDateChange}
               format="DD-MM-YYYY"
+              status={error && !date ? "error" : ""}
             />
           </div>
         );
@@ -93,11 +130,12 @@ const DueDateCalculatorForm = () => {
           <>
             <div className="form-group">
               <label>Date of transfer</label>
-              <DatePicker 
-                className="form-control" 
-                value={date} 
-                onChange={setDate}
+              <DatePicker
+                className="form-control"
+                value={date}
+                onChange={handleDateChange}
                 format="DD-MM-YYYY"
+                status={error && !date ? "error" : ""}
               />
             </div>
             <div className="form-group">
@@ -115,15 +153,16 @@ const DueDateCalculatorForm = () => {
           <>
             <div className="form-group">
               <label>Date of ultrasound</label>
-              <DatePicker 
-                className="form-control" 
-                value={date} 
-                onChange={setDate}
+              <DatePicker
+                className="form-control"
+                value={date}
+                onChange={handleDateChange}
                 format="DD-MM-YYYY"
+                status={error && !date ? "error" : ""}
               />
             </div>
             <div className="form-group">
-              <label >Calculated gestational age on the date that the ultrasound was performed</label>
+              <label>Calculated gestational age on the date that the ultrasound was performed</label>
               <div className="gestational-age">
                 <div className="weeks-container">
                   <label>Weeks</label>
@@ -131,6 +170,7 @@ const DueDateCalculatorForm = () => {
                     className="form-control"
                     value={weeks}
                     onChange={setWeeks}
+                    status={error && !weeks ? "error" : ""}
                   >
                     {generateWeeksOptions()}
                   </Select>
@@ -141,6 +181,7 @@ const DueDateCalculatorForm = () => {
                     className="form-control"
                     value={days}
                     onChange={setDays}
+                    status={error && !days ? "error" : ""}
                   >
                     {generateDaysOptions()}
                   </Select>
@@ -153,11 +194,12 @@ const DueDateCalculatorForm = () => {
         return (
           <div className="form-group">
             <label>What&apos;s your due date?</label>
-            <DatePicker 
-              className="form-control" 
-              value={date} 
-              onChange={setDate}
+            <DatePicker
+              className="form-control"
+              value={date}
+              onChange={handleDateChange}
               format="DD-MM-YYYY"
+              status={error && !date ? "error" : ""}
             />
           </div>
         );
@@ -168,7 +210,7 @@ const DueDateCalculatorForm = () => {
 
   if (showResults) {
     return (
-      <DueDateCalculatorResult 
+      <DueDateCalculatorResult
         calculationData={{
           calculationMethod,
           date,
@@ -187,7 +229,8 @@ const DueDateCalculatorForm = () => {
       <div className="form-group">
         <label>Calculation method</label>
         <Select
-          className="form-control cycle-dropdown"
+          // className="form-control cycle-dropdown"
+          style={{ width: '100%' }}
           value={calculationMethod}
           onChange={handleCalculationMethodChange}
         >
@@ -198,15 +241,16 @@ const DueDateCalculatorForm = () => {
           <Option value="I know my due date">I know my due date</Option>
         </Select>
       </div>
-      
+
       {renderInputFields()}
-      
+
+      {error && <Alert message={error} type="error" style={{ marginBottom: '15px' }} />}
+
       <div className="form-group">
-        <Button 
-          type="primary" 
+        <Button
+          type="primary"
           className="timeline-button"
           onClick={handleSubmit}
-          disabled={!date}
         >
           See your timeline
         </Button>

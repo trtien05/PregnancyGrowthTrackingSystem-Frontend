@@ -3,16 +3,15 @@ import './PregnancyCalculatorForm.css'
 import PregnancyCalculationResult from '../PregnancyCalculationResult/PregnancyCalculationResult';
 
 const calculateBMI = (weight, height) => {
-  // Convert weight to kg if in lbs
   const weightInKg = weight.unit === 'lb' ? weight.value * 0.45359237 : weight.value;
 
-  // Convert height to meters if in ft/in
   let heightInMeters;
   if (height.unit === 'ft') {
     const totalInches = (height.feet * 12) + height.inches;
     heightInMeters = totalInches * 0.0254;
   } else {
-    heightInMeters = height.meters;
+    // For meters, handle the main value and inches separately
+    heightInMeters = Number(height.feet) + (Number(height.inches) * 0.0254);
   }
 
   return weightInKg / (heightInMeters * heightInMeters);
@@ -48,13 +47,78 @@ const PregnancyCalculatorForm = () => {
     pregnancyWeek: ''
   })
 
+  const [errors, setErrors] = useState({
+    prePregnancyWeight: '',
+    currentWeight: '',
+    heightFeet: '',
+    heightInches: '',
+    pregnancyWeek: ''
+  });
+
   const [showResults, setShowResults] = useState(false);
   const [calculationResults, setCalculationResults] = useState(null);
 
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      prePregnancyWeight: '',
+      currentWeight: '',
+      heightFeet: '',
+      heightInches: '',
+      pregnancyWeek: ''
+    };
 
+    // Validate pre-pregnancy weight
+    if (!formData.prePregnancyWeight) {
+      newErrors.prePregnancyWeight = 'Pre-pregnancy weight is required';
+      isValid = false;
+    } else if (parseFloat(formData.prePregnancyWeight) <= 0) {
+      newErrors.prePregnancyWeight = 'Weight must be greater than 0';
+      isValid = false;
+    }
+
+    // Validate current weight
+    if (!formData.currentWeight) {
+      newErrors.currentWeight = 'Current weight is required';
+      isValid = false;
+    } else if (parseFloat(formData.currentWeight) <= 0) {
+      newErrors.currentWeight = 'Weight must be greater than 0';
+      isValid = false;
+    }
+
+    // Validate height
+    if (!formData.heightFeet) {
+      newErrors.heightFeet = 'Height is required';
+      isValid = false;
+    } else if (parseFloat(formData.heightFeet) <= 0) {
+      newErrors.heightFeet = 'Height must be greater than 0';
+      isValid = false;
+    }
+
+    if (formData.heightFeetUnit === 'ft' && (!formData.heightInches || formData.heightInches === '')) {
+      newErrors.heightInches = 'Inches is required';
+      isValid = false;
+    } else if (formData.heightFeetUnit === 'ft' && (parseFloat(formData.heightInches) < 0 || parseFloat(formData.heightInches) > 11)) {
+      newErrors.heightInches = 'Inches must be between 0 and 11';
+      isValid = false;
+    }
+
+    // Validate pregnancy week
+    if (!formData.pregnancyWeek) {
+      newErrors.pregnancyWeek = 'Pregnancy week is required';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
 
     const bmi = calculateBMI(
       {
@@ -63,7 +127,7 @@ const PregnancyCalculatorForm = () => {
       },
       {
         feet: Number(formData.heightFeet),
-        inches: Number(formData.heightInches),
+        inches: Number(formData.heightInches) || 0,
         unit: formData.heightFeetUnit
       }
     );
@@ -72,8 +136,18 @@ const PregnancyCalculatorForm = () => {
 
     setCalculationResults({
       bmi,
-      weightGainRange
+      weightGainRange,
+      currentPregnancyWeek: Number(formData.pregnancyWeek),
+      prePregnancyWeight: {
+        value: Number(formData.prePregnancyWeight),
+        unit: formData.prePregnancyUnit
+      },
+      currentWeight: {
+        value: Number(formData.currentWeight),
+        unit: formData.currentWeightUnit
+      }
     });
+
     setShowResults(true);
   };
 
@@ -90,6 +164,13 @@ const PregnancyCalculatorForm = () => {
       isCarryingTwins: false,
       pregnancyWeek: ''
     });
+    setErrors({
+      prePregnancyWeight: '',
+      currentWeight: '',
+      heightFeet: '',
+      heightInches: '',
+      pregnancyWeek: ''
+    });
   };
 
   if (showResults) {
@@ -98,6 +179,9 @@ const PregnancyCalculatorForm = () => {
         bmi={calculationResults.bmi}
         weightGainRange={calculationResults.weightGainRange}
         onStartOver={handleStartOver}
+        currentPregnancyWeek={calculationResults.currentPregnancyWeek}
+        prePregnancyWeight={calculationResults.prePregnancyWeight}
+        currentWeight={calculationResults.currentWeight}
       />
     );
   }
@@ -107,6 +191,14 @@ const PregnancyCalculatorForm = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }))
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   }
 
 
@@ -126,17 +218,18 @@ const PregnancyCalculatorForm = () => {
               onChange={handleInputChange}
               placeholder="Enter weight"
               min="0"
-              required
+              className={errors.prePregnancyWeight ? 'error-input' : ''}
             />
             <select name="prePregnancyUnit" value={formData.prePregnancyUnit} onChange={handleInputChange}>
               <option value="lb">lb</option>
               <option value="kg">kg</option>
             </select>
           </div>
+          {errors.prePregnancyWeight && <p className="error-message">{errors.prePregnancyWeight}</p>}
         </div>
 
         <div className="form-group">
-          <label className="form-label">Your weight right now</label>
+          <label className="form-label">Your current weight </label>
           <div className="input-group">
             <input
               type="number"
@@ -145,13 +238,14 @@ const PregnancyCalculatorForm = () => {
               onChange={handleInputChange}
               placeholder="Enter weight"
               min="0"
-              required
+              className={errors.currentWeight ? 'error-input' : ''}
             />
             <select name="currentWeightUnit" value={formData.currentWeightUnit} onChange={handleInputChange}>
               <option value="lb">lb</option>
               <option value="kg">kg</option>
             </select>
           </div>
+          {errors.currentWeight && <p className="error-message">{errors.currentWeight}</p>}
         </div>
 
         <div className="form-group">
@@ -165,8 +259,7 @@ const PregnancyCalculatorForm = () => {
                 onChange={handleInputChange}
                 placeholder="Feet"
                 min="0"
-                required
-                className="height-feet"
+                className={`height-feet ${errors.heightFeet ? 'error-input' : ''}`}
               />
               <select name="heightFeetUnit" value={formData.heightFeetUnit} onChange={handleInputChange}>
                 <option value="ft">ft</option>
@@ -182,11 +275,13 @@ const PregnancyCalculatorForm = () => {
                 placeholder="Inches"
                 min="0"
                 max="11"
-                required
+                className={errors.heightInches ? 'error-input' : ''}
               />
-              <span className="unit-label">in</span>
+              <span className="unit-label">inch</span>
             </div>
           </div>
+          {errors.heightFeet && <p className="error-message">{errors.heightFeet}</p>}
+          {errors.heightInches && <p className="error-message">{errors.heightInches}</p>}
         </div>
 
         <div className="checkbox-group">
@@ -195,13 +290,18 @@ const PregnancyCalculatorForm = () => {
         </div>
         <div className="conversion-info">
           <p className="info-text">
-            <small>Conversion reference: 1 lb = 0.45 kg | 1 ft = 0.3 m</small>
+            Conversion reference: 1 lb = 0.45 kg | 1 ft = 0.3 m | 1 inch = 2.5 cm
           </p>
         </div>
         <div className="form-group">
           <label className="form-label">Your week of pregnancy</label>
           <div className="input-group">
-            <select name="pregnancyWeek" value={formData.pregnancyWeek} onChange={handleInputChange} required className="full-width">
+            <select
+              name="pregnancyWeek"
+              value={formData.pregnancyWeek}
+              onChange={handleInputChange}
+              className={`full-width ${errors.pregnancyWeek ? 'error-input' : ''}`}
+            >
               <option value="">Select week</option>
               {pregnancyWeeks.map((week) => (
                 <option key={week} value={week}>
@@ -210,6 +310,7 @@ const PregnancyCalculatorForm = () => {
               ))}
             </select>
           </div>
+          {errors.pregnancyWeek && <p className="error-message">{errors.pregnancyWeek}</p>}
         </div>
 
         <button type="submit" className="submit-button">

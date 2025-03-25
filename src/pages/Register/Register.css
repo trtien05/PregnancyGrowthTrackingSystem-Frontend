@@ -48,10 +48,6 @@
 }
 .input-field {
   width: 100%; /* equivalent to 'w-full' */
-  padding: 0.5rem 1rem; /* equivalent to 'px-4 py-2' */
-  border-radius: 1rem; /* equivalent to 'rounded-xl' */
-  border: 1px solid #d1d5db; /* equivalent to 'border-gray-300' */
-  outline: none; /* equivalent to 'focus:outline-none' */
   transition: all 0.2s; /* smooth transition for focus ring */
 }
 
