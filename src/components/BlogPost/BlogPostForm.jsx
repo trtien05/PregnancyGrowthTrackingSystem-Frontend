@@ -4,7 +4,7 @@ import {
   Input, 
   Button, 
   Switch, 
-  Select,
+  // Select,
   message,
   Upload,
   Space
@@ -14,9 +14,9 @@ import {
   LoadingOutlined 
 } from '@ant-design/icons';
 import PropTypes from 'prop-types';
-import blogPostService from '../../services/blogPostService';
+// import blogPostService from '../../services/blogPostService';
 
-const { Option } = Select;
+// const { Option } = Select;
 const { TextArea } = Input;
 
 const BlogPostForm = ({ 
@@ -30,30 +30,30 @@ const BlogPostForm = ({
   const [submitLoading, setSubmitLoading] = useState(false);
   
   // State for dynamic tags
-  const [tagOptions, setTagOptions] = useState([]);
-  const [tagsLoading, setTagsLoading] = useState(false);
+  // const [tagOptions, setTagOptions] = useState([]);
+  // const [tagsLoading, setTagsLoading] = useState(false);
 
   // Fetch tags when component mounts
-  useEffect(() => {
-    const fetchTags = async () => {
-      setTagsLoading(true);
-      try {
-        const response = await blogPostService.getAllTags();
-        if (response && response.data) {
-          // Extract tag names from the response
-          const tags = response.data.map(tag => tag.name);
-          setTagOptions(tags);
-        }
-      } catch (error) {
-        console.error('Error fetching tags:', error);
-        message.error('Failed to load tags');
-      } finally {
-        setTagsLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchTags = async () => {
+  //     // setTagsLoading(true);
+  //     try {
+  //       const response = await blogPostService.getAllTags();
+  //       if (response && response.data) {
+  //         // Extract tag names from the response
+  //         const tags = response.data.map(tag => tag.name);
+  //         // setTagOptions(tags);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching tags:', error);
+  //       message.error('Failed to load tags');
+  //     } finally {
+  //       setTagsLoading(false);
+  //     }
+  //   };
 
-    fetchTags();
-  }, []);
+  //   fetchTags();
+  // }, []);
 
   // Set initial values when the form is loaded or edited
   useEffect(() => {
@@ -242,7 +242,7 @@ const BlogPostForm = ({
         />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         name="nameTags"
         label="Tags"
         rules={[{ 
@@ -260,7 +260,7 @@ const BlogPostForm = ({
             <Option key={tag} value={tag}>{tag}</Option>
           ))}
         </Select>
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item
         name="featuredImageUrl"
